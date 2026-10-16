@@ -8,7 +8,7 @@ import { useSession } from "@/state/session";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/checklist")({
-  validateSearch: (s: Record<string, unknown>): { list?: string } => (typeof s.list === "string" ? { list: s.list } : {}),
+  validateSearch: (s: Record<string, unknown>): { list?: string } => (typeof s["list"] === "string" ? { list: s["list"] } : {}),
   head: () => ({
     meta: [
       { title: "Your checklist — CataPanda" },

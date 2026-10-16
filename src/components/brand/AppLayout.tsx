@@ -25,7 +25,7 @@ export function Page({ children }: { children: ReactNode }) {
 
 type FlowPath = "/" | "/questions" | "/options" | "/checklist" | "/share";
 
-export function FlowNav({ back, next, nextLabel = "Next", nextDisabled }: { back?: FlowPath; next?: FlowPath; nextLabel?: string; nextDisabled?: boolean }) {
+export function FlowNav({ back, next, nextLabel = "Next", nextDisabled }: { back?: FlowPath | undefined; next?: FlowPath | undefined; nextLabel?: string; nextDisabled?: boolean }) {
   const small = "px-4 py-2.5 text-sm";
   return (
     <div className="fixed inset-x-0 bottom-0 z-20 border-t border-sand bg-snow shadow-soft">
