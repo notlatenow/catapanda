@@ -48,7 +48,9 @@ export const session = {
   setFacts: (facts: HouseholdFact[]) => set({ facts }),
   setClarify: (clarify: Clarify) => set({ clarify, answers: {} }),
   setAnswer: (id: string, a: Answer) => set({ answers: { ...state.answers, [id]: { ...state.answers[id], ...a } } }),
-  skipAll: () => set({ answers: Object.fromEntries((state.clarify?.questions ?? []).map((q) => [q.id, { skipped: true }])) }),
+  skipAll: () => set({ answers: Object.fromEntries((state.clarify?.questions ?? []).map((q) => [q.id, { ...state.answers[q.id], skipped: true }])) }),
+  /** Un-skips every question, restoring any answers given before skipping. */
+  undoSkipAll: () => set({ answers: Object.fromEntries(Object.entries(state.answers).map(([id, a]) => [id, { ...a, skipped: false }])) }),
   setPersonal: (personal: Personal) => set({ personal, facts: personal.status === "done" ? personal.facts : [] }),
   reset: () => set({ ...initial, visit: state.visit + 1 }),
 };

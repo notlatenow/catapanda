@@ -80,7 +80,12 @@ function Questions() {
         <StackedCard>
           <h1 className="text-2xl text-ink">A few quick questions</h1>
           <p className="mt-2 text-sm text-slate">Feel free to skip these questions, but the more info we have, the better your checklists will be.</p>
-          <PillButton variant="secondary" className="mt-4 px-4 py-2 text-sm" onClick={() => session.skipAll()}>Skip all</PillButton>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <PillButton variant="secondary" className="px-4 py-2 text-sm" onClick={() => session.skipAll()} disabled={questions.every((q) => s.answers[q.id]?.skipped)}>Skip all</PillButton>
+            {questions.some((q) => s.answers[q.id]?.skipped) && (
+              <PillButton variant="secondary" className="px-4 py-2 text-sm" onClick={() => session.undoSkipAll()}>Undo skip all</PillButton>
+            )}
+          </div>
         </StackedCard>
         {questions.map((q) => {
           const a = s.answers[q.id] ?? {};
