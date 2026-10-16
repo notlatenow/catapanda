@@ -27,14 +27,14 @@ type FlowPath = "/" | "/questions" | "/options" | "/checklist" | "/share";
 export function FlowNav({ back, next, nextLabel = "Next" }: { back?: FlowPath; next?: FlowPath; nextLabel?: string }) {
   const small = "px-4 py-2.5 text-sm";
   return (
-    <div className="fixed inset-x-0 bottom-0 z-20 bg-panda/95 backdrop-blur">
+    <div className="fixed inset-x-0 bottom-0 z-20 border-t border-sand bg-snow shadow-soft">
       <div className="mx-auto flex max-w-xl items-center justify-between gap-2 px-4 py-3">
         {back ? (
           <Link to={back} className={cn(pillVariants({ variant: "secondary" }), small)}>Back</Link>
         ) : <span />}
-        <Link to="/" className="text-sm font-bold text-snow underline-offset-4 hover:underline">Start over</Link>
+        <Link to="/" className="text-sm font-bold text-bright underline-offset-4 hover:underline">Start over</Link>
         {next ? (
-          <Link to={next} className={cn(pillVariants({ variant: "primary" }), small, "bg-snow text-panda hover:text-snow")}>{nextLabel}</Link>
+          <Link to={next} className={cn(pillVariants({ variant: "primary" }), small)}>{nextLabel}</Link>
         ) : <span />}
       </div>
     </div>
