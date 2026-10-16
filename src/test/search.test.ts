@@ -39,7 +39,7 @@ describe("search privacy and sources", () => {
 
 describe("provider boundary", () => {
   it("filters returned URLs and restricts the provider call", async () => {
-    const fetcher = vi.fn(async () => Response.json({ results: [{ title: "FDA", url: link, snippet: "Guidance" }, { title: "Bad", url: "https://example.com", snippet: "x" }] }));
+    const fetcher = vi.fn(async (_input: RequestInfo | URL, _init?: RequestInit) => Response.json({ results: [{ title: "FDA", url: link, snippet: "Guidance" }, { title: "Bad", url: "https://example.com", snippet: "x" }] }));
     vi.stubGlobal("fetch", fetcher);
     expect(await runSearch("oxygen concentrator power outage backup")).toEqual([{ title: "FDA", link, snippet: "Guidance" }]);
     const body = JSON.parse(fetcher.mock.calls[0]?.[1]?.body as string);
