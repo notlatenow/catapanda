@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Fragment } from "react";
 import { Page, FlowNav, PlaceholderNote } from "@/components/brand/AppLayout";
 import { StackedCard } from "@/components/brand/StackedCard";
-import { PillButton } from "@/components/brand/PillButton";
+import { pillVariants } from "@/components/brand/PillButton";
 import { buildAll, priorityLabel, type Checklist, type Row } from "@/lib/checklists";
 import { useSession } from "@/state/session";
 import { cn } from "@/lib/utils";
