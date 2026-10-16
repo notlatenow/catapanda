@@ -65,8 +65,8 @@
   --linen: #efece3;
   --ocean: #033a66;
   --abyss: #022846;
-  --ink-base: #2e2e31;
-  --halftone-dot: #0a0a0b;
+  --ink-base: #141416;
+  --halftone-dot: #2c2c30;
 
   --background: var(--sky);
   --foreground: var(--snow);
@@ -113,6 +113,9 @@
 /* Comic halftone: black dots over a soft charcoal ink base */
 @utility halftone-ink {
   background-color: var(--ink-base);
-  background-image: radial-gradient(circle at center, var(--halftone-dot) 1.1px, transparent 1.6px);
-  background-size: 5px 5px;
+  background-image:
+    radial-gradient(circle at center, var(--halftone-dot) 1.2px, transparent 1.8px),
+    radial-gradient(circle at center, var(--halftone-dot) 1.2px, transparent 1.8px);
+  background-size: 6px 6px;
+  background-position: 0 0, 3px 3px;
 }
