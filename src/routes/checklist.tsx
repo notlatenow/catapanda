@@ -89,7 +89,7 @@ function Rows({ rows, showStores }: { rows: Row[]; showStores: boolean }) {
             {r.kind === "tip" ? "CataPanda Tip" : (
               <>Gov-vetted: <Link to="/about" hash="gov-vetted" className="text-bright underline-offset-2 hover:underline">Source ↗</Link></>
             )}
-            {showStores && r.stores.length > 0 && <> | Find at {[...r.stores].sort().join(", ")}</>}
+            {showStores && r.stores.length > 0 && <> | Find at the store: {[...r.stores].sort().join(", ")}</>}
           </p>
         </li>
       ))}
