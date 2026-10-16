@@ -50,7 +50,7 @@ function About() {
         <ul>
           {sources.map((s) => (
             <li key={s.code} className="border-b border-linen py-3 text-sm last:border-0">
-              <p className="font-bold text-ink">{s.country} <span className="text-slate">({s.code})</span></p>
+              <p className="font-bold text-ink">{s.country}</p>
               <p>{s.agency}</p>
               {s.websites.map((w) => (
                 <a key={w} href={w} target="_blank" rel="noopener noreferrer" className="block break-all text-bright underline-offset-2 hover:underline">{w} ↗</a>
