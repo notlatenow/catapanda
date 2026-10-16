@@ -1,0 +1,47 @@
+[
+  {
+    "name": "Earthquake",
+    "tagline": "Ground shaking causing structural damage",
+    "tipsIntro": "Five items above (sturdy rope, water-resistant matches, fire extinguisher, baby wrap, and head/neck protection) come from sources that name an earthquake-specific kit. The behaviours below are what the sources stress once the shaking starts or stops:",
+    "tips": [
+      { "text": "Taiwan's whole bag series is built around this scenario: keep the bag by the door so it can be grabbed immediately if a building is damaged and evacuation is required.", "sources": ["TW"] },
+      { "text": "Store roughly 3 days of food per person at home (in addition to your bag), and secure heavy furniture to the wall so it can't topple.", "sources": ["TW"] },
+      { "text": "Put on sturdy shoes before moving around afterward — broken glass on the floor is a common injury source.", "sources": ["SG"] },
+      { "text": "If trapped under debris, use a whistle, a torchlight, or tap on a pipe or wall to attract rescuers' attention — shouting tires you out and risks inhaling dust.", "sources": ["SG"] },
+      { "text": "If pinned down, move periodically to prevent blood clots, and keep your spirits up while waiting for rescue.", "sources": ["SG"] },
+      { "text": "Keep calm and douse any open flames immediately; take cover under sturdy furniture, away from glass.", "sources": ["HK"] },
+      { "text": "After the shaking stops, check for a gas leak before using any flame — open windows, shut off the main valve, and report it rather than lighting anything.", "sources": ["HK"] },
+      { "text": "Know how to give first aid and how to use a fire extinguisher — practise both before you need them.", "sources": ["KR"] },
+      { "text": "A stroller is hard to manoeuvre over debris; a baby wrap or carrier is easier to evacuate with. If sheltering in place, use a cushion, folded clothing or a thick book to protect your head and neck.", "sources": ["KR"] }
+    ]
+  },
+  {
+    "name": "Flood",
+    "tagline": "Rising water from storms, rivers, or coastal surge",
+    "tipsIntro": "The sourced documents mostly focus on evacuation behaviour for floods rather than flood-only gear — the one addition is South Korea's Safe Korea heavy-rain guide, which adds a portable burner (see the checklist above). Otherwise, the core kit doubles as your flood bag; below is what the sources emphasise doing with it.",
+    "tips": [
+      { "text": "Move to higher ground. Stay put but grab your bag and be ready to evacuate the moment authorities advise it.", "sources": ["SG"] },
+      { "text": "If it feels dangerous to remain home, call the emergency line and evacuate immediately, away from open areas, streams and storm drains.", "sources": ["SG"] },
+      { "text": "Don't walk through moving water higher than ankle height; if you must, use a stick to check the ground ahead of you.", "sources": ["SG"] },
+      { "text": "Flooding is more likely in low-lying or poorly-drained areas — check drains and clear blockages before the rainy season.", "sources": ["HK"] },
+      { "text": "If your home is at risk, leave early and shelter elsewhere until the rain subsides.", "sources": ["HK"] },
+      { "text": "In coastal or low-lying areas, a storm surge can flood the shoreline with little warning — move to high ground immediately and contact the police if you need help.", "sources": ["HK"] },
+      { "text": "Stock at least 3 days of food and water per person and keep it together in one place; also fill your bathtub in advance as a backup water supply in case the mains are cut.", "sources": ["KR"] },
+      { "text": "Fuel your car ahead of time or arrange transport with a neighbour, and clean drains and gutters and inspect nearby slopes/retaining walls before heavy rain arrives.", "sources": ["KR"] }
+    ]
+  },
+  {
+    "name": "Typhoon",
+    "tagline": "Tropical storms with high winds & flooding",
+    "tipsIntro": "No items beyond the core kit were uniquely specified for typhoons — checking Taiwan's and South Korea's live sites confirmed this, though both add useful home-hardening steps alongside the bag. The sources put particular weight on a few items and behaviours as storms escalate:",
+    "tips": [
+      { "text": "Keep a flashlight and first aid kit within reach — they're specifically called out for the power outages and storm-related injuries typhoons cause.", "sources": ["SG"] },
+      { "text": "Set your freezer to its lowest setting ahead of time to slow food spoilage if the power goes out.", "sources": ["SG"] },
+      { "text": "Tune in to the radio for updates throughout the storm — don't step outside during a lull, as winds can pick up again.", "sources": ["SG"] },
+      { "text": "Hong Kong grades storms on an escalating signal system (No. 1 through No. 10); as the signal rises, finish your preparations, stay indoors and lock windows and doors, and keep monitoring radio or TV broadcasts.", "sources": ["HK"] },
+      { "text": "A storm surge riding on a high tide can flood coastal areas — residents in low-lying coastal areas should move to high ground and contact police if assistance is needed.", "sources": ["HK"] },
+      { "text": "At home, lay in sandbags and waterproof flood gates, clear your gutters, and reinforce or bring in windows, signage and hanging planters before the storm arrives.", "sources": ["TW"] },
+      { "text": "Apply safety film or tape to windows, place sandbags or water barriers at basement entrances, and move parked vehicles and loose outdoor objects to safety.", "sources": ["KR"] }
+    ]
+  }
+]
