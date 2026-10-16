@@ -40,7 +40,7 @@ export function FlowNav({ back, next, nextLabel = "Next", nextDisabled, startOve
         {next && nextDisabled ? (
           <button type="button" disabled className={cn(pillVariants({ variant: "primary" }), small, "border-2 border-panda bg-sky text-panda disabled:opacity-100")}>{nextLabel}</button>
         ) : next ? (
-          <Link to={next} className={cn(pillVariants({ variant: "primary" }), small, "bg-panda/50 text-snow hover:bg-panda active:bg-panda")}>{nextLabel}</Link>
+          <Link to={next} className={cn(pillVariants({ variant: "primary" }), small, "border-2 border-transparent bg-panda/50 text-snow hover:bg-panda active:bg-panda")}>{nextLabel}</Link>
         ) : <span />}
       </div>
     </div>
