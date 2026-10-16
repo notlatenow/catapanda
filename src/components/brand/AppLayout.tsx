@@ -36,7 +36,7 @@ export function FlowNav({ back, next, nextLabel = "Next", nextDisabled, startOve
         {back ? (
           <Link to={back} className={cn(pillVariants({ variant: "secondary" }), small)}>Back</Link>
         ) : <span />}
-        {startOver ? <Link to="/" onClick={() => session.reset()} className="text-sm font-bold text-pale underline-offset-4 hover:text-snow hover:underline">Start over</Link> : <span />}
+        {startOver ? <Link to="/" onClick={() => session.reset()} className="text-sm font-bold text-sun hover:text-snow active:text-dusk">Start over</Link> : <span />}
         {next && nextDisabled ? (
           <button type="button" disabled className={cn(pillVariants({ variant: "primary" }), small, "border-2 border-dusk bg-sky text-dusk disabled:opacity-100")}>{nextLabel}</button>
         ) : next ? (
