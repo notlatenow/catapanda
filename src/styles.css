@@ -47,6 +47,7 @@
   --color-linen: var(--linen);
   --color-ocean: var(--ocean);
   --color-abyss: var(--abyss);
+  --color-pitch: var(--pitch);
 }
 
 :root {
@@ -66,6 +67,7 @@
   --ocean: #033a66;
   --abyss: #022846;
   --ink-base: #141416;
+  --pitch: #000000;
   --halftone-dot: #2c2c30;
 
   --background: var(--sky);

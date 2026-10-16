@@ -13,8 +13,8 @@ export function SiteHeader() {
       <nav className="mx-auto flex max-w-xl items-center justify-between px-4 py-3">
         <Link to="/" className="font-display text-xl font-bold text-snow">CataPanda</Link>
         <div className="flex gap-1">
-          <Link to="/" className={link} activeProps={{ className: "bg-snow/15 text-snow" }} activeOptions={{ exact: true }}>Home</Link>
-          <Link to="/about" className={link} activeProps={{ className: "bg-snow/15 text-snow" }}>About</Link>
+          <Link to="/" className={link} activeProps={{ className: "bg-pitch text-sky hover:text-sky" }} activeOptions={{ exact: true }}>Home</Link>
+          <Link to="/about" className={link} activeProps={{ className: "bg-pitch text-sky hover:text-sky" }}>About</Link>
         </div>
       </nav>
     </header>
