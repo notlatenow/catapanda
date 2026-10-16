@@ -23,7 +23,7 @@ function About() {
       <img src={mascots.url} alt="CataPanda mascots" className="mx-auto w-40" />
       <StackedCard>
         <h1 className="text-2xl text-ink">About CataPanda</h1>
-        <p className="mt-2 text-slate">Every item comes from official disaster-preparedness guidance. Sources:</p>
+        <p id="gov-vetted" className="mt-2 scroll-mt-20 text-slate">Every item comes from official disaster-preparedness guidance. Sources:</p>
         <ul className="mt-3">
           {sources.map((s) => (
             <li key={s.code} className="border-b border-linen py-2 text-sm text-ink last:border-0">

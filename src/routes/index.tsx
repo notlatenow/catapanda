@@ -1,13 +1,12 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { createFileRoute } from "@tanstack/react-router";
 import logo from "@/assets/web-logo.png.asset.json";
 import mascots from "@/assets/web-mascots.png.asset.json";
 import { Page, FlowNav } from "@/components/brand/AppLayout";
 import { StackedCard } from "@/components/brand/StackedCard";
-import { OptionCard, TextField } from "@/components/brand/OptionCard";
-import { PillButton } from "@/components/brand/PillButton";
+import { OptionCard, TextArea } from "@/components/brand/OptionCard";
 import { catalog } from "@/services/catalog";
 import { APP_TITLE } from "@/config/app";
+import { session, useSession, DESCRIPTION_MIN, DESCRIPTION_MAX } from "@/state/session";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -23,8 +22,9 @@ export const Route = createFileRoute("/")({
 
 function Start() {
   const disasters = catalog.getDisasters();
-  const [picked, setPicked] = useState<string[]>([]);
-  const toggle = (n: string) => setPicked((p) => (p.includes(n) ? p.filter((x) => x !== n) : [...p, n]));
+  const { disasters: picked, description } = useSession();
+  const len = description.trim().length;
+  const ready = picked.length > 0 && len >= DESCRIPTION_MIN;
 
   return (
     <>
@@ -33,33 +33,41 @@ function Start() {
         <StackedCard>
           <div className="flex items-center gap-4">
             <div className="flex-1">
-              <h1 className="text-2xl text-ink">Get ready, together.</h1>
-              <p className="mt-2 text-slate">Pick the disasters you're preparing for and tell us about your household. We'll build checklists you can trust.</p>
+              <h1 className="text-2xl text-ink">Let's get your home ready.</h1>
+              <p className="mt-2 text-slate">Tell us what you're prepping for and who's at home. We'll put together a friendly, government-backed checklist made just for you.</p>
             </div>
             <img src={mascots.url} alt="CataPanda mascots" className="w-24 shrink-0" />
           </div>
         </StackedCard>
 
-        <StackedCard variant="accent">
-          <h2 className="text-xl">What are you preparing for?</h2>
-          <p className="mt-1 text-sm">Pick one or more.</p>
+        <StackedCard>
+          <h2 className="text-xl text-ink">What are you preparing for?</h2>
+          <p className="mt-1 text-sm text-slate">Pick one or more.</p>
           <div className="mt-4 grid gap-3">
             {disasters.map((d) => (
-              <OptionCard key={d.name} name={d.name} tagline={d.tagline} selected={picked.includes(d.name)} onClick={() => toggle(d.name)} />
+              <OptionCard key={d.name} name={d.name} tagline={d.tagline} selected={picked.includes(d.name)} onClick={() => session.toggleDisaster(d.name)} />
             ))}
           </div>
-          <label className="mt-4 block text-sm font-bold">Your household</label>
-          <TextField className="mt-1" placeholder="e.g. Two adults, a toddler and a cat" />
-          <p className="mt-2 text-xs">Never stored or shared.</p>
         </StackedCard>
 
-        <div className="flex flex-wrap gap-3">
-          <Link to="/questions"><PillButton>Let's go</PillButton></Link>
-          <Link to="/about"><PillButton variant="secondary">How it works</PillButton></Link>
-          <PillButton disabled>Disabled</PillButton>
-        </div>
+        <StackedCard variant="accent">
+          <label htmlFor="household" className="block font-display text-xl font-bold text-panda">Tell us about your household</label>
+          <TextArea
+            id="household"
+            className="mt-3"
+            rows={4}
+            maxLength={DESCRIPTION_MAX}
+            value={description}
+            onChange={(e) => session.setDescription(e.target.value.slice(0, DESCRIPTION_MAX))}
+            placeholder="Describe your home (ex: I live with my elderly mother who uses a walker, we have a cat)"
+          />
+          <div className="mt-2 flex justify-between text-xs">
+            <span>{len < DESCRIPTION_MIN ? `At least ${DESCRIPTION_MIN} characters` : "Never stored or shared."}</span>
+            <span aria-live="polite">{description.length}/{DESCRIPTION_MAX}</span>
+          </div>
+        </StackedCard>
       </Page>
-      <FlowNav next="/questions" />
+      <FlowNav next="/options" nextDisabled={!ready} />
     </>
   );
 }
