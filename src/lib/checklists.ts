@@ -1,12 +1,16 @@
 /** Plain-logic checklist builder (no AI). AI layers on top in later stages. */
 import { catalog, type CatalogItem, type HouseholdFact, type Priority } from "@/services/catalog";
+import type { AIItem, TopPick } from "@/lib/personalize-types";
+
+export type AIInput = { items: AIItem[]; top: TopPick[] } | null;
 
 export type Row = {
   name: string;
   shortNote: string;
   category: string;
   priority: Exclude<Priority, "conditional">;
-  kind: "catalog" | "tip";
+  kind: "catalog" | "tip" | "ai";
+  why?: string;
   stores: string[];
   sourceCount: number;
 };
@@ -55,6 +59,10 @@ function tipRows(): Row[] {
   }));
 }
 
+function aiRow(i: AIItem): Row {
+  return { name: i.name, shortNote: i.shortNote, category: i.category, priority: i.priority, kind: "ai", stores: i.stores, sourceCount: 0 };
+}
+
 export function buildDisasterList(disaster: string): Checklist {
   const hh = householdNames();
   const items = itemsFor(disaster);
@@ -66,7 +74,7 @@ export function buildDisasterList(disaster: string): Checklist {
   return { id: disaster, title: disaster, sections, showStores: false };
 }
 
-export function buildPersonalized(disasters: string[], facts: HouseholdFact[]): Checklist {
+export function buildPersonalized(disasters: string[], facts: HouseholdFact[], ai: AIInput = null): Checklist {
   const lists = disasters.map((d) => itemsFor(d).filter((i) => isVisible(i, facts)));
   const seen = new Set<string>();
   const all: CatalogItem[] = [];
@@ -75,10 +83,27 @@ export function buildPersonalized(disasters: string[], facts: HouseholdFact[]): 
   });
   const inEvery = (i: CatalogItem) => lists.every((l) => l.some((x) => x.name === i.name));
   const multi = disasters.length > 1;
-  const combo = multi ? sortRows(all.filter(inEvery).map(toRow)) : [];
-  const core = sortRows(all.filter((i) => !multi || !inEvery(i)).map(toRow));
 
-  const sections: Section[] = [{ title: "Custom", note: "These are customized items based on the info you shared.", rows: tipRows() }];
+  // AI items: specialization pairs move their catalog item into Custom.
+  const byName = new Map(all.map((i) => [i.name, i]));
+  const cats = catalog.getCategories();
+  const aiItems = [...(ai?.items ?? [])]
+    .map((i) => (i.specializes && !byName.has(i.specializes) ? { ...i, specializes: null } : i))
+    .sort((a, b) => cats.indexOf(a.category) - cats.indexOf(b.category));
+  const paired = new Set(aiItems.map((i) => i.specializes).filter((n): n is string => !!n));
+  const custom: Row[] = tipRows();
+  const emitted = new Set<string>();
+  for (const i of aiItems) {
+    if (!i.specializes) { custom.push(aiRow(i)); continue; }
+    if (emitted.has(i.specializes)) continue;
+    emitted.add(i.specializes);
+    custom.push(toRow(byName.get(i.specializes)!), ...aiItems.filter((x) => x.specializes === i.specializes).map(aiRow));
+  }
+  const rest = all.filter((i) => !paired.has(i.name));
+  const combo = multi ? sortRows(rest.filter(inEvery).map(toRow)) : [];
+  const core = sortRows(rest.filter((i) => !multi || !inEvery(i)).map(toRow));
+
+  const sections: Section[] = [{ title: "Custom", note: "These are customized items based on the info you shared.", rows: custom }];
   let overlapLine: string | undefined;
   if (multi) {
     sections.push({ title: "Combo", note: "These items overlap between the disasters you chose.", rows: combo });
@@ -90,19 +115,26 @@ export function buildPersonalized(disasters: string[], facts: HouseholdFact[]): 
   return { id: "personalized", title: "Personalized checklist", sections, showStores: true, overlapLine };
 }
 
-export function buildTop10(personalized: Checklist): Checklist {
+export function buildTop10(personalized: Checklist, top: TopPick[] = []): Checklist & { aiRanked: boolean } {
   const tips = tipRows();
   const bag = tips.find((t) => t.name === "Grab-and-go bag")!;
-  const catalogRows = personalized.sections.filter((s) => s.title !== "Custom").flatMap((s) => s.rows);
-  const water = catalogRows.find((r) => r.name === "Drinking water");
+  const shown = new Map(personalized.sections.flatMap((s) => s.rows).map((r) => [r.name, r]));
+  const water = shown.get("Drinking water");
+  const names = top.map((t) => t.name);
+  const valid = names.length === 8 && new Set(names).size === 8 && names.every((n) => shown.has(n) && n !== bag.name && n !== "Drinking water");
+  if (valid && water) {
+    const rows = [bag, water, ...top.map((t) => ({ ...shown.get(t.name)!, why: t.why }))];
+    return { id: "top10", title: "Top 10", sections: [{ title: "Top 10", rows }], showStores: false, aiRanked: true };
+  }
+  const catalogRows = personalized.sections.flatMap((s) => s.rows).filter((r) => r.kind === "catalog");
   const rest = sortRows(catalogRows.filter((r) => r.name !== "Drinking water"));
   const rows = [bag, ...(water ? [water] : []), ...rest].slice(0, 10);
-  return { id: "top10", title: "Top 10", sections: [{ title: "Top 10", rows }], showStores: false };
+  return { id: "top10", title: "Top 10", sections: [{ title: "Top 10", rows }], showStores: false, aiRanked: false };
 }
 
-export function buildAll(disasters: string[], facts: HouseholdFact[]) {
-  const personalized = buildPersonalized(disasters, facts);
-  return { top10: buildTop10(personalized), personalized, perDisaster: disasters.map(buildDisasterList) };
+export function buildAll(disasters: string[], facts: HouseholdFact[], ai: AIInput = null) {
+  const personalized = buildPersonalized(disasters, facts, ai);
+  return { top10: buildTop10(personalized, ai?.top), personalized, perDisaster: disasters.map(buildDisasterList) };
 }
 
 export const priorityLabel = (p: Row["priority"]) => ({ essential: "Essential", important: "Important", "nice-to-have": "Nice-to-have" })[p];
