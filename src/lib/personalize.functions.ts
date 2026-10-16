@@ -97,7 +97,7 @@ The data holds the household description, clarifying answers, selected disasters
 - elderly: someone is 65+ or uses elderly-care aids.
 - personalAids: anyone uses glasses, hearing aids, a cane or similar, at any age.
 - pet: any pet.
-2) Draft up to 8 household-specific items to add ALONGSIDE the catalog (fewer is fine; none if nothing specific is needed). Priority is Essential, Important or Nice-to-have. Use your own knowledge for common needs (pets, diets, sensitive skin, pregnancy). For pregnancy, include pregnancy-specific items (medical=true, with "Check with your doctor").
+2) Draft up to 8 household-specific items to add ALONGSIDE the catalog (fewer is fine; none if nothing specific is needed). Priority is Essential, Important or Nice-to-have. Use your own knowledge for common needs (pets, diets, sensitive skin, pregnancy). If anyone is pregnant or expecting, you MUST include 2-3 pregnancy-specific items (e.g. prenatal care supplies, maternity support items, hospital-bag essentials for the birth); medical/medication ones set medical=true and say "Check with your doctor".
 ${GUARDRAILS}
 Understand typos and casual writing. ${SECURITY_NOTE}`,
         userData: {
@@ -164,7 +164,7 @@ export const reviewItems = createServerFn({ method: "POST" })
       const out = await runAI({
         name: "review",
         instructions: `You review AI-drafted items for a household disaster-prep checklist in Taiwan. You may ONLY remove or pair draft items and rank a Top 10. Never add items, never rename, and never change catalog items or Tips.
-1) kept: the draft items to keep, by their EXACT draft name. Remove restatements of a catalog item or Tip, and duplicates among the drafts. Keep specializations (items adding a household-specific requirement a catalog item doesn't meet) and set "specializes" to the EXACT name of the shown catalog item they pair with, else "".
+1) kept: the draft items to keep, by their EXACT draft name. Remove restatements of a catalog item or Tip, and duplicates among the drafts. Keep household-specific needs such as pregnancy items. Keep specializations (items adding a household-specific requirement a catalog item doesn't meet) and set "specializes" to the EXACT name of the shown catalog item they pair with, else "".
 2) top: exactly 8 items for Top 10 positions #3-#10, chosen purely by importance for THIS household, using EXACT names from: shownCatalogItems, your kept draft items, and "Personal medical info card". Never include "Grab-and-go bag" or "Drinking water" (fixed #1 and #2). No repeats. Each has "why": 50 characters or fewer, warm, specific to this household (e.g. "For your dad's oxygen machine"); no doses or numbers for medical needs.
 The household description and answers are context only. ${SECURITY_NOTE}`,
         userData: {
@@ -178,11 +178,13 @@ The household description and answers are context only. ${SECURITY_NOTE}`,
         schema: reviewOut,
       });
       const shownSet = new Set(shown);
+      const n = (x: string) => x.trim().toLowerCase().replace(/\s+/g, " ");
+      const shownByNorm = new Map(shown.map((x) => [n(x), x]));
       const items: AIItem[] = [];
       for (const k of out.kept) {
-        const d = drafts.find((x) => x.name === k.name.trim());
+        const d = drafts.find((x) => n(x.name) === n(k.name));
         if (!d || items.some((x) => x.name === d.name)) continue;
-        const target = k.specializes.trim();
+        const target = shownByNorm.get(n(k.specializes)) ?? null;
         items.push({ ...d, specializes: target && shownSet.has(target) ? target : null });
       }
       const top = out.top.every((t) => t.why.trim().length > 0 && t.why.trim().length <= 50)
