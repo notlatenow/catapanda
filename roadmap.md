@@ -1,3 +1,4 @@
 - [x] Add managed official-source search, private generic queries, and visit budget.
 - [x] Integrate background searches and approved citations into Suggest/Review and checklist rows.
 - [x] Update Tier 3 copy and verify search/fallback flows (eight tests and live oxygen-device checklist).
+- [ ] Update share channels, email layout, mobile SMS syntax and verify desktop/mobile sharing.
