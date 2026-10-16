@@ -50,6 +50,7 @@
   --color-pitch: var(--pitch);
   --color-sun: var(--sun);
   --color-dusk: var(--dusk);
+  --color-haze: var(--haze);
 }
 
 :root {
@@ -72,6 +73,7 @@
   --pitch: #000000;
   --sun: #d99b00;
   --dusk: #103654;
+  --haze: #006ec2;
   --halftone-dot: #2c2c30;
 
   --background: var(--sky);
