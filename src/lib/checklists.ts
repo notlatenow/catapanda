@@ -28,7 +28,7 @@ function toRow(i: CatalogItem): Row {
     shortNote: i.shortNote,
     category: i.category,
     priority: i.priority === "conditional" ? "important" : i.priority,
-    kind: "catalog",
+    kind: i.badge === "cataPandaTip" ? "tip" : "catalog",
     stores: i.stores,
     sourceCount: i.sources.length,
   };
