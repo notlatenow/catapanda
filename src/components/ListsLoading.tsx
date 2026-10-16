@@ -61,7 +61,7 @@ export function ListsLoading({ disasters, phase }: { disasters: string[]; phase:
         {tip && (
           <div className="mt-2 w-full rounded-2xl border border-sand bg-pale p-4 text-left text-sm">
             <p className="text-xs font-bold uppercase tracking-wide text-slate">{tip.label}</p>
-            <p className="mt-1 text-ink">{tip.text} <span className="text-slate">({tip.sources.join(", ")})</span></p>
+            <p className="mt-1 text-ink">{tip.text}</p>
           </div>
         )}
       </div>
