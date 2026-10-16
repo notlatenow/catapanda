@@ -34,13 +34,13 @@ export function FlowNav({ back, next, nextLabel = "Next", nextDisabled, startOve
     <div className="mx-auto max-w-xl px-4 pb-6">
       <div className="flex items-center justify-between gap-2 py-2.5">
         {back ? (
-          <Link to={back} className={cn(pillVariants({ variant: "primary" }), small, "border-2 border-transparent bg-panda/50 text-snow hover:bg-panda active:bg-panda")}>Back</Link>
+          <Link to={back} className={cn(pillVariants({ variant: "primary" }), small, "border-2 border-dusk bg-sky text-dusk hover:border-panda hover:bg-panda hover:text-snow active:bg-panda")}>Back</Link>
         ) : <span />}
         {startOver ? <Link to="/" onClick={() => session.reset()} className="text-sm font-bold text-dusk hover:text-snow active:text-sun">Start over</Link> : <span />}
         {next && nextDisabled ? (
-          <button type="button" disabled className={cn(pillVariants({ variant: "primary" }), small, "border-2 border-dusk bg-sky text-dusk disabled:opacity-100")}>{nextLabel}</button>
+          <button type="button" disabled className={cn(pillVariants({ variant: "primary" }), small, "border-2 border-transparent bg-panda/50 text-snow disabled:opacity-100")}>{nextLabel}</button>
         ) : next ? (
-          <Link to={next} className={cn(pillVariants({ variant: "primary" }), small, "border-2 border-transparent bg-panda/50 text-snow hover:bg-panda active:bg-panda")}>{nextLabel}</Link>
+          <Link to={next} className={cn(pillVariants({ variant: "primary" }), small, "border-2 border-dusk bg-sky text-dusk hover:border-panda hover:bg-panda hover:text-snow active:bg-panda")}>{nextLabel}</Link>
         ) : <span />}
       </div>
     </div>
