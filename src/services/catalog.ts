@@ -21,6 +21,8 @@ export type CatalogItem = {
   stores: string[];
   detailNotes?: string;
   teamNote?: string;
+  /** "cataPandaTip" shows the item with the CataPanda Tip label instead of Gov-vetted. */
+  badge?: "cataPandaTip";
 };
 export type Disaster = { name: string; tagline: string; tipsIntro: string; tips: SourcedText[] };
 export type Source = {
