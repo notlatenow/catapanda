@@ -15,6 +15,7 @@ export function SiteHeader() {
         <div className="flex gap-1">
           <Link to="/" className={link} activeOptions={{ exact: true }}>Home</Link>
           <Link to="/about" className={link}>About</Link>
+          <Link to="/share" className={link}>Share</Link>
         </div>
       </nav>
     </header>
