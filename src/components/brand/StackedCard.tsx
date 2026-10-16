@@ -1,0 +1,23 @@
+import type { ReactNode } from "react";
+import { cn } from "@/lib/utils";
+
+type Props = { children: ReactNode; variant?: "standard" | "accent"; className?: string };
+
+/** Signature layered card: Panda Black tab above, Sunset Gold (or White on accent) tab below. */
+export function StackedCard({ children, variant = "standard", className }: Props) {
+  const accent = variant === "accent";
+  return (
+    <div className={cn("relative py-2", className)}>
+      <div aria-hidden className="absolute inset-x-4 top-0 h-8 rounded-3xl bg-panda" />
+      <div aria-hidden className={cn("absolute inset-x-4 bottom-0 h-8 rounded-3xl", accent ? "bg-snow" : "bg-gold")} />
+      <div
+        className={cn(
+          "relative rounded-3xl p-5 shadow-soft sm:p-6",
+          accent ? "bg-brick text-snow [&_h1]:text-panda [&_h2]:text-panda [&_h3]:text-panda" : "bg-card text-card-foreground",
+        )}
+      >
+        {children}
+      </div>
+    </div>
+  );
+}
