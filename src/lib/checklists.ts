@@ -13,7 +13,7 @@ export type Row = {
   why?: string;
   stores: string[];
   sourceCount: number;
-  sourceUrl?: string | null;
+  sourceUrl?: string | null | undefined;
 };
 
 export type Section = { title: string; note?: string; rows: Row[] };

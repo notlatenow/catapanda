@@ -9,7 +9,7 @@ export type AIItem = {
   stores: string[];
   medical: boolean;
   specializes: string | null;
-  sourceUrl?: string | null;
+  sourceUrl?: string | null | undefined;
 };
 export type TopPick = { name: string; why: string };
 export type QA = { question: string; answer: string };
