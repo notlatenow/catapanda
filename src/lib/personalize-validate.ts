@@ -18,17 +18,25 @@ export function validateItems(items: AIItem[]): AIItem[] {
     const name = i.name.trim();
     let note = i.shortNote.trim();
     if (i.medical && !DOCTOR.test(note)) {
-      const withDoctor = `${note.replace(/[.\s]+$/, "")}. Check with your doctor`;
-      if (withDoctor.length <= MAX_NOTE) note = withDoctor;
+      const suffix = " (Check with your doctor)";
+      const room = MAX_NOTE - suffix.length;
+      let base = note.replace(/[.\s]+$/, "");
+      if (base.length > room) {
+        base = base.slice(0, room);
+        const cut = base.lastIndexOf(" ");
+        if (cut > room / 2) base = base.slice(0, cut);
+        base = base.replace(/[\s,;:.–-]+$/, "");
+      }
+      note = base ? `${base}${suffix}` : "Check with your doctor";
     }
     if (!name || name.length > 60 || taken.has(norm(name))) continue;
     if (!cats.has(i.category)) continue;
     if (!["essential", "important", "nice-to-have"].includes(i.priority)) continue;
-    if (!i.stores.every((s) => stores.has(s))) continue;
+    const validStores = [...new Set(i.stores.filter((s) => stores.has(s)))];
     if (!note || note.length > MAX_NOTE) continue;
     if (i.medical && (!DOCTOR.test(note) || DOSE.test(note))) continue;
     taken.add(norm(name));
-    out.push({ ...i, name, shortNote: note, stores: [...new Set(i.stores)] });
+    out.push({ ...i, name, shortNote: note, stores: validStores });
     if (out.length >= MAX_AI_ITEMS) break;
   }
   return out;
