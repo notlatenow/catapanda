@@ -49,6 +49,7 @@
   --color-abyss: var(--abyss);
   --color-pitch: var(--pitch);
   --color-sun: var(--sun);
+  --color-dusk: var(--dusk);
 }
 
 :root {
@@ -70,6 +71,7 @@
   --ink-base: #141416;
   --pitch: #000000;
   --sun: #d99b00;
+  --dusk: #1e466e;
   --halftone-dot: #2c2c30;
 
   --background: var(--sky);
