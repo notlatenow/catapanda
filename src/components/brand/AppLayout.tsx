@@ -15,8 +15,8 @@ export function SiteHeader() {
           <Link to="/about" className={link} activeProps={{ className: "bg-snow/15 text-snow" }}>About</Link>
         </div>
       </nav>
-      <svg aria-hidden="true" viewBox="0 0 400 14" preserveAspectRatio="none" className="absolute inset-x-0 top-full block h-3.5 w-full fill-panda">
-        <path d="M0 0 H400 V5 C392 9 386 4 378 7 C368 11 361 6 350 8 C340 10 334 5 322 6 C311 7 305 12 293 10 C282 8 276 4 264 6 C252 8 247 13 235 11 C224 9 219 5 207 6 C195 7 189 11 178 10 C166 9 160 4 148 6 C137 8 131 12 119 10 C108 8 101 5 90 7 C79 9 73 13 61 11 C50 9 44 5 33 6 C22 7 15 11 8 9 C4 8 2 6 0 7 Z" />
+      <svg aria-hidden="true" viewBox="0 0 400 18" preserveAspectRatio="none" className="absolute inset-x-0 top-full block h-4 w-full fill-panda">
+        <path d="M0 0 H400 V5 L400.0 5.3 L392.5 3.0 L382.3 4.9 L372.6 3.7 L364.2 6.5 L352.4 4.1 L332.6 5.5 L329.9 14.3 L328.8 6.5 L316.6 3.5 L298.3 3.2 L297.1 12.0 L296.1 5.7 L283.9 6.3 L262.0 5.8 L255.0 4.9 L233.9 4.8 L218.6 5.8 L207.6 5.6 L205.7 15.6 L204.5 5.0 L196.0 4.7 L188.2 4.2 L170.5 5.1 L155.3 5.8 L136.6 4.8 L121.2 3.9 L119.1 15.1 L118.4 3.3 L103.6 5.6 L88.3 6.3 L77.4 3.4 L76.4 12.7 L75.1 6.9 L62.7 6.8 L46.7 3.5 L27.4 4.3 L26.3 11.4 L25.3 5.0 L18.3 5.1 L11.2 3.6 L0 5 Z" />
       </svg>
     </header>
   );
