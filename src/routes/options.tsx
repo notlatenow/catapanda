@@ -3,6 +3,8 @@ import { Page, FlowNav, PlaceholderNote } from "@/components/brand/AppLayout";
 import { StackedCard } from "@/components/brand/StackedCard";
 import { OptionCard } from "@/components/brand/OptionCard";
 import { useSession } from "@/state/session";
+import { usePersonalization } from "@/state/personalize";
+import { ListsLoading } from "@/components/ListsLoading";
 
 export const Route = createFileRoute("/options")({
   head: () => ({
@@ -19,6 +21,8 @@ export const Route = createFileRoute("/options")({
 function Options() {
   const { disasters, clarify } = useSession();
   const hasQuestions = !!clarify?.questions.length;
+  const personal = usePersonalization();
+  const waiting = !personal || personal.status === "running";
   const lists = [
     { id: "top10", name: "Top 10", tagline: "The ten things to get first" },
     { id: "personalized", name: "Personalized checklist", tagline: "Everything for your household, in one place" },
@@ -27,16 +31,23 @@ function Options() {
   return (
     <>
       <Page>
+        {disasters.length > 0 && waiting && <ListsLoading disasters={disasters} phase={personal?.phase ?? 0} />}
         <StackedCard>
           <h1 className="text-2xl text-ink">Your checklists</h1>
           <p className="mt-2 text-slate">Pick a checklist to open.</p>
           {disasters.length > 0 && (
             <div className="mt-4 grid gap-3">
-              {lists.map((l) => (
-                <Link key={l.id} to="/checklist" search={{ list: l.id }}>
-                  <OptionCard name={l.name} tagline={l.tagline} />
-                </Link>
-              ))}
+              {lists.map((l) =>
+                waiting && (l.id === "top10" || l.id === "personalized") ? (
+                  <div key={l.id} className="opacity-60" aria-disabled="true">
+                    <OptionCard name={l.name} tagline="Almost ready…" />
+                  </div>
+                ) : (
+                  <Link key={l.id} to="/checklist" search={{ list: l.id }}>
+                    <OptionCard name={l.name} tagline={l.tagline} />
+                  </Link>
+                ),
+              )}
             </div>
           )}
         </StackedCard>

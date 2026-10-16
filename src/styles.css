@@ -95,3 +95,11 @@
 }
 
 @utility shadow-soft { box-shadow: var(--shadow-soft); }
+
+@keyframes cp-bob {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-6px) rotate(-2deg); }
+  75% { transform: translateY(-3px) rotate(2deg); }
+}
+.cp-bob { animation: cp-bob 1.6s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .cp-bob { animation: none; } }
