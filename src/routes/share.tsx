@@ -2,7 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Page, FlowNav, PlaceholderNote } from "@/components/brand/AppLayout";
 import { StackedCard } from "@/components/brand/StackedCard";
-import { PillButton } from "@/components/brand/PillButton";
+import { PillButton, pillVariants } from "@/components/brand/PillButton";
+import { cn } from "@/lib/utils";
 import { buildAll } from "@/lib/checklists";
 import { buildShareMessage } from "@/lib/share";
 import { useSession } from "@/state/session";
@@ -82,9 +83,7 @@ function SharePage() {
         </StackedCard>
         <div className="flex flex-col gap-3">
           {links.map((l) => (
-            <a key={l.label} href={l.href} target={l.href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" className="contents">
-              <PillButton className="w-full" tabIndex={-1}>{l.label}</PillButton>
-            </a>
+            <a key={l.label} href={l.href} target={l.href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" className={cn(pillVariants(), "w-full")}>{l.label}</a>
           ))}
           <PillButton className="w-full" onClick={() => shareSheet("Signal")}>Signal</PillButton>
           <PillButton className="w-full" onClick={() => shareSheet("Instagram")}>Instagram</PillButton>
