@@ -64,7 +64,7 @@ function SharePage() {
     ...(device.mobile ? [{ label: "SMS", href: smsShareHref(msg, device.ios), icon: <MessageCircle className="size-8" strokeWidth={2.5} /> }] : []),
     { label: "WhatsApp", href: `https://wa.me/?text=${enc}`, icon: <WhatsAppIcon /> },
     { label: "Facebook", href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(APP_URL)}`, icon: <FacebookIcon /> },
-    { label: "X", href: xShareHref(disasters), icon: <XIcon /> },
+    { label: "X", href: xShareHref(disasters, names), icon: <XIcon /> },
   ];
 
   return (
@@ -77,7 +77,7 @@ function SharePage() {
           <p className="mt-1 whitespace-pre-wrap break-words rounded-2xl bg-linen p-4 text-sm text-ink">{msg}</p>
         </StackedCard>
         <ul className="flex flex-wrap justify-center gap-x-5 gap-y-4">
-          {links.map((l) => (
+          {links.map((l, i) => (
             <li key={l.label}>
               <a
                 href={l.href}
@@ -85,7 +85,7 @@ function SharePage() {
                 rel="noopener noreferrer"
                 className="group flex w-20 flex-col items-center gap-2 rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
-                <span className="flex size-16 -rotate-2 items-center justify-center rounded-[1.4rem] border-[3px] border-panda bg-snow text-panda shadow-[4px_4px_0_0_var(--panda)] transition-all group-hover:rotate-0 group-hover:text-bright group-active:translate-x-[3px] group-active:translate-y-[3px] group-active:text-brick group-active:shadow-[1px_1px_0_0_var(--panda)]">
+                <span className={`${i % 2 ? "rotate-[7deg]" : "-rotate-[8deg]"} flex size-16 items-center justify-center rounded-[1.4rem] border-[3px] border-panda bg-snow text-panda shadow-[4px_4px_0_0_var(--panda)] transition-all group-hover:rotate-0 group-hover:text-bright group-active:translate-x-[3px] group-active:translate-y-[3px] group-active:text-brick group-active:shadow-[1px_1px_0_0_var(--panda)]`}>
                   {l.icon}
                 </span>
                 <span className="font-display text-sm font-bold text-snow">{l.label}</span>
