@@ -29,7 +29,7 @@ export function FlowNav({ back, next, nextLabel = "Next", nextDisabled }: { back
   const small = "px-4 py-2.5 text-sm";
   return (
     <div className="mx-auto max-w-xl px-4 pb-6">
-      <div className="flex items-center justify-between gap-2 rounded-full bg-ocean px-3 py-2.5 shadow-soft">
+      <div className="flex items-center justify-between gap-2 py-2.5">
         {back ? (
           <Link to={back} className={cn(pillVariants({ variant: "secondary" }), small)}>Back</Link>
         ) : <span />}
