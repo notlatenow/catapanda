@@ -17,9 +17,11 @@ describe("Share formatting", () => {
     expect(smsShareHref(msg, false)).toBe(`sms:?body=${encodeURIComponent(msg)}`);
   });
   it("prefills X with concise text and the configured public URL", () => {
-    const url = new URL(xShareHref(["Flood", "Earthquake"]));
-    expect(url.searchParams.get("url")).toBe(APP_URL);
-    expect(url.searchParams.get("text")).toContain("flood & earthquake");
-    expect((url.searchParams.get("text") ?? "").length + 24).toBeLessThan(280);
+    const names = Array.from({ length: 10 }, (_, i) => `Item ${i + 1}`);
+    const text = new URL(xShareHref(["Flood", "Earthquake"], names)).searchParams.get("text") ?? "";
+    expect(text.startsWith("My top essentials for flood & earthquake prep in Taiwan:")).toBe(true);
+    expect(text).toContain("5. Item 5 (+5 more)");
+    expect(text).not.toContain("Item 6");
+    expect(text.endsWith(`Make your own list with CataPanda: ${APP_URL}`)).toBe(true);
   });
 });

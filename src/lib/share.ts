@@ -27,7 +27,13 @@ export function smsShareHref(message: string, ios: boolean): string {
   return `sms:${ios ? "&" : "?"}body=${encodeURIComponent(message)}`;
 }
 
-export function xShareHref(disasters: string[]): string {
-  const text = `Made for ${disasterPhrase(disasters)} disasters, here's my disaster prep Top 10 for ${SHARE_COUNTRY}! Make your own list with Catastrophic Pandamonium.`;
-  return `https://x.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(APP_URL)}`;
+/** X gets a short post: top 5 items, "+N more", then the app URL. */
+export function buildXShare(disasters: string[], itemNames: string[]): string {
+  const top = itemNames.slice(0, 5).map((n, i) => `${i + 1}. ${n}`).join("\n");
+  const more = itemNames.length > 5 ? ` (+${itemNames.length - 5} more)` : "";
+  return `My top essentials for ${disasterPhrase(disasters)} prep in ${SHARE_COUNTRY}:\n${top}${more}\n\nMake your own list with CataPanda: ${APP_URL}`;
+}
+
+export function xShareHref(disasters: string[], itemNames: string[]): string {
+  return `https://x.com/intent/tweet?text=${encodeURIComponent(buildXShare(disasters, itemNames))}`;
 }
