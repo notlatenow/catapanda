@@ -102,9 +102,9 @@ function Rows({ rows, showStores }: { rows: Row[]; showStores: boolean }) {
             {r.kind === "tip" ? "CataPanda Tip" : r.kind === "ai" ? (
               <>AI: {r.sourceUrl ? (
                 <a href={r.sourceUrl} target="_blank" rel="noopener noreferrer" className="text-bright underline-offset-2 hover:underline">Source ↗</a>
-              ) : <Link to="/about" hash="how-the-tiers-work" className="text-bright underline-offset-2 hover:underline">Source ↗</Link>}</>
+              ) : <Link to="/about" hash="how-the-tiers-work" target="_blank" rel="noopener noreferrer" className="text-bright underline-offset-2 hover:underline">Source ↗</Link>}</>
             ) : (
-              <>Gov-vetted: <Link to="/about" hash="gov-vetted" className="text-bright underline-offset-2 hover:underline">Source ↗</Link></>
+              <>Gov-vetted: <Link to="/about" hash="gov-vetted" target="_blank" rel="noopener noreferrer" className="text-bright underline-offset-2 hover:underline">Source ↗</Link></>
             )}
             {showStores && r.stores.length > 0 && <> | Find at the store: {[...r.stores].sort().join(", ")}</>}
           </p>
