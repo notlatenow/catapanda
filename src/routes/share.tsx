@@ -1,8 +1,10 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 import { useState } from "react";
 import { Mail, MessageCircle } from "lucide-react";
-import { Page, FlowNav, PlaceholderNote } from "@/components/brand/AppLayout";
+import { Page, FlowNav } from "@/components/brand/AppLayout";
+import { pillVariants } from "@/components/brand/PillButton";
+import { cn } from "@/lib/utils";
 import { StackedCard } from "@/components/brand/StackedCard";
 import { buildAll } from "@/lib/checklists";
 import { buildEmailShare, buildShareMessage, smsShareHref, xShareHref } from "@/lib/share";
@@ -46,10 +48,14 @@ function SharePage() {
 
   if (!disasters.length) {
     return (
-      <>
-        <Page><PlaceholderNote>Pick at least one disaster first, then come back to share your Top 10.</PlaceholderNote></Page>
-        <FlowNav back="/options" />
-      </>
+      <Page>
+        <StackedCard>
+          <h1 className="text-2xl text-ink">Nothing to share yet!</h1>
+          <p className="mt-2 text-slate">Head back to the home page to tell us about <strong className="text-ink">your</strong> home! After that, you can come back here and share your personal Top 10 checklist with all your loved ones.</p>
+          <p className="mt-2 font-bold text-ink">Sharing is caring.</p>
+          <Link to="/" className={cn(pillVariants({ variant: "primary" }), "mt-5 inline-flex")}>Go to the home page</Link>
+        </StackedCard>
+      </Page>
     );
   }
 
