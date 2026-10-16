@@ -9,7 +9,7 @@
     "Tools & Support Aids",
     "Household & Special Needs"
   ],
-  "storeTypes": ["Grocery store", "Hardware store", "Pharmacy", "Specialty store"],
+  "storeTypes": ["Grocery", "Hardware", "Pharmacy", "Specialty"],
   "priorities": ["essential", "important", "nice-to-have", "conditional"],
   "sources": [
     { "code": "BN", "country": "Brunei", "agency": "Brunei National Disaster Management Centre (NDMC / Pusat Pengurusan Bencana Kebangsaan)", "document": "Public Safety Basics Guidebook (2025 ed.), “Penyediaan Beg Kecemasan (Beg 72 Jam)” – 72-Hour Bag", "websites": ["https://www.ndmc.gov.bn/"] },
@@ -29,7 +29,7 @@
     { "text": "If you carry a power bank, recharge it every 2–3 months so it's ready when needed.", "sources": ["SG"] }
   ],
   "cataPandaTips": [
-    { "name": "Grab-and-go bag", "shortNote": "Lightweight, by the door, on back or shoulder", "priority": "essential", "category": "Tools & Support Aids", "stores": ["Hardware store", "Specialty store"], "sources": ["TW"], "basis": "Research-backed. Taiwan's NFA/TFDP guides are built around the evacuation bag: pack one bag per family member, keep it lightweight and easy to carry, store it near the front door, suggested maximum weight per bag about 15 kg for men and 10 kg for women, check contents every six months." },
+    { "name": "Grab-and-go bag", "shortNote": "Lightweight, by the door, on back or shoulder", "priority": "essential", "category": "Tools & Support Aids", "stores": ["Hardware", "Specialty"], "sources": ["TW"], "basis": "Research-backed. Taiwan's NFA/TFDP guides are built around the evacuation bag: pack one bag per family member, keep it lightweight and easy to carry, store it near the front door, suggested maximum weight per bag about 15 kg for men and 10 kg for women, check contents every six months." },
     { "name": "Personal medical info card", "shortNote": "Blood type, allergies, conditions, medications", "priority": "essential", "category": "First Aid & Medication", "stores": [], "sources": [], "basis": "Team-added (not in the government sources). Complements the core \"Personal medications\" item." }
   ],
   "householdRules": [
