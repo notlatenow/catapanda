@@ -12,7 +12,7 @@ export type Row = {
 };
 
 export type Section = { title: string; note?: string; rows: Row[] };
-export type Checklist = { id: string; title: string; sections: Section[]; showStores: boolean; overlapLine?: string };
+export type Checklist = { id: string; title: string; sections: Section[]; showStores: boolean; overlapLine?: string | undefined };
 
 const rank: Record<Row["priority"], number> = { essential: 0, important: 1, "nice-to-have": 2 };
 
