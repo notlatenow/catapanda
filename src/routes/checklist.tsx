@@ -33,7 +33,7 @@ function ChecklistPage() {
     return (
       <>
         <Page><PlaceholderNote>Head back to the start and pick at least one disaster first.</PlaceholderNote></Page>
-        <FlowNav back="/options" />
+        <FlowNav back="/options" startOver={false} />
       </>
     );
   }
