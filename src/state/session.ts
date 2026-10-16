@@ -3,14 +3,19 @@
  */
 import { useSyncExternalStore } from "react";
 import type { HouseholdFact } from "@/services/catalog";
+import type { Answer, ClarifyQuestion } from "@/lib/clarify-types";
+
+export type Clarify = { key: string; questions: ClarifyQuestion[]; searchNeeds: string[] };
 
 export type Session = {
   disasters: string[]; // in the order selected
   description: string;
   facts: HouseholdFact[]; // supplied by AI in a later stage
+  clarify: Clarify | null; // result for the current disasters + description
+  answers: Record<string, Answer>;
 };
 
-const initial: Session = { disasters: [], description: "", facts: [] };
+const initial: Session = { disasters: [], description: "", facts: [], clarify: null, answers: {} };
 let state: Session = initial;
 const listeners = new Set<() => void>();
 
@@ -19,12 +24,17 @@ function set(next: Partial<Session>) {
   listeners.forEach((l) => l());
 }
 
+export const clarifyKey = (s: Session) => JSON.stringify([s.disasters, s.description.trim()]);
+
 export const session = {
   get: () => state,
   toggleDisaster: (name: string) =>
     set({ disasters: state.disasters.includes(name) ? state.disasters.filter((d) => d !== name) : [...state.disasters, name] }),
   setDescription: (description: string) => set({ description }),
   setFacts: (facts: HouseholdFact[]) => set({ facts }),
+  setClarify: (clarify: Clarify) => set({ clarify, answers: {} }),
+  setAnswer: (id: string, a: Answer) => set({ answers: { ...state.answers, [id]: { ...state.answers[id], ...a } } }),
+  skipAll: () => set({ answers: Object.fromEntries((state.clarify?.questions ?? []).map((q) => [q.id, { skipped: true }])) }),
   reset: () => set(initial),
 };
 

@@ -17,7 +17,8 @@ export const Route = createFileRoute("/options")({
 });
 
 function Options() {
-  const { disasters } = useSession();
+  const { disasters, clarify } = useSession();
+  const hasQuestions = !!clarify?.questions.length;
   const lists = [
     { id: "top10", name: "Top 10", tagline: "The ten things to get first" },
     { id: "personalized", name: "Personalized checklist", tagline: "Everything for your household, in one place" },
@@ -41,7 +42,7 @@ function Options() {
         </StackedCard>
         {disasters.length === 0 && <PlaceholderNote>Head back to the start and pick at least one disaster first.</PlaceholderNote>}
       </Page>
-      <FlowNav back="/" next={disasters.length ? "/checklist" : undefined} />
+      <FlowNav back={hasQuestions ? "/questions" : "/"} next={disasters.length ? "/checklist" : undefined} />
     </>
   );
 }
