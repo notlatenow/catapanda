@@ -18,3 +18,6 @@
 - AI on/off is the `AI_ENABLED` server env setting (unset = on; "false"/"off"/"0" = off); when off or failing, every AI step returns empty and the plain-logic flow is used.
 - AI steps pass user text only inside delimited `<user_data>` and never log inputs/outputs.
 - AI personalization = Suggest then Review server fns (`src/lib/personalize.functions.ts`), validated by plain logic (`personalize-validate.ts`, `checklists.ts`); any failure or ~25s timeout falls back to the plain-logic lists.
+- All provider search calls live in `src/lib/search.server.ts`; catalog-owned domain restrictions and fixed generic query mapping prevent personal text from reaching search providers.
+- Keep search attempts in visit-scoped memory (including failures), capped at three and reset only on Start over; searches run during questions and join the existing personalization deadline.
+- AI citation URLs must exactly match allowed search-result links through Suggest and Review; preserve approved URLs in checklist rows without changing catalog sources.

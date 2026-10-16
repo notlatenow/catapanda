@@ -13,6 +13,7 @@ export type Row = {
   why?: string;
   stores: string[];
   sourceCount: number;
+  sourceUrl?: string | null;
 };
 
 export type Section = { title: string; note?: string; rows: Row[] };
@@ -60,7 +61,7 @@ function tipRows(): Row[] {
 }
 
 function aiRow(i: AIItem): Row {
-  return { name: i.name, shortNote: i.shortNote, category: i.category, priority: i.priority, kind: "ai", stores: i.stores, sourceCount: 0 };
+  return { name: i.name, shortNote: i.shortNote, category: i.category, priority: i.priority, kind: "ai", stores: i.stores, sourceCount: 0, sourceUrl: i.sourceUrl };
 }
 
 export function buildDisasterList(disaster: string): Checklist {

@@ -17,6 +17,8 @@ export const Route = createFileRoute("/checklist")({
       { name: "description", content: "Your personalized, source-backed disaster prep checklist." },
       { property: "og:title", content: "Your checklist — CataPanda" },
       { property: "og:description", content: "A personalized, source-backed prep checklist." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: ChecklistPage,
@@ -98,7 +100,9 @@ function Rows({ rows, showStores }: { rows: Row[]; showStores: boolean }) {
           <p className="mt-0.5 text-xs text-slate">
             {r.category} | {priorityLabel(r.priority)} |{" "}
             {r.kind === "tip" ? "CataPanda Tip" : r.kind === "ai" ? (
-              <>AI: <Link to="/about" hash="how-the-tiers-work" className="text-bright underline-offset-2 hover:underline">Source ↗</Link></>
+              <>AI: {r.sourceUrl ? (
+                <a href={r.sourceUrl} target="_blank" rel="noopener noreferrer" className="text-bright underline-offset-2 hover:underline">Source ↗</a>
+              ) : <Link to="/about" hash="how-the-tiers-work" className="text-bright underline-offset-2 hover:underline">Source ↗</Link>}</>
             ) : (
               <>Gov-vetted: <Link to="/about" hash="gov-vetted" className="text-bright underline-offset-2 hover:underline">Source ↗</Link></>
             )}

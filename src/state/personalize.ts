@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { suggestItems, reviewItems } from "@/lib/personalize.functions";
 import type { QA } from "@/lib/personalize-types";
 import { session, personalKey, useSession, type Personal } from "@/state/session";
+import { collectSearchResults } from "@/state/search";
 
 const TIMEOUT_MS = 25000;
 
@@ -29,10 +30,12 @@ export function ensurePersonalized() {
   const answers = qaPairs();
 
   const work = (async () => {
-    const sug = await suggestItems({ data: { description, disasters, answers, searchResults: [] } });
+    const searchResults = await collectSearchResults(description, answers);
+    if (!current()) return null;
+    const sug = await suggestItems({ data: { description, disasters, answers, searchResults } });
     if (!sug.ok || !current()) return null;
     session.setPersonal({ ...base, phase: 1 });
-    const rev = await reviewItems({ data: { drafts: sug.drafts, disasters, facts: sug.facts, description, answers } });
+    const rev = await reviewItems({ data: { drafts: sug.drafts, disasters, facts: sug.facts, description, answers, searchResults } });
     if (!rev.ok) return null;
     return { facts: sug.facts, items: rev.items, top: rev.top };
   })().catch(() => null);

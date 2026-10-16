@@ -27,6 +27,6 @@ function prepare(texts: string[], answers: QA[] = []) {
 export function startBackgroundSearch(searchNeeds: string[]) { prepare(searchNeeds); }
 
 export async function collectSearchResults(description: string, answers: QA[]): Promise<SearchResult[]> {
-  const results = (await Promise.all(prepare([description], answers))).flat();
+  const results = (await Promise.all(prepare([description, ...(session.get().clarify?.searchNeeds ?? [])], answers))).flat();
   return [...new Map(results.map((r) => [r.link, r])).values()];
 }
