@@ -13,7 +13,7 @@ export function SiteHeader() {
       <nav className="mx-auto flex max-w-xl items-center justify-between px-4 py-3">
         <Link to="/" className="font-display text-xl font-bold text-snow">CataPanda</Link>
         <div className="flex gap-1">
-          <Link to="/" className={link} activeOptions={{ exact: true }}>Home</Link>
+          <Link to="/" onClick={() => session.reset()} className={link} activeOptions={{ exact: true }}>Home</Link>
           <Link to="/about" className={link}>About</Link>
           <Link to="/share" className={link}>Share</Link>
         </div>
@@ -28,7 +28,7 @@ export function Page({ children }: { children: ReactNode }) {
 
 type FlowPath = "/" | "/questions" | "/options" | "/checklist" | "/share";
 
-export function FlowNav({ back, next, nextLabel = "Next", nextDisabled }: { back?: FlowPath | undefined; next?: FlowPath | undefined; nextLabel?: string; nextDisabled?: boolean }) {
+export function FlowNav({ back, next, nextLabel = "Next", nextDisabled, startOver = true }: { back?: FlowPath | undefined; next?: FlowPath | undefined; nextLabel?: string; nextDisabled?: boolean; startOver?: boolean }) {
   const small = "px-4 py-2.5 text-sm";
   return (
     <div className="mx-auto max-w-xl px-4 pb-6">
@@ -36,7 +36,7 @@ export function FlowNav({ back, next, nextLabel = "Next", nextDisabled }: { back
         {back ? (
           <Link to={back} className={cn(pillVariants({ variant: "secondary" }), small)}>Back</Link>
         ) : <span />}
-        <Link to="/" onClick={() => session.reset()} className="text-sm font-bold text-pale underline-offset-4 hover:text-snow hover:underline">Start over</Link>
+        {startOver ? <Link to="/" onClick={() => session.reset()} className="text-sm font-bold text-pale underline-offset-4 hover:text-snow hover:underline">Start over</Link> : <span />}
         {next && nextDisabled ? (
           <button type="button" disabled className={cn(pillVariants({ variant: "primary" }), small)}>{nextLabel}</button>
         ) : next ? (

@@ -100,7 +100,7 @@ function SharePage() {
           ))}
         </ul>
       </Page>
-      <FlowNav back="/checklist" />
+      <FlowNav back="/checklist" startOver={false} />
     </>
   );
 }

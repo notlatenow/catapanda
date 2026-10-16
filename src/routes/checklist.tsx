@@ -87,7 +87,7 @@ function ChecklistPage() {
         )}
         </>}
       </Page>
-      <FlowNav back="/options" />
+
     </>
   );
 }
