@@ -85,7 +85,7 @@ function SharePage() {
             <a key={l.label} href={l.href} target={l.href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" className={cn(pillVariants(), "w-full")}>{l.label}</a>
           ))}
           <PillButton variant="secondary" className="w-full" onClick={() => copyMsg()}>Copy message</PillButton>
-          <p role="status" aria-live="polite" className="min-h-5 text-center text-sm font-bold text-ink">{status}</p>
+          <p role="status" aria-live="polite" className="min-h-5 text-center text-sm font-bold text-snow">{status}</p>
         </div>
       </Page>
       <FlowNav back="/checklist" />
