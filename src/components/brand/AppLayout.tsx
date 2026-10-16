@@ -7,7 +7,7 @@ import { session } from "@/state/session";
 export function SiteHeader() {
   const link = "rounded-full px-4 py-1.5 font-bold text-snow/80 hover:text-snow";
   return (
-    <header className="bg-panda">
+    <header className="relative z-10 bg-panda">
       <nav className="mx-auto flex max-w-xl items-center justify-between px-4 py-3">
         <Link to="/" className="font-display text-xl font-bold text-snow">CataPanda</Link>
         <div className="flex gap-1">
@@ -15,6 +15,9 @@ export function SiteHeader() {
           <Link to="/about" className={link} activeProps={{ className: "bg-snow/15 text-snow" }}>About</Link>
         </div>
       </nav>
+      <svg aria-hidden="true" viewBox="0 0 400 14" preserveAspectRatio="none" className="absolute inset-x-0 top-full block h-3.5 w-full fill-panda">
+        <path d="M0 0 H400 V5 C392 9 386 4 378 7 C368 11 361 6 350 8 C340 10 334 5 322 6 C311 7 305 12 293 10 C282 8 276 4 264 6 C252 8 247 13 235 11 C224 9 219 5 207 6 C195 7 189 11 178 10 C166 9 160 4 148 6 C137 8 131 12 119 10 C108 8 101 5 90 7 C79 9 73 13 61 11 C50 9 44 5 33 6 C22 7 15 11 8 9 C4 8 2 6 0 7 Z" />
+      </svg>
     </header>
   );
 }
