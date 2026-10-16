@@ -30,3 +30,15 @@ export function TextField(props: React.InputHTMLAttributes<HTMLInputElement>) {
     />
   );
 }
+
+export function TextArea(props: React.TextareaHTMLAttributes<HTMLTextAreaElement>) {
+  return (
+    <textarea
+      {...props}
+      className={cn(
+        "w-full resize-none rounded-2xl border border-sand bg-snow px-4 py-3 text-ink placeholder:text-slate focus:border-bright focus:outline-none",
+        props.className,
+      )}
+    />
+  );
+}
