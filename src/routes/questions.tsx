@@ -65,8 +65,8 @@ function Questions() {
         <StackedCard>
           <div className="flex flex-col items-center gap-3 py-6 text-center" role="status">
             <img src={mascots.url} alt="" className="w-24 animate-bounce" />
-            <h1 className="text-xl text-ink">Reading about your household…</h1>
-            <p className="text-slate">Just a moment while we think of a few helpful questions.</p>
+            <h1 className="text-xl text-ink">Getting to know your household…</h1>
+            <p className="text-slate">Thinking up a few quick questions. Just a moment!</p>
           </div>
         </StackedCard>
       </Page>

@@ -46,6 +46,7 @@ type CatalogSource = {
   bagTips: SourcedText[];
   cataPandaTips: CataPandaTip[];
   householdRules: HouseholdRule[];
+  topTenFixed: [string, string];
 };
 
 const source: CatalogSource = {
@@ -66,6 +67,8 @@ export const catalog = {
   getBagTips: () => source.bagTips,
   getCataPandaTips: () => source.cataPandaTips,
   getHouseholdRules: () => source.householdRules,
+  /** Names fixed at Top 10 #1 and #2. */
+  getTopTenFixed: () => source.topTenFixed,
   getAllItems: () => source.items,
   getItem: (name: string) => source.items.find((i) => i.name === name),
   getCoreItems: () => source.items.filter((i) => i.scope === "core"),
