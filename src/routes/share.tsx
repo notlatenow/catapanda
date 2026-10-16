@@ -58,17 +58,12 @@ function SharePage() {
   const enc = encodeURIComponent(msg);
   const email = buildEmailShare(disasters, names);
 
-  const copyMsg = async () => {
-    const ok = await copy(msg);
-    setStatus(ok ? "Copied! Ready to paste anywhere." : "Copying didn't work. Select the message above and copy it instead.");
-  };
-
-  const links = [
-    { label: "Email", href: `mailto:?subject=${encodeURIComponent(email.subject)}&body=${encodeURIComponent(email.body)}` },
-    ...(device.mobile ? [{ label: "SMS text message", href: smsShareHref(msg, device.ios) }] : []),
-    { label: "WhatsApp", href: `https://wa.me/?text=${enc}` },
-    { label: "Facebook", href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(APP_URL)}` },
-    { label: "X", href: xShareHref(disasters) },
+  const links: { label: string; href: string; icon: ReactNode }[] = [
+    { label: "Email", href: `mailto:?subject=${encodeURIComponent(email.subject)}&body=${encodeURIComponent(email.body)}`, icon: <Mail className="size-8" strokeWidth={2.5} /> },
+    ...(device.mobile ? [{ label: "SMS", href: smsShareHref(msg, device.ios), icon: <MessageCircle className="size-8" strokeWidth={2.5} /> }] : []),
+    { label: "WhatsApp", href: `https://wa.me/?text=${enc}`, icon: <WhatsAppIcon /> },
+    { label: "Facebook", href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(APP_URL)}`, icon: <FacebookIcon /> },
+    { label: "X", href: xShareHref(disasters), icon: <XIcon /> },
   ];
 
   return (
@@ -80,13 +75,23 @@ function SharePage() {
           <p className="mt-4 text-xs font-bold uppercase tracking-wide text-slate">Message preview</p>
           <p className="mt-1 whitespace-pre-wrap break-words rounded-2xl bg-linen p-4 text-sm text-ink">{msg}</p>
         </StackedCard>
-        <div className="flex flex-col gap-3">
+        <ul className="flex flex-wrap justify-center gap-x-5 gap-y-4">
           {links.map((l) => (
-            <a key={l.label} href={l.href} target={l.href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" className={cn(pillVariants(), "w-full")}>{l.label}</a>
+            <li key={l.label}>
+              <a
+                href={l.href}
+                target={l.href.startsWith("http") ? "_blank" : undefined}
+                rel="noopener noreferrer"
+                className="group flex w-20 flex-col items-center gap-2 rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                <span className="flex size-16 -rotate-2 items-center justify-center rounded-[1.4rem] border-[3px] border-panda bg-snow text-panda shadow-[4px_4px_0_0_var(--panda)] transition-all group-hover:rotate-0 group-hover:text-bright group-active:translate-x-[3px] group-active:translate-y-[3px] group-active:text-brick group-active:shadow-[1px_1px_0_0_var(--panda)]">
+                  {l.icon}
+                </span>
+                <span className="font-display text-sm font-bold text-snow">{l.label}</span>
+              </a>
+            </li>
           ))}
-          <PillButton variant="secondary" className="w-full" onClick={() => copyMsg()}>Copy message</PillButton>
-          <p role="status" aria-live="polite" className="min-h-5 text-center text-sm font-bold text-snow">{status}</p>
-        </div>
+        </ul>
       </Page>
       <FlowNav back="/checklist" />
     </>
