@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, type ReactNode } from "react";
+import { useState } from "react";
+import { Mail, MessageCircle } from "lucide-react";
 import { Page, FlowNav, PlaceholderNote } from "@/components/brand/AppLayout";
 import { StackedCard } from "@/components/brand/StackedCard";
-import { PillButton, pillVariants } from "@/components/brand/PillButton";
-import { cn } from "@/lib/utils";
 import { buildAll } from "@/lib/checklists";
 import { buildEmailShare, buildShareMessage, smsShareHref, xShareHref } from "@/lib/share";
 import { APP_URL } from "@/config/app";
@@ -23,18 +23,19 @@ export const Route = createFileRoute("/share")({
   component: SharePage,
 });
 
-async function copy(text: string) {
-  try {
-    await navigator.clipboard.writeText(text);
-    return true;
-  } catch {
-    return false;
-  }
+const svg = { className: "size-8", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 2.5, strokeLinecap: "round" as const, strokeLinejoin: "round" as const, "aria-hidden": true };
+function WhatsAppIcon() {
+  return <svg {...svg}><path d="M3.5 20.5l1.3-4.2A8.5 8.5 0 1 1 8 19.4z" /><path d="M9 8.5c0 3.5 3 6.5 6.5 6.5l1-1.6-2-1-1 .8a4 4 0 0 1-2.2-2.2l.8-1-1-2z" /></svg>;
+}
+function FacebookIcon() {
+  return <svg {...svg}><rect x="3" y="3" width="18" height="18" rx="5" /><path d="M15.5 7.5h-1.8A2.2 2.2 0 0 0 11.5 9.7V21M9 13h6" /></svg>;
+}
+function XIcon() {
+  return <svg {...svg}><path d="M4 4l16 16M20 4L4 20" /></svg>;
 }
 
 function SharePage() {
   const { disasters, facts, personal } = useSession();
-  const [status, setStatus] = useState("");
   const [device, setDevice] = useState({ mobile: false, ios: false });
 
   useEffect(() => {
