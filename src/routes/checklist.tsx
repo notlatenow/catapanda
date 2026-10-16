@@ -6,6 +6,8 @@ import { PillButton } from "@/components/brand/PillButton";
 import { buildAll, priorityLabel, type Checklist, type Row } from "@/lib/checklists";
 import { useSession } from "@/state/session";
 import { cn } from "@/lib/utils";
+import { usePersonalization, FALLBACK_MESSAGE } from "@/state/personalize";
+import { ListsLoading } from "@/components/ListsLoading";
 
 export const Route = createFileRoute("/checklist")({
   validateSearch: (s: Record<string, unknown>): { list?: string } => (typeof s["list"] === "string" ? { list: s["list"] } : {}),
@@ -23,6 +25,7 @@ export const Route = createFileRoute("/checklist")({
 function ChecklistPage() {
   const { disasters, facts } = useSession();
   const { list = "top10" } = Route.useSearch();
+  const personal = usePersonalization();
 
   if (!disasters.length) {
     return (
@@ -33,9 +36,13 @@ function ChecklistPage() {
     );
   }
 
-  const built = buildAll(disasters, facts);
+  const ai = personal?.status === "done" ? { items: personal.items, top: personal.top } : null;
+  const built = buildAll(disasters, facts, ai);
   const all: Checklist[] = [built.top10, built.personalized, ...built.perDisaster];
   const current = all.find((c) => c.id === list) ?? built.top10;
+  const needsAI = current.id === "top10" || current.id === "personalized";
+  const waiting = needsAI && (!personal || personal.status === "running");
+  const showFallback = needsAI && personal?.status === "fallback";
 
   return (
     <>
@@ -52,6 +59,8 @@ function ChecklistPage() {
             </Link>
           ))}
         </nav>
+        {waiting ? <ListsLoading disasters={disasters} phase={personal?.phase ?? 0} /> : <>
+        {showFallback && <p role="status" className="rounded-2xl border border-sand bg-pale p-4 text-sm text-ink">{FALLBACK_MESSAGE}</p>}
         <StackedCard>
           <h1 className="text-2xl text-ink">{current.title}</h1>
           {current.sections.map((s) => (
@@ -71,6 +80,7 @@ function ChecklistPage() {
         {current.id === "top10" && (
           <Link to="/share" className="self-center"><PillButton>Share your Top 10</PillButton></Link>
         )}
+        </>}
       </Page>
       <FlowNav back="/options" next="/share" nextLabel="Share" />
     </>
@@ -83,10 +93,13 @@ function Rows({ rows, showStores }: { rows: Row[]; showStores: boolean }) {
       {rows.map((r) => (
         <li key={r.name} className="border-b border-linen py-3 last:border-0">
           <p className="font-bold text-ink">{r.name}</p>
+          {r.why && <p className="text-sm font-bold text-bright">{r.why}</p>}
           <p className="text-sm text-slate">{r.shortNote}</p>
           <p className="mt-0.5 text-xs text-slate">
             {r.category} | {priorityLabel(r.priority)} |{" "}
-            {r.kind === "tip" ? "CataPanda Tip" : (
+            {r.kind === "tip" ? "CataPanda Tip" : r.kind === "ai" ? (
+              <>AI: <Link to="/about" hash="how-the-tiers-work" className="text-bright underline-offset-2 hover:underline">Source ↗</Link></>
+            ) : (
               <>Gov-vetted: <Link to="/about" hash="gov-vetted" className="text-bright underline-offset-2 hover:underline">Source ↗</Link></>
             )}
             {showStores && r.stores.length > 0 && <> | Find at the store: {[...r.stores].sort().join(", ")}</>}

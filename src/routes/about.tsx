@@ -72,9 +72,22 @@ function About() {
       </Section>
 
       <Section id="ai" title="AI">
-        <p>CataPanda uses AI to tailor your lists to your household. More details are coming soon.</p>
+        <p>CataPanda uses AI to tailor your lists to your household. It reads what you told us, figures out who's at home (like a baby, a grandparent or a pet), and suggests a few extra items just for you. It also picks your Top 10 and explains why each one matters for you.</p>
+        <p>Every AI item is labeled "AI", so you always know where it came from.</p>
         <h3 id="how-the-tiers-work" className="scroll-mt-20 font-bold text-ink">How the tiers work</h3>
-        <p>Coming soon.</p>
+        <ul className="flex flex-col gap-2">
+          <li><span className="font-bold text-ink">Tier 1: The vetted catalog.</span> Always used. Every list starts with our gov-vetted items.</li>
+          <li><span className="font-bold text-ink">Tier 2: AI reasoning.</span> For common needs like pets, special diets, sensitive skin or pregnancy, AI adds items alongside the catalog.</li>
+          <li id="tier-3"><span className="font-bold text-ink">Tier 3: Live web search.</span> For niche needs, coming next.</li>
+        </ul>
+        <h3 className="font-bold text-ink">Our guardrails</h3>
+        <ul className="flex list-disc flex-col gap-1 pl-5">
+          <li>AI never changes, renames or removes vetted items. It only adds alongside them.</li>
+          <li>Physical items and supplies only.</li>
+          <li>No brand names, store names or medication doses.</li>
+          <li>Medical items always say "Check with your doctor".</li>
+        </ul>
+        <p>Your household description is never stored or shared.</p>
       </Section>
 
       <Section id="privacy" title="Privacy">
