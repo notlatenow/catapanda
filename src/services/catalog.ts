@@ -5,6 +5,7 @@
 import itemsData from "@/data/catalog/items.json";
 import disastersData from "@/data/catalog/disasters.json";
 import referenceData from "@/data/catalog/reference.json";
+import allowedSitesData from "@/data/catalog/allowed-sites.json";
 
 export type Priority = "essential" | "important" | "nice-to-have" | "conditional";
 export type HouseholdFact = "infant" | "elderly" | "personalAids" | "pet";
@@ -54,6 +55,7 @@ const source: CatalogSource = {
 };
 
 export const catalog = {
+  getAllowedSites: (): string[] => [...allowedSitesData],
   getDisasters: () => source.disasters,
   getDisaster: (name: string) => source.disasters.find((d) => d.name === name),
   getCategories: () => source.categories,

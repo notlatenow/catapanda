@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { catalog } from "@/services/catalog";
 import type { ClarifyResult } from "@/lib/clarify-types";
+import { genericSearchNeeds } from "@/lib/search-policy";
 
 const input = z.object({
   description: z.string().min(1).max(250),
@@ -71,7 +72,7 @@ ${rules.map((r) => `  - ${r}`).join("\n")}
         ...q,
         options: q.type === "yesno" ? ["Yes", "No"] : q.options.slice(0, 5),
       }));
-      return { enabled: true, questions, searchNeeds: out.searchNeeds };
+      return { enabled: true, questions, searchNeeds: genericSearchNeeds([data.description, ...out.searchNeeds]) };
     } catch {
       // Deliberately no logging of content (privacy).
       return { enabled: true, failed: true, questions: [], searchNeeds: [] };

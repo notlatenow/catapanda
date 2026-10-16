@@ -9,6 +9,7 @@ import { PillButton } from "@/components/brand/PillButton";
 import { cn } from "@/lib/utils";
 import { clarify } from "@/lib/clarify.functions";
 import { session, useSession, clarifyKey } from "@/state/session";
+import { startBackgroundSearch } from "@/state/search";
 
 export const Route = createFileRoute("/questions")({
   head: () => ({
@@ -37,7 +38,8 @@ function Questions() {
   useEffect(() => {
     if (!s.disasters.length || !s.description.trim()) { void navigate({ to: "/", replace: true }); return; }
     if (fresh) {
-      if (!s.clarify!.questions.length) void navigate({ to: "/options", replace: true });
+      startBackgroundSearch(s.clarify?.searchNeeds ?? []);
+      if (!s.clarify?.questions.length) void navigate({ to: "/options", replace: true });
       setLoading(false);
       return;
     }
@@ -49,6 +51,7 @@ function Questions() {
       .then((res) => {
         if (!alive) return;
         session.setClarify({ key, questions: res?.questions ?? [], searchNeeds: res?.searchNeeds ?? [] });
+        startBackgroundSearch(res?.searchNeeds ?? []);
         if (!res || !res.questions.length) void navigate({ to: "/options", replace: true });
         else setLoading(false);
       });
