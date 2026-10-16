@@ -65,6 +65,8 @@
   --linen: #efece3;
   --ocean: #033a66;
   --abyss: #022846;
+  --ink-base: #2e2e31;
+  --halftone-dot: #0a0a0b;
 
   --background: var(--sky);
   --foreground: var(--snow);
@@ -107,3 +109,10 @@
 }
 .cp-bob { animation: cp-bob 1.6s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) { .cp-bob { animation: none; } }
+
+/* Comic halftone: black dots over a soft charcoal ink base */
+@utility halftone-ink {
+  background-color: var(--ink-base);
+  background-image: radial-gradient(circle at center, var(--halftone-dot) 1.1px, transparent 1.6px);
+  background-size: 5px 5px;
+}
