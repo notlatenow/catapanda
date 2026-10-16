@@ -63,6 +63,9 @@ function ChecklistPage() {
         </nav>
         {waiting ? <ListsLoading disasters={disasters} phase={personal?.phase ?? 0} /> : <>
         {showFallback && <p role="status" className="rounded-2xl border border-sand bg-pale p-4 text-sm text-ink">{FALLBACK_MESSAGE}</p>}
+        {current.id === "top10" && (
+          <Link to="/share" className={cn(pillVariants({ variant: "primary" }), "self-center")}>Share your Top 10</Link>
+        )}
         <StackedCard>
           <h1 className="text-2xl text-ink">{current.title}</h1>
           {current.sections.map((s) => (
@@ -80,11 +83,11 @@ function ChecklistPage() {
           ))}
         </StackedCard>
         {current.id === "top10" && (
-          <Link to="/share" className="self-center"><PillButton>Share your Top 10</PillButton></Link>
+          <Link to="/share" className={cn(pillVariants({ variant: "primary" }), "self-center")}>Share your Top 10</Link>
         )}
         </>}
       </Page>
-      <FlowNav back="/options" next="/share" nextLabel="Share" />
+      <FlowNav back="/options" />
     </>
   );
 }
