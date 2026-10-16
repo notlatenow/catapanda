@@ -4,10 +4,12 @@ import { pillVariants } from "./PillButton";
 import { cn } from "@/lib/utils";
 import { session } from "@/state/session";
 
+const INK_EDGE = "polygon(0 0, 100% 0, 100.00% calc(100% - 3.8px), 99.67% calc(100% - 3.9px), 98.67% calc(100% - 6.2px), 97.12% calc(100% - 5.0px), 94.25% calc(100% - 5.3px), 92.90% calc(100% - 2.0px), 91.88% calc(100% - 3.6px), 88.78% calc(100% - 4.7px), 87.45% calc(100% - 2.5px), 85.85% calc(100% - 2.9px), 82.45% calc(100% - 5.3px), 81.10% calc(100% - 4.6px), 80.03% calc(100% - 3.6px), 78.92% calc(100% - 3.2px), 77.65% calc(100% - 4.5px), 75.38% calc(100% - 5.7px), 72.42% calc(100% - 6.2px), 71.40% calc(100% - 5.4px), 70.33% calc(100% - 3.1px), 66.92% calc(100% - 5.0px), 65.92% calc(100% - 5.3px), 63.02% calc(100% - 3.7px), 62.08% calc(100% - 4.7px), 58.65% calc(100% - 4.4px), 55.38% calc(100% - 5.6px), 54.62% calc(100% - 2.7px), 51.25% calc(100% - 4.8px), 48.17% calc(100% - 4.7px), 45.33% calc(100% - 6.2px), 43.77% calc(100% - 5.5px), 42.15% calc(100% - 3.3px), 39.10% calc(100% - 2.0px), 35.60% calc(100% - 5.2px), 33.60% calc(100% - 3.5px), 31.48% calc(100% - 3.6px), 29.30% calc(100% - 2.7px), 27.32% calc(100% - 4.4px), 26.50% calc(100% - 5.4px), 25.23% calc(100% - 6.2px), 23.02% calc(100% - 6.4px), 21.82% calc(100% - 3.7px), 19.30% calc(100% - 2.2px), 15.82% calc(100% - 6.3px), 13.18% calc(100% - 2.9px), 12.18% calc(100% - 5.1px), 11.18% calc(100% - 2.9px), 8.70% calc(100% - 4.2px), 7.42% calc(100% - 3.9px), 5.28% calc(100% - 4.4px), 2.00% calc(100% - 4.0px), 0.00% calc(100% - 5.0px))";
+
 export function SiteHeader() {
   const link = "rounded-full px-4 py-1.5 font-bold text-snow/80 hover:text-snow";
   return (
-    <header className="relative z-10 bg-panda">
+    <header className="halftone-ink relative z-10 pb-2.5" style={{ clipPath: INK_EDGE }}>
       <nav className="mx-auto flex max-w-xl items-center justify-between px-4 py-3">
         <Link to="/" className="font-display text-xl font-bold text-snow">CataPanda</Link>
         <div className="flex gap-1">
@@ -15,9 +17,6 @@ export function SiteHeader() {
           <Link to="/about" className={link} activeProps={{ className: "bg-snow/15 text-snow" }}>About</Link>
         </div>
       </nav>
-      <svg aria-hidden="true" viewBox="0 0 400 10" preserveAspectRatio="none" className="absolute inset-x-0 top-full block h-2.5 w-full fill-panda">
-        <path d="M0 0 H400 V5 L400.0 6.2 L398.7 6.1 L394.7 3.8 L388.5 5.0 L377.0 4.7 L371.6 8.0 L367.5 6.4 L355.1 5.3 L349.8 7.5 L343.4 7.1 L329.8 4.7 L324.4 5.4 L320.1 6.4 L315.7 6.8 L310.6 5.5 L301.5 4.3 L289.7 3.8 L285.6 4.6 L281.3 6.9 L267.7 5.0 L263.7 4.7 L252.1 6.3 L248.3 5.3 L234.6 5.6 L221.5 4.4 L218.5 7.3 L205.0 5.2 L192.7 5.3 L181.3 3.8 L175.1 4.5 L168.6 6.7 L156.4 8.0 L142.4 4.8 L134.4 6.5 L125.9 6.4 L117.2 7.3 L109.3 5.6 L106.0 4.6 L100.9 3.8 L92.1 3.6 L87.3 6.3 L77.2 7.8 L63.3 3.7 L52.7 7.1 L48.7 4.9 L44.7 7.1 L34.8 5.8 L29.7 6.1 L21.1 5.6 L8.0 6.0 L0 5 Z" />
-      </svg>
     </header>
   );
 }
