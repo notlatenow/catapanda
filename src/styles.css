@@ -45,6 +45,8 @@
   --color-slate: var(--slate);
   --color-sand: var(--sand);
   --color-linen: var(--linen);
+  --color-ocean: var(--ocean);
+  --color-abyss: var(--abyss);
 }
 
 :root {
@@ -61,6 +63,8 @@
   --slate: #6b6b70;
   --sand: #e3e0d6;
   --linen: #efece3;
+  --ocean: #033a66;
+  --abyss: #022846;
 
   --background: var(--sky);
   --foreground: var(--snow);

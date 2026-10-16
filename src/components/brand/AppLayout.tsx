@@ -29,11 +29,11 @@ export function FlowNav({ back, next, nextLabel = "Next", nextDisabled }: { back
   const small = "px-4 py-2.5 text-sm";
   return (
     <div className="mx-auto max-w-xl px-4 pb-6">
-      <div className="flex items-center justify-between gap-2 rounded-full border border-sand bg-snow px-3 py-2.5 shadow-soft">
+      <div className="flex items-center justify-between gap-2 rounded-full border border-abyss bg-ocean px-3 py-2.5 shadow-soft">
         {back ? (
           <Link to={back} className={cn(pillVariants({ variant: "secondary" }), small)}>Back</Link>
         ) : <span />}
-        <Link to="/" onClick={() => session.reset()} className="text-sm font-bold text-bright underline-offset-4 hover:underline">Start over</Link>
+        <Link to="/" onClick={() => session.reset()} className="text-sm font-bold text-pale underline-offset-4 hover:text-snow hover:underline">Start over</Link>
         {next && nextDisabled ? (
           <button type="button" disabled className={cn(pillVariants({ variant: "primary" }), small)}>{nextLabel}</button>
         ) : next ? (
