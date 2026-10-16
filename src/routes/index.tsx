@@ -15,6 +15,8 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "Build personalized earthquake, flood and typhoon prep checklists for your household in Taiwan." },
       { property: "og:title", content: APP_TITLE },
       { property: "og:description", content: "Personalized disaster prep checklists for households in Taiwan." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: Start,

@@ -13,6 +13,8 @@ export const Route = createFileRoute("/options")({
       { name: "description", content: "Choose which personalized disaster prep checklist to view." },
       { property: "og:title", content: "Checklist options — CataPanda" },
       { property: "og:description", content: "Choose your personalized checklist." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: Options,

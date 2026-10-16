@@ -1,6 +1,8 @@
 /** Plain-logic validation of AI items (runs after every AI step). */
 import { catalog } from "@/services/catalog";
 import type { AIItem } from "@/lib/personalize-types";
+import type { SearchResult } from "@/lib/search-types";
+import { isAllowedSearchUrl } from "@/lib/search-policy";
 
 const norm = (s: string) => s.trim().toLowerCase().replace(/\s+/g, " ");
 export const MAX_AI_ITEMS = 8;
@@ -9,7 +11,8 @@ const DOCTOR = /check with your doctor/i;
 /** Quantities, dosages or runtimes (e.g. "500 mg", "8 hours", "2 tablets"). Plain digits are fine. */
 const DOSE = /\d+(\.\d+)?\s*(mg|mcg|µg|ml|g|iu|units?|tablets?|pills?|capsules?|doses?|hours?|hrs?|h|minutes?|mins?|days?|%|mah|wh)\b/i;
 
-export function validateItems(items: AIItem[]): AIItem[] {
+export function validateItems(items: AIItem[], searchResults: SearchResult[] = []): AIItem[] {
+  const links = new Set(searchResults.filter((r) => isAllowedSearchUrl(r.link)).map((r) => r.link));
   const cats = new Set(catalog.getCategories());
   const stores = new Set(catalog.getStoreTypes());
   const taken = new Set([...catalog.getAllItems().map((i) => norm(i.name)), ...catalog.getCataPandaTips().map((t) => norm(t.name))]);
@@ -34,9 +37,11 @@ export function validateItems(items: AIItem[]): AIItem[] {
     if (!["essential", "important", "nice-to-have"].includes(i.priority)) continue;
     const validStores = [...new Set(i.stores.filter((s) => stores.has(s)))];
     if (!note || note.length > MAX_NOTE) continue;
-    if (i.medical && (!DOCTOR.test(note) || DOSE.test(note))) continue;
+    if (DOSE.test(name) || DOSE.test(note)) continue;
+    if (i.medical && !DOCTOR.test(note)) continue;
     taken.add(norm(name));
-    out.push({ ...i, name, shortNote: note, stores: validStores });
+    const sourceUrl = i.sourceUrl && links.has(i.sourceUrl) && isAllowedSearchUrl(i.sourceUrl) ? i.sourceUrl : null;
+    out.push({ ...i, name, shortNote: note, stores: validStores, sourceUrl });
     if (out.length >= MAX_AI_ITEMS) break;
   }
   return out;

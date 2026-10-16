@@ -78,7 +78,7 @@ function About() {
         <ul className="flex flex-col gap-2">
           <li><span className="font-bold text-ink">Tier 1: The vetted catalog.</span> Always used. Every list starts with our gov-vetted items.</li>
           <li><span className="font-bold text-ink">Tier 2: AI reasoning.</span> For common needs like pets, special diets, sensitive skin or pregnancy, AI adds items alongside the catalog.</li>
-          <li id="tier-3"><span className="font-bold text-ink">Tier 3: Live web search.</span> For niche needs, coming next.</li>
+          <li id="tier-3"><span className="font-bold text-ink">Tier 3: Live web search.</span> Used only for niche needs (such as medical devices and their power backup, severe allergies, or specialized care). It searches only official government and health-authority sites, never sends your personal words or details, and links each item directly to its official source.</li>
         </ul>
         <h3 className="font-bold text-ink">Our guardrails</h3>
         <ul className="flex list-disc flex-col gap-1 pl-5">

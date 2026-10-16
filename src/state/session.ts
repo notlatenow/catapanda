@@ -18,6 +18,7 @@ export type Personal = {
 };
 
 export type Session = {
+  visit: number;
   disasters: string[]; // in the order selected
   description: string;
   facts: HouseholdFact[]; // supplied by AI in a later stage
@@ -26,7 +27,7 @@ export type Session = {
   personal: Personal | null; // AI personalization for the current inputs
 };
 
-const initial: Session = { disasters: [], description: "", facts: [], clarify: null, answers: {}, personal: null };
+const initial: Session = { visit: 0, disasters: [], description: "", facts: [], clarify: null, answers: {}, personal: null };
 let state: Session = initial;
 const listeners = new Set<() => void>();
 
@@ -49,7 +50,7 @@ export const session = {
   setAnswer: (id: string, a: Answer) => set({ answers: { ...state.answers, [id]: { ...state.answers[id], ...a } } }),
   skipAll: () => set({ answers: Object.fromEntries((state.clarify?.questions ?? []).map((q) => [q.id, { skipped: true }])) }),
   setPersonal: (personal: Personal) => set({ personal, facts: personal.status === "done" ? personal.facts : [] }),
-  reset: () => set(initial),
+  reset: () => set({ ...initial, visit: state.visit + 1 }),
 };
 
 export function useSession(): Session {
