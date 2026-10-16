@@ -44,7 +44,7 @@ function Start() {
 
         <StackedCard>
           <h2 className="text-xl text-ink">What are you preparing for?</h2>
-          <p className="mt-1 text-sm text-slate">Pick one or more.</p>
+          <p className="mt-1 text-sm text-slate" aria-live="polite">{picked.length ? "Pick one or more." : "Pick at least one to get started."}</p>
           <div className="mt-4 grid gap-3">
             {disasters.map((d) => (
               <OptionCard key={d.name} name={d.name} tagline={d.tagline} selected={picked.includes(d.name)} onClick={() => session.toggleDisaster(d.name)} />
@@ -64,7 +64,7 @@ function Start() {
             placeholder="Describe your home (ex: I live with my elderly mother who uses a walker, we have a cat)"
           />
           <div className="mt-2 flex justify-between text-xs">
-            <span>{len < DESCRIPTION_MIN ? `At least ${DESCRIPTION_MIN} characters` : "Never stored or shared."}</span>
+            <span>{len < DESCRIPTION_MIN ? `Tell us a little more (at least ${DESCRIPTION_MIN} characters).` : description.length >= DESCRIPTION_MAX ? "That's the limit. Short and sweet works great!" : "Never stored or shared."}</span>
             <span aria-live="polite">{description.length}/{DESCRIPTION_MAX}</span>
           </div>
         </StackedCard>

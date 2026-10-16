@@ -118,17 +118,18 @@ export function buildPersonalized(disasters: string[], facts: HouseholdFact[], a
 
 export function buildTop10(personalized: Checklist, top: TopPick[] = []): Checklist & { aiRanked: boolean } {
   const tips = tipRows();
-  const bag = tips.find((t) => t.name === "Grab-and-go bag")!;
+  const [firstName, secondName] = catalog.getTopTenFixed();
   const shown = new Map(personalized.sections.flatMap((s) => s.rows).map((r) => [r.name, r]));
-  const water = shown.get("Drinking water");
+  const bag = tips.find((t) => t.name === firstName) ?? shown.get(firstName)!;
+  const water = shown.get(secondName);
   const names = top.map((t) => t.name);
-  const valid = names.length === 8 && new Set(names).size === 8 && names.every((n) => shown.has(n) && n !== bag.name && n !== "Drinking water");
+  const valid = names.length === 8 && new Set(names).size === 8 && names.every((n) => shown.has(n) && n !== firstName && n !== secondName);
   if (valid && water) {
     const rows = [bag, water, ...top.map((t) => ({ ...shown.get(t.name)!, why: t.why }))];
     return { id: "top10", title: "Top 10", sections: [{ title: "Top 10", rows }], showStores: false, aiRanked: true };
   }
   const catalogRows = personalized.sections.flatMap((s) => s.rows).filter((r) => r.kind === "catalog");
-  const rest = sortRows(catalogRows.filter((r) => r.name !== "Drinking water"));
+  const rest = sortRows(catalogRows.filter((r) => r.name !== secondName));
   const rows = [bag, ...(water ? [water] : []), ...rest].slice(0, 10);
   return { id: "top10", title: "Top 10", sections: [{ title: "Top 10", rows }], showStores: false, aiRanked: false };
 }

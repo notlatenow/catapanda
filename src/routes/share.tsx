@@ -32,7 +32,7 @@ async function copy(text: string) {
 }
 
 function SharePage() {
-  const { disasters, facts } = useSession();
+  const { disasters, facts, personal } = useSession();
   const [status, setStatus] = useState("");
 
   if (!disasters.length) {
@@ -44,20 +44,21 @@ function SharePage() {
     );
   }
 
-  const names = buildAll(disasters, facts).top10.sections[0]!.rows.map((r) => r.name);
+  const ai = personal?.status === "done" ? { items: personal.items, top: personal.top } : null;
+  const names = buildAll(disasters, facts, ai).top10.sections[0]!.rows.map((r) => r.name);
   const msg = buildShareMessage(disasters, names);
   const enc = encodeURIComponent(msg);
 
   const copyMsg = async (app?: string) => {
     const ok = await copy(msg);
-    setStatus(ok ? `Message copied!${app ? ` Open ${app} and paste it in.` : ""}` : "Couldn't copy automatically — select the preview text above and copy it.");
+    setStatus(ok ? `Copied! ${app ? `Open ${app} and paste it in.` : "Ready to paste anywhere."}` : "Hmm, copying didn't work. Press and hold the preview above to copy it yourself.");
   };
 
   const shareSheet = async (app: string) => {
     if (navigator.share) {
       try {
         await navigator.share({ text: msg });
-        setStatus("");
+        setStatus("Shared! Thanks for helping your people prep.");
         return;
       } catch (e) {
         if ((e as Error).name === "AbortError") return;

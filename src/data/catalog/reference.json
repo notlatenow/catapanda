@@ -9,34 +9,179 @@
     "Tools & Support Aids",
     "Household & Special Needs"
   ],
-  "storeTypes": ["Grocery", "Hardware", "Pharmacy", "Specialty"],
-  "priorities": ["essential", "important", "nice-to-have", "conditional"],
+  "storeTypes": [
+    "Grocery",
+    "Hardware",
+    "Pharmacy",
+    "Specialty"
+  ],
+  "priorities": [
+    "essential",
+    "important",
+    "nice-to-have",
+    "conditional"
+  ],
   "sources": [
-    { "code": "BN", "country": "Brunei", "agency": "Brunei National Disaster Management Centre (NDMC / Pusat Pengurusan Bencana Kebangsaan)", "document": "Public Safety Basics Guidebook (2025 ed.), “Penyediaan Beg Kecemasan (Beg 72 Jam)” – 72-Hour Bag", "websites": ["https://www.ndmc.gov.bn/"] },
-    { "code": "HK", "country": "Hong Kong", "agency": "Hong Kong Security Bureau", "document": "“Simple Guidelines in the Event of Major Mishaps,” Emergency Kit section", "websites": ["https://www.sb.gov.hk/eng/emergency/index.html"] },
-    { "code": "ID", "country": "Indonesia", "agency": "BPBD DIY — Yogyakarta Regional Disaster Management Agency (under Indonesia's national BNPB)", "document": "“Tas Siaga Bencana” (Disaster Preparedness Bag) guide — live site; BNPB's national homepage has no item list, so its regional agency's published list is used", "websites": ["https://www.bnpb.go.id/"], "websiteNote": "national parent agency" },
-    { "code": "KR", "country": "South Korea", "agency": "Republic of Korea Ministry of the Interior and Safety — Safe Korea", "document": "Safe Korea Action Guides — Typhoon, Heavy Rain & Earthquake (live site)", "websites": ["https://eng.safekorea.go.kr/safekorea-eng/acts/nacts/action-guide.do?&category=earthQuake"], "websiteNote": "also category=heavyRain, category=typhoon" },
-    { "code": "PH", "country": "Philippines", "agency": "Philippine Senate Committee on Climate Change, with PHIVOLCS, NDRRMC, DepEd, DOH, PAGASA, BFP & MGB", "document": "Disaster Preparedness & First Aid Handbook — Earthquake Survival Kit list", "websites": ["https://climate.gov.ph/"], "websiteNote": "Supplied as a PDF; closest listed government site" },
-    { "code": "SG", "country": "Singapore", "agency": "Singapore Civil Defence Force (SCDF)", "document": "SCDF Emergency Preparedness Handbook (2026 ed.), Chapter 3 – “Ready Bag”, cross-checked against the live Ready Bag page", "websites": ["https://www.scdf.gov.sg/home/community-and-volunteers/fire-emergency-guides/ready-bag-for-emergency"] },
-    { "code": "TW", "country": "Taiwan", "agency": "Taiwan National Fire Agency (NFA) & Taipei Fire Department (TFDP)", "document": "緊急避難包準備方向 (Emergency Evacuation Bag Preparation Guide) — 24/48/72-Hour editions, plus TFDP's live Earthquake “Daily Preparation” and Typhoon “Typhoon Preparation” pages", "websites": ["https://www.nfa.gov.tw/eng/index.php?code=list&flag=detail&ids=1371&article_id=8958", "https://www.tfdp.com.tw/en/index.php?code=list&flag=detail&ids=170&article_id=1261"] }
+    {
+      "code": "BN",
+      "country": "Brunei",
+      "agency": "Brunei National Disaster Management Centre (NDMC / Pusat Pengurusan Bencana Kebangsaan)",
+      "document": "Public Safety Basics Guidebook (2025 ed.), “Penyediaan Beg Kecemasan (Beg 72 Jam)” – 72-Hour Bag",
+      "websites": [
+        "https://www.ndmc.gov.bn/"
+      ]
+    },
+    {
+      "code": "HK",
+      "country": "Hong Kong",
+      "agency": "Hong Kong Security Bureau",
+      "document": "“Simple Guidelines in the Event of Major Mishaps,” Emergency Kit section",
+      "websites": [
+        "https://www.sb.gov.hk/eng/emergency/index.html"
+      ]
+    },
+    {
+      "code": "ID",
+      "country": "Indonesia",
+      "agency": "BPBD DIY — Yogyakarta Regional Disaster Management Agency (under Indonesia's national BNPB)",
+      "document": "“Tas Siaga Bencana” (Disaster Preparedness Bag) guide — live site; BNPB's national homepage has no item list, so its regional agency's published list is used",
+      "websites": [
+        "https://www.bnpb.go.id/"
+      ],
+      "websiteNote": "national parent agency"
+    },
+    {
+      "code": "KR",
+      "country": "South Korea",
+      "agency": "Republic of Korea Ministry of the Interior and Safety — Safe Korea",
+      "document": "Safe Korea Action Guides — Typhoon, Heavy Rain & Earthquake (live site)",
+      "websites": [
+        "https://eng.safekorea.go.kr/safekorea-eng/acts/nacts/action-guide.do?&category=earthQuake"
+      ],
+      "websiteNote": "also category=heavyRain, category=typhoon"
+    },
+    {
+      "code": "PH",
+      "country": "Philippines",
+      "agency": "Philippine Senate Committee on Climate Change, with PHIVOLCS, NDRRMC, DepEd, DOH, PAGASA, BFP & MGB",
+      "document": "Disaster Preparedness & First Aid Handbook — Earthquake Survival Kit list",
+      "websites": [
+        "https://climate.gov.ph/"
+      ],
+      "websiteNote": "Supplied as a PDF; closest listed government site"
+    },
+    {
+      "code": "SG",
+      "country": "Singapore",
+      "agency": "Singapore Civil Defence Force (SCDF)",
+      "document": "SCDF Emergency Preparedness Handbook (2026 ed.), Chapter 3 – “Ready Bag”, cross-checked against the live Ready Bag page",
+      "websites": [
+        "https://www.scdf.gov.sg/home/community-and-volunteers/fire-emergency-guides/ready-bag-for-emergency"
+      ]
+    },
+    {
+      "code": "TW",
+      "country": "Taiwan",
+      "agency": "Taiwan National Fire Agency (NFA) & Taipei Fire Department (TFDP)",
+      "document": "緊急避難包準備方向 (Emergency Evacuation Bag Preparation Guide) — 24/48/72-Hour editions, plus TFDP's live Earthquake “Daily Preparation” and Typhoon “Typhoon Preparation” pages",
+      "websites": [
+        "https://www.nfa.gov.tw/eng/index.php?code=list&flag=detail&ids=1371&article_id=8958",
+        "https://www.tfdp.com.tw/en/index.php?code=list&flag=detail&ids=170&article_id=1261"
+      ]
+    }
   ],
   "bagTips": [
-    { "text": "Pack one bag per family member if possible; keep it lightweight and easy to carry.", "sources": ["TW"] },
-    { "text": "Store the bag near the front door or entryway so it's grabbed quickly in the dark.", "sources": ["TW"] },
-    { "text": "Suggested maximum weight per bag: about 15 kg for men, 10 kg for women.", "sources": ["TW"] },
-    { "text": "Check and update the bag's contents every six months — watch expiry dates on food, medication and masks.", "sources": ["TW"] },
-    { "text": "Store batteries alongside devices, not inside them, to avoid leakage or corrosion; swap in fresh ones periodically.", "sources": ["SG"] },
-    { "text": "If you carry a power bank, recharge it every 2–3 months so it's ready when needed.", "sources": ["SG"] }
+    {
+      "text": "Pack one bag per family member if possible; keep it lightweight and easy to carry.",
+      "sources": [
+        "TW"
+      ]
+    },
+    {
+      "text": "Store the bag near the front door or entryway so it's grabbed quickly in the dark.",
+      "sources": [
+        "TW"
+      ]
+    },
+    {
+      "text": "Suggested maximum weight per bag: about 15 kg for men, 10 kg for women.",
+      "sources": [
+        "TW"
+      ]
+    },
+    {
+      "text": "Check and update the bag's contents every six months — watch expiry dates on food, medication and masks.",
+      "sources": [
+        "TW"
+      ]
+    },
+    {
+      "text": "Store batteries alongside devices, not inside them, to avoid leakage or corrosion; swap in fresh ones periodically.",
+      "sources": [
+        "SG"
+      ]
+    },
+    {
+      "text": "If you carry a power bank, recharge it every 2–3 months so it's ready when needed.",
+      "sources": [
+        "SG"
+      ]
+    }
   ],
   "cataPandaTips": [
-    { "name": "Grab-and-go bag", "shortNote": "Lightweight, by the door, on back or shoulder", "priority": "essential", "category": "Tools & Support Aids", "stores": ["Hardware", "Specialty"], "sources": ["TW"], "basis": "Research-backed. Taiwan's NFA/TFDP guides are built around the evacuation bag: pack one bag per family member, keep it lightweight and easy to carry, store it near the front door, suggested maximum weight per bag about 15 kg for men and 10 kg for women, check contents every six months." },
-    { "name": "Personal medical info card", "shortNote": "Blood type, allergies, conditions, medications", "priority": "essential", "category": "First Aid & Medication", "stores": [], "sources": [], "basis": "Team-added (not in the government sources). Complements the core \"Personal medications\" item." }
+    {
+      "name": "Grab-and-go bag",
+      "shortNote": "Lightweight, by the door, on back or shoulder",
+      "priority": "essential",
+      "category": "Tools & Support Aids",
+      "stores": [
+        "Hardware",
+        "Specialty"
+      ],
+      "sources": [
+        "TW"
+      ],
+      "basis": "Research-backed. Taiwan's NFA/TFDP guides are built around the evacuation bag: pack one bag per family member, keep it lightweight and easy to carry, store it near the front door, suggested maximum weight per bag about 15 kg for men and 10 kg for women, check contents every six months."
+    },
+    {
+      "name": "Personal medical info card",
+      "shortNote": "Blood type, allergies, conditions, medications",
+      "priority": "essential",
+      "category": "First Aid & Medication",
+      "stores": [],
+      "sources": [],
+      "basis": "Team-added (not in the government sources). Complements the core \"Personal medications\" item."
+    }
   ],
   "householdRules": [
-    { "item": "Infant supplies", "fact": "infant", "shownWhen": "The household has an infant, or is expecting a baby" },
-    { "item": "Baby wrap / carrier", "fact": "infant", "shownWhen": "The household has an infant, or is expecting a baby" },
-    { "item": "Elderly-care items", "fact": "elderly", "shownWhen": "Someone is 65+, or uses elderly-care aids" },
-    { "item": "Personal aids: vision, hearing, mobility", "fact": "personalAids", "shownWhen": "Anyone uses glasses, hearing aids, a cane, dentures or similar aids (any age)" },
-    { "item": "Pet supplies", "fact": "pet", "shownWhen": "The household has a pet" }
+    {
+      "item": "Infant supplies",
+      "fact": "infant",
+      "shownWhen": "The household has an infant, or is expecting a baby"
+    },
+    {
+      "item": "Baby wrap / carrier",
+      "fact": "infant",
+      "shownWhen": "The household has an infant, or is expecting a baby"
+    },
+    {
+      "item": "Elderly-care items",
+      "fact": "elderly",
+      "shownWhen": "Someone is 65+, or uses elderly-care aids"
+    },
+    {
+      "item": "Personal aids: vision, hearing, mobility",
+      "fact": "personalAids",
+      "shownWhen": "Anyone uses glasses, hearing aids, a cane, dentures or similar aids (any age)"
+    },
+    {
+      "item": "Pet supplies",
+      "fact": "pet",
+      "shownWhen": "The household has a pet"
+    }
+  ],
+  "topTenFixed": [
+    "Grab-and-go bag",
+    "Drinking water"
   ]
 }

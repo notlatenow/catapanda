@@ -68,7 +68,6 @@ function About() {
             <li key={t.name}><span className="font-bold text-ink">{t.name}:</span> {t.shortNote}.</li>
           ))}
         </ul>
-        <p>A grab-and-go bag keeps everything together by the door, so you can leave fast. Taiwan's fire agencies build their whole guide around it. A personal medical info card is our own addition. If you can't speak for yourself, it tells helpers your blood type, allergies and medications.</p>
       </Section>
 
       <Section id="ai" title="AI">

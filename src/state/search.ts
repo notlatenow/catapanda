@@ -24,6 +24,9 @@ function prepare(texts: string[], answers: QA[] = []) {
   });
 }
 
+/** True when this visit has official-site searches (for the loading message). */
+export function hasSearches() { return visit === session.get().visit && searches.size > 0; }
+
 export function startBackgroundSearch(searchNeeds: string[]) { prepare(searchNeeds); }
 
 export async function collectSearchResults(description: string, answers: QA[]): Promise<SearchResult[]> {
