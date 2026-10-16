@@ -20,7 +20,7 @@ export function SiteHeader() {
 }
 
 export function Page({ children }: { children: ReactNode }) {
-  return <main className="mx-auto flex max-w-xl flex-col gap-6 px-4 py-6 pb-28">{children}</main>;
+  return <main className="mx-auto flex max-w-xl flex-col gap-6 px-4 pt-6 pb-4">{children}</main>;
 }
 
 type FlowPath = "/" | "/questions" | "/options" | "/checklist" | "/share";
@@ -46,4 +46,12 @@ export function FlowNav({ back, next, nextLabel = "Next", nextDisabled }: { back
 
 export function PlaceholderNote({ children }: { children: ReactNode }) {
   return <p className="rounded-2xl bg-linen px-4 py-3 text-sm text-slate">{children}</p>;
+}
+
+export function SiteFooter() {
+  return (
+    <footer className="mx-auto max-w-xl px-4 pb-28 pt-2 text-center text-xs text-slate">
+      Gov-vetted items are checked against government sources. Items marked 'AI' are AI recommendations — check them against your own needs.
+    </footer>
+  );
 }
