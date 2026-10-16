@@ -37,7 +37,7 @@ function ChecklistPage() {
   }
 
   const ai = personal?.status === "done" ? { items: personal.items, top: personal.top } : null;
-  const built = buildAll(disasters, facts, ai);
+  const built = buildAll(disasters, personal?.status === "done" ? personal.facts : facts, ai);
   const all: Checklist[] = [built.top10, built.personalized, ...built.perDisaster];
   const current = all.find((c) => c.id === list) ?? built.top10;
   const needsAI = current.id === "top10" || current.id === "personalized";
