@@ -50,7 +50,7 @@ export function PlaceholderNote({ children }: { children: ReactNode }) {
 
 export function SiteFooter() {
   return (
-    <footer className="mx-auto max-w-xl px-4 pb-28 pt-2 text-center text-xs text-slate">
+    <footer className="mx-auto max-w-xl px-4 pb-28 pt-2 text-center text-sm text-pale">
       Gov-vetted items are checked against government sources. Items marked 'AI' are AI recommendations — check them against your own needs.
     </footer>
   );
