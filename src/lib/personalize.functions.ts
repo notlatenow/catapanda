@@ -93,11 +93,11 @@ export const suggestItems = createServerFn({ method: "POST" })
         instructions: `You personalize a disaster-prep checklist for a household in Taiwan.
 The data holds the household description, clarifying answers, selected disasters, the vetted catalog items, the CataPanda Tips and any search results.
 1) Household facts. True ONLY if stated or answered, never guessed:
-- infant: a baby or infant in the home, including expecting a baby.
+- infant: a baby or infant in the home, OR anyone pregnant/expecting (e.g. "pregnant wife", "preganant", "baby on the way", "due soon", a "Yes" to a due-date or baby question). Pregnancy always means infant=true.
 - elderly: someone is 65+ or uses elderly-care aids.
 - personalAids: anyone uses glasses, hearing aids, a cane or similar, at any age.
 - pet: any pet.
-2) Draft up to 8 household-specific items to add ALONGSIDE the catalog (fewer is fine; none if nothing specific is needed). Priority is Essential, Important or Nice-to-have. Use your own knowledge for common needs (pets, diets, sensitive skin, pregnancy).
+2) Draft up to 8 household-specific items to add ALONGSIDE the catalog (fewer is fine; none if nothing specific is needed). Priority is Essential, Important or Nice-to-have. Use your own knowledge for common needs (pets, diets, sensitive skin, pregnancy). For pregnancy, include pregnancy-specific items (medical=true, with "Check with your doctor").
 ${GUARDRAILS}
 Understand typos and casual writing. ${SECURITY_NOTE}`,
         userData: {
