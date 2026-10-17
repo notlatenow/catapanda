@@ -107,7 +107,7 @@ export function Questions() {
           <StackedCard bottomTab={theme === "yellow" ? "blue" : "yellow"} topTab={loading ? "blue" : "panda"}>
             <h1 ref={heading} tabIndex={-1} className={cn("leading-7 outline-none", !loading && step === 0 ? "text-2xl font-normal" : "text-lg font-bold")}>{loading ? "Hold on, we got a few more questions for you!" : step === 0 ? "Tell us about your household" : q?.text ?? "Your checklists are next…"}</h1>
           {loading ? (
-             <div className="question-cat-arena relative mt-6 h-96 w-full overflow-hidden" role="status" aria-label="Preparing your follow-up questions"><img src={catBadge.url} alt="CataPanda cat in a red circle" className="question-cat-bounce absolute aspect-square w-72 max-w-full object-contain" /></div>
+             <div className="question-cat-arena relative mt-6 h-96 w-full overflow-hidden" role="status" aria-label="Preparing your follow-up questions"><div className="question-cat-bounce absolute flex aspect-square items-center justify-center"><img src={catBadge.url} alt="CataPanda cat in a red circle" className="question-cat-wobble aspect-square object-contain" /></div></div>
           ) : step === 0 ? (
             <form id="household-form" onSubmit={(e) => { e.preventDefault(); void submitHousehold(); }}>
                <p className="mt-3 text-sm text-slate">Who's at home? Include pets and any needs you'd like us to keep in mind.</p>
