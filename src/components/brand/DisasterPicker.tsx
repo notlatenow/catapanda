@@ -55,7 +55,7 @@ export function DisasterPicker({ picked, onToggle }: { picked: string[]; onToggl
           <InkOutline wide />
           <Select.Value placeholder="Choose your region." />
           <Select.Icon>
-            <svg aria-hidden="true" viewBox="0 0 24 18" className="h-4 w-5 fill-none stroke-ink" strokeWidth="2.2" strokeLinejoin="round"><path d="m3 4 18-1-9 12Z" /></svg>
+            <svg aria-hidden="true" viewBox="0 0 24 18" className="h-4 w-5 fill-pitch"><path d="m3 4 18-1-9 12Z" /></svg>
           </Select.Icon>
         </Select.Trigger>
         <Select.Portal>
