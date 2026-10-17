@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, X } from "lucide-react";
 import mascots from "@/assets/friends-waist.png.asset.json";
 import blueBackground from "@/assets/question-blue.png";
 import redBackground from "@/assets/question-red.png";
@@ -92,6 +92,10 @@ export function Questions() {
   return (
     <main className={cn("question-screen relative isolate flex min-h-svh flex-col text-ink", `question-${theme}`)}>
       <img src={background} alt="" className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover" />
+      <div className="mx-auto flex w-full max-w-4xl items-center justify-between px-6 py-5 sm:px-10">
+        <PillButton onClick={back} aria-label="Back" title="Back" className="h-11 w-11 bg-transparent p-0 text-pale hover:bg-ocean hover:text-snow"><ArrowLeft size={23} /></PillButton>
+        <PillButton onClick={() => { request.current += 1; session.reset(); void navigate({ to: "/" }); }} aria-label="Exit form" title="Exit form" className="h-11 w-11 bg-transparent p-0 text-pale hover:bg-ocean hover:text-snow"><X size={23} /></PillButton>
+      </div>
       <div className="mx-auto flex w-full max-w-2xl flex-1 items-center px-5 py-12 sm:px-8">
         <section key={loading ? "loading" : step} className="question-enter w-full" aria-busy={loading}>
           <StackedCard>
@@ -118,14 +122,17 @@ export function Questions() {
             </div>
           ) : null}
           </StackedCard>
-          <nav aria-label="Question navigation" className="mt-6 grid grid-cols-[auto_1fr_auto] items-center gap-3 sm:mt-8">
-            <PillButton onClick={back} className="question-next">Back</PillButton>
-            <PillButton onClick={() => { request.current += 1; session.reset(); void navigate({ to: "/" }); }} className="question-reset justify-self-center bg-transparent px-1 text-dusk hover:bg-transparent hover:text-snow active:text-sun">Start over</PillButton>
+          <div className="mt-6 flex justify-end sm:mt-8">
             {!loading && (step === 0 || textQuestion || answer.choice) ? (
               <PillButton type={step === 0 ? "submit" : "button"} form={step === 0 ? "household-form" : undefined} disabled={nextDisabled} onClick={step === 0 ? undefined : nextQuestion} className="question-next">Next</PillButton>
-            ) : <span />}
-          </nav>
+            ) : null}
+          </div>
         </section>
+      </div>
+      <div className="mx-auto flex w-full max-w-4xl items-center justify-between gap-4 px-6 py-5 text-xs text-pale sm:px-10">
+        <div className="flex items-center gap-1.5" aria-label={`Step ${step + 1}`}>
+          {Array.from({ length: questions.length + 1 }, (_, i) => <span key={i} className={cn("h-1.5 w-5 rounded-full", i <= step ? "bg-welcome" : "bg-pale/25")} />)}
+        </div>
       </div>
     </main>
   );
