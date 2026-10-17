@@ -35,7 +35,7 @@ function Start() {
       </div>
       <Page>
         <StackedCard variant="welcome">
-          <h1 className="text-2xl text-snow">Let's get your home ready.</h1>
+          <h1 className="text-2xl text-welcome">Let's get your home ready.</h1>
           <p className="mt-2 text-snow">We get it: nobody wants natural disasters. But when one comes, you'll know how to prepare thanks to our gov-backed checklist. Sourced from {catalog.getSources().length} official government resources across Asia, so you know it's legit. Tell us what you're prepping for and who's at home...</p>
         </StackedCard>
 
