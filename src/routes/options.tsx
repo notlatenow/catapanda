@@ -47,7 +47,7 @@ function Options() {
           )}
           {disasters.length > 0 && (
             <>
-              <div className="mt-4 grid grid-cols-2 items-center gap-3">
+              <div className="mt-4 grid grid-cols-2 items-center gap-3 [&>*]:min-w-0">
                 {featured.map((l) =>
                   waiting ? (
                     <span key={l.id} className={`${featuredText} opacity-60`} aria-disabled="true">{l.art ? <img src={l.art} alt={l.name} className={`mx-auto h-auto w-[80%] ${l.tilt}`} /> : l.name}</span>
