@@ -3,7 +3,6 @@ import { useEffect, type ReactNode } from "react";
 import { useState } from "react";
 import { Mail, MessageCircle } from "lucide-react";
 import { Page, FlowNav } from "@/components/brand/AppLayout";
-import { pillVariants } from "@/components/brand/PillButton";
 import { cn } from "@/lib/utils";
 import { StackedCard } from "@/components/brand/StackedCard";
 import { buildAll } from "@/lib/checklists";
