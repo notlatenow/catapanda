@@ -33,7 +33,12 @@ function FacebookIcon() {
   return <svg {...svg}><rect x="3" y="3" width="18" height="18" rx="5" /><path d="M15.5 7.5h-1.8A2.2 2.2 0 0 0 11.5 9.7V21M9 13h6" /></svg>;
 }
 function XIcon() {
-  return <svg {...svg}><path d="M4 4l16 16M20 4L4 20" /></svg>;
+  return (
+    <svg {...svg} strokeWidth={2}>
+      <path d="M4.2 3.8h4.9l3.1 4.3 3.6-4.3h4l-5.6 6.6 6.1 9.8h-4.9l-3.5-4.9-4.1 4.9h-4l6.1-7.2z" strokeLinejoin="round" />
+      <path d="M10.6 12.2l4.8 7.6" />
+    </svg>
+  );
 }
 
 function SharePage() {
