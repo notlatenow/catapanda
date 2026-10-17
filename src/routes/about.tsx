@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type { ReactNode } from "react";
-import mascots from "@/assets/web-mascots.png.asset.json";
+import friends from "@/assets/friends-waist.png.asset.json";
 import { Page } from "@/components/brand/AppLayout";
 import { StackedCard } from "@/components/brand/StackedCard";
 import { catalog } from "@/services/catalog";
@@ -35,8 +35,14 @@ function About() {
   const tips = catalog.getCataPandaTips();
   return (
     <Page>
-      <img src={mascots.url} alt="CataPanda mascots" className="mx-auto w-40" />
-      <Section title="About CataPanda">
+      <div className="relative mt-32">
+        <img
+          src={friends.url}
+          alt="The CataPanda cat and panda hugging"
+          className="pointer-events-none absolute inset-x-0 bottom-full mx-auto -mb-3 w-64"
+        />
+        <div className="relative">
+          <Section title="About CataPanda">
         <p>Hi! CataPanda (short for Catastrophic Pandamonium) helps you get ready for earthquakes, floods and typhoons in Taiwan.</p>
         <p>Pick what you're preparing for, tell us a little about your home, and we'll hand you a clear, doable checklist. No panic, just a plan.</p>
       </Section>
