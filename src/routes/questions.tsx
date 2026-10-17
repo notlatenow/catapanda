@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, X } from "lucide-react";
-import mascots from "@/assets/friends-waist.png.asset.json";
+import catBadge from "@/assets/cat-circle-cleaned.png.asset.json";
 import blueBackground from "@/assets/question-blue.webp";
 import redBackground from "@/assets/question-red.webp";
 import yellowBackground from "@/assets/question-yellow.webp";
@@ -105,9 +105,9 @@ export function Questions() {
       <div className="mx-auto flex w-full max-w-xl flex-1 items-center px-4 py-12">
         <section key={loading ? "loading" : step} className="question-enter w-full text-sm" aria-busy={loading}>
           <StackedCard bottomTab={theme === "yellow" ? "blue" : "yellow"} topTab={loading ? "blue" : "panda"}>
-           <h1 ref={heading} tabIndex={-1} className={cn("leading-7 outline-none", !loading && step === 0 ? "text-2xl font-normal" : "text-lg font-bold")}>{loading ? "A little more about your home…" : step === 0 ? "Tell us about your household" : q?.text ?? "Your checklists are next…"}</h1>
+            <h1 ref={heading} tabIndex={-1} className={cn("leading-7 outline-none", !loading && step === 0 ? "text-2xl font-normal" : "text-lg font-bold")}>{loading ? "We've got a few more questions for ya!" : step === 0 ? "Tell us about your household" : q?.text ?? "Your checklists are next…"}</h1>
           {loading ? (
-            <div className="mt-8" role="status"><img src={mascots.url} alt="" className="cp-bob h-36 w-48 object-contain object-bottom" /><p className="mt-5 text-slate">Just a moment…</p></div>
+             <div className="question-cat-arena relative mt-6 h-48 w-full overflow-hidden" role="status" aria-label="Preparing your follow-up questions"><img src={catBadge.url} alt="CataPanda cat in a red circle" className="question-cat-bounce absolute h-24 w-24 object-contain" /></div>
           ) : step === 0 ? (
             <form id="household-form" onSubmit={(e) => { e.preventDefault(); void submitHousehold(); }}>
                <p className="mt-3 text-sm text-slate">Who's at home? Include pets and any needs you'd like us to keep in mind.</p>

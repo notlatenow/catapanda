@@ -145,6 +145,17 @@ h1, h2, h3, h4, .font-display, .question-next { font-weight: 400; }
 .cp-bob { animation: cp-bob 1.6s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) { .cp-bob { animation: none; } }
 
+@keyframes question-cat-bounce {
+  0%, 100% { left: 0; top: 0; }
+  25% { left: calc(100% - 6rem); top: 6rem; }
+  50% { left: calc(100% - 6rem); top: 0; }
+  75% { left: 0; top: 6rem; }
+}
+.question-cat-bounce { animation: question-cat-bounce 7s linear infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .question-cat-bounce { animation: none; left: calc(50% - 3rem); top: 3rem; }
+}
+
 /* Comic halftone: black dots over a soft charcoal ink base */
 @utility halftone-ink {
   background-color: var(--ink-base);
