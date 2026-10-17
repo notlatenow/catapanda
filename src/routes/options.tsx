@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Page, FlowNav, PlaceholderNote } from "@/components/brand/AppLayout";
+import { Page, FlowNav } from "@/components/brand/AppLayout";
 import { StackedCard } from "@/components/brand/StackedCard";
 import { OptionCard } from "@/components/brand/OptionCard";
 import { useSession } from "@/state/session";
