@@ -75,7 +75,7 @@ function SharePage() {
     ...(device.mobile ? [{ label: "SMS", href: smsShareHref(msg, device.ios), icon: <MessageCircle className="size-8" strokeWidth={2.5} /> }] : []),
     { label: "WhatsApp", href: `https://wa.me/?text=${enc}`, icon: <WhatsAppIcon /> },
     { label: "Facebook", href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(APP_URL)}`, icon: <FacebookIcon /> },
-    { label: "X", href: xShareHref(disasters, names), icon: <XIcon /> },
+    { label: "X / Twitter", href: xShareHref(disasters, names), icon: <XIcon /> },
   ];
 
   return (
