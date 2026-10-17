@@ -57,17 +57,17 @@ function ChecklistPage() {
               search={{ list: c.id }}
               className={cn("rounded-full border px-4 py-1.5 text-sm font-bold", c.id === current.id ? "border-panda bg-panda text-snow" : "border-sand bg-snow text-ink")}
             >
-              {c.title}
+              {c.id === "top10" ? "Top Tips" : c.id === "personalized" ? "Personal Picks" : c.id}
             </Link>
           ))}
         </nav>
         {waiting ? <ListsLoading disasters={disasters} phase={personal?.phase ?? 0} /> : <>
         {showFallback && <p role="status" className="rounded-2xl border border-sand bg-pale p-4 text-sm text-ink">{FALLBACK_MESSAGE}</p>}
         {current.id === "top10" && (
-          <Link to="/share" className={cn(pillVariants({ variant: "primary" }), "self-center")}>Share your Top 10</Link>
+          <Link to="/share" className={cn(pillVariants({ variant: "primary" }), "self-center")}>Share your Top Tips</Link>
         )}
         <StackedCard>
-          <h1 className="text-2xl text-ink">{current.title}</h1>
+          <h1 className="text-2xl text-ink">{current.id === "top10" ? "Top Tips" : current.id === "personalized" ? "Personal Picks" : `${current.id} Basics`}</h1>
           {current.sections.map((s) => (
             <Fragment key={s.title}>
               {(current.sections.length > 1 || s.note) && (
@@ -83,7 +83,7 @@ function ChecklistPage() {
           ))}
         </StackedCard>
         {current.id === "top10" && (
-          <Link to="/share" className={cn(pillVariants({ variant: "primary" }), "self-center")}>Share your Top 10</Link>
+          <Link to="/share" className={cn(pillVariants({ variant: "primary" }), "self-center")}>Share your Top Tips</Link>
         )}
         </>}
       </Page>

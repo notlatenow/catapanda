@@ -31,7 +31,7 @@ function Options() {
     { id: "top10", name: "Top Tips", art: topTipsArt, tilt: "-rotate-[5deg]" },
     { id: "personalized", name: "Personal Picks", art: personalPicksArt, tilt: "rotate-[10deg]" },
   ];
-  const lists = disasters.map((d) => ({ id: d, name: `${d} basics` }));
+  const lists = disasters.map((d) => ({ id: d, name: `${d} Basics` }));
   const featuredText = "font-display block py-2 text-center text-3xl leading-tight text-slate sm:text-4xl";
   if (disasters.length > 0 && waiting) {
     return (
