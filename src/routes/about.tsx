@@ -35,7 +35,7 @@ function About() {
   const tips = catalog.getCataPandaTips();
   return (
     <Page>
-      <div className="relative z-20 mt-32">
+      <div className="relative z-20 mt-40">
         <img
           src={friends.url}
           alt="The CataPanda cat and panda hugging"
