@@ -67,6 +67,7 @@
   --pale: #eaf4fb;
   --ink: #2a2a2e;
   --slate: #6b6b70;
+  --intake-unselected: #98989e;
   --sand: #e3e0d6;
   --linen: #efece3;
   --ocean: #033a66;
@@ -116,7 +117,7 @@
 
 /* Uneven pen outlines stay crisp without stretching the stroke. */
 .ink-outline { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; fill: currentColor; }
-.doodle-disaster { background: var(--snow); color: var(--slate); transition: background-color 150ms ease, color 150ms ease; }
+.doodle-disaster { background: var(--snow); color: var(--intake-unselected); transition: background-color 150ms ease, color 150ms ease; }
 .doodle-disaster:nth-child(1) .ink-outline { transform: rotate(-0.8deg); }
 .doodle-disaster:nth-child(2) .ink-outline { transform: rotate(0.7deg); }
 .doodle-disaster:nth-child(3) .ink-outline { transform: rotate(-0.5deg); }
@@ -124,7 +125,7 @@
 .doodle-disaster:active { background: var(--pale); }
 .doodle-disaster.doodle-selected { background: var(--snow); color: var(--pitch); }
 .doodle-region { background: var(--snow); color: var(--pitch); }
-.doodle-region[data-placeholder] { color: var(--slate); }
+.doodle-region[data-placeholder] { color: var(--intake-unselected); }
 @media (prefers-reduced-motion: reduce) { .doodle-disaster { transition: none; } }
 
 @keyframes cp-bob {

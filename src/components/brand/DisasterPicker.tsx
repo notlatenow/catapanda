@@ -19,17 +19,16 @@ function InkOutline({ wide = false }: { wide?: boolean }) {
 
 function DisasterIcon({ name }: { name: string }) {
   return (
-    <svg aria-hidden="true" viewBox="0 0 80 72" className="h-16 w-16 max-w-full fill-none stroke-current" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
+    <svg aria-hidden="true" viewBox="0 0 32 32" className="h-16 w-16 max-w-full fill-none stroke-current" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
       {name === "Earthquake" ? <>
-        <path d="M9 32 38 9 69 31 M16 29 17 59 34 60 M47 59 63 58 63 28 M29 19 29 12 20 12 20 25" />
-        <path d="m40 21-7 13 12 5-10 12 8 13 M24 36 29 36 29 44 23 44 Z M52 36 57 36 57 44 52 44 Z M7 63 19 66 29 63 M52 64 62 67 73 63" />
+        <path d="M4 13 15.5 4 28 13 M7 11v15h6 M25 11v15h-5" />
+        <path d="m17 10-3 6 5 2-4 6 2 5 M10 16v3 M22 16v3" />
       </> : name === "Flood" ? <>
-        <path d="m17 33 23-20 23 19 M23 29 23 44 M57 29 57 43 M35 29 45 29 45 39 35 39 Z" />
-        <path d="M6 46 Q14 38 23 46 T40 46 T57 46 T74 46 M6 56 Q14 48 23 56 T40 56 T57 56 T74 56 M10 66 Q18 58 27 66 T44 66 T61 66" />
-        <path d="m10 15-3 6 M67 10l-3 7 M74 28l-3 6" />
+        <path d="m7 13 9-8 9 8 M10 11v7 M22 11v7 M16 12v3" />
+        <path d="M3 21q3-4 6 0t7 0t7 0t6 0 M3 27q3-4 6 0t7 0t7 0t6 0" />
       </> : <>
-        <path d="M13 34 C5 20 21 10 33 17 C39 2 62 7 62 23 C76 20 79 37 65 40 L53 40 M13 33 29 33 C44 33 46 43 36 46 M7 43 23 43 M15 54 51 54 C68 54 65 42 58 45 M28 64 49 64 C62 64 68 59 67 55" />
-        <path d="m25 21 4-2 M44 14q8-2 11 5 M10 63l8-1" />
+        <path d="M7 14a5 5 0 0 1 1-10 6 6 0 0 1 11-1 5 5 0 0 1 7 9" />
+        <path d="M4 17h13c6 0 6-8 2-8 M7 22h17c6 0 6-8 2-8 M11 27h7c5 0 7-2 7-5" />
       </>}
     </svg>
   );
