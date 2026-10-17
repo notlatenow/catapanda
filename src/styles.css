@@ -144,6 +144,6 @@
 @utility halftone-ink {
   background-color: var(--ink-base);
   background-image: url("./assets/halftone.svg");
-  background-size: 480px 100%;
-  background-repeat: repeat-x;
+  background-size: 480px 64px;
+  background-repeat: repeat;
 }
