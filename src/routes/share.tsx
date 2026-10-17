@@ -69,8 +69,9 @@ function SharePage() {
   const email = buildEmailShare(disasters, names);
 
   const links: { label: string; href: string; icon: ReactNode }[] = [
-    { label: "Email", href: `mailto:?subject=${encodeURIComponent(email.subject)}&body=${encodeURIComponent(email.body)}`, icon: <Mail className="size-8" strokeWidth={2.5} /> },
-    ...(device.mobile ? [{ label: "SMS", href: smsShareHref(msg, device.ios), icon: <MessageCircle className="size-8" strokeWidth={2.5} /> }] : []),
+    device.mobile
+      ? { label: "Text", href: smsShareHref(msg, device.ios), icon: <MessageCircle className="size-8" strokeWidth={2.5} /> }
+      : { label: "Email", href: `mailto:?subject=${encodeURIComponent(email.subject)}&body=${encodeURIComponent(email.body)}`, icon: <Mail className="size-8" strokeWidth={2.5} /> },
     { label: "WhatsApp", href: `https://wa.me/?text=${enc}`, icon: <WhatsAppIcon /> },
     { label: "Facebook", href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(APP_URL)}`, icon: <FacebookIcon /> },
     { label: "X / Twitter", href: xShareHref(disasters, names), icon: <XIcon /> },
