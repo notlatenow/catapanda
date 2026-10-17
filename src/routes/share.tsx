@@ -56,9 +56,8 @@ function SharePage() {
       <Page>
         <StackedCard>
           <h1 className="text-2xl text-ink">Nothing to share yet!</h1>
-          <p className="mt-2 text-slate">Head back to the home page to tell us about <strong className="text-ink">your</strong> home! After that, you can come back here and share your personal Top 10 checklist with all your loved ones.</p>
+          <p className="mt-2 text-slate">Head back home and pick at least one disaster first. After that, return here to share your disaster top tips with your loved ones!</p>
           <p className="mt-2 font-bold text-ink">Sharing is caring.</p>
-          <Link to="/" className={cn(pillVariants({ variant: "primary" }), "mt-5 inline-flex")}>Go to the home page</Link>
         </StackedCard>
       </Page>
     );
