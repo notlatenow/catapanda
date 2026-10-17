@@ -51,6 +51,8 @@
   --color-sun: var(--sun);
   --color-dusk: var(--dusk);
   --color-haze: var(--haze);
+  --color-flow-hover: var(--flow-hover);
+  --color-flow-hover-text: var(--flow-hover-text);
 }
 
 :root {
@@ -74,6 +76,8 @@
   --sun: #d99b00;
   --dusk: #103654;
   --haze: #0063ad;
+  --flow-hover: #103654;
+  --flow-hover-text: #006ec2;
   --halftone-dot: #2c2c30;
 
   --background: var(--sky);
@@ -111,18 +115,16 @@
 @utility shadow-soft { box-shadow: var(--shadow-soft); }
 
 /* Uneven pen outlines stay crisp without stretching the stroke. */
-.ink-outline { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; fill: var(--ink); }
-.doodle-disaster { background: var(--snow); transition: background-color 150ms ease; }
+.ink-outline { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; fill: currentColor; }
+.doodle-disaster { background: var(--snow); color: var(--slate); transition: background-color 150ms ease, color 150ms ease; }
 .doodle-disaster:nth-child(1) .ink-outline { transform: rotate(-0.8deg); }
 .doodle-disaster:nth-child(2) .ink-outline { transform: rotate(0.7deg); }
 .doodle-disaster:nth-child(3) .ink-outline { transform: rotate(-0.5deg); }
 .doodle-disaster:hover { background: var(--pale); }
 .doodle-disaster:active { background: var(--pale); }
-.doodle-disaster.doodle-selected { background: var(--pale); }
-.doodle-selected .ink-outline { fill: var(--bright); }
-.doodle-region { background: var(--snow); color: var(--ink); }
+.doodle-disaster.doodle-selected { background: var(--snow); color: var(--pitch); }
+.doodle-region { background: var(--snow); color: var(--pitch); }
 .doodle-region[data-placeholder] { color: var(--slate); }
-.doodle-region:hover .ink-outline, .doodle-region[data-state="open"] .ink-outline { fill: var(--bright); }
 @media (prefers-reduced-motion: reduce) { .doodle-disaster { transition: none; } }
 
 @keyframes cp-bob {

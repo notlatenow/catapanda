@@ -1,5 +1,4 @@
 import * as Select from "@radix-ui/react-select";
-import { useState } from "react";
 import { PillButton } from "./PillButton";
 import { catalog } from "@/services/catalog";
 import { cn } from "@/lib/utils";
@@ -36,31 +35,29 @@ function DisasterIcon({ name }: { name: string }) {
   );
 }
 
-export function DisasterPicker({ picked, onToggle }: { picked: string[]; onToggle: (name: string) => void }) {
-  const [region, setRegion] = useState("");
+export function DisasterPicker({ picked, onToggle, region, onRegionChange }: { picked: string[]; onToggle: (name: string) => void; region: string; onRegionChange: (region: string) => void }) {
   return (
     <>
       <div className="mt-4 grid grid-cols-3 gap-2 sm:gap-3" role="group" aria-label="Disasters">
         {catalog.getDisasters().map(({ name }) => (
           <PillButton key={name} type="button" aria-pressed={picked.includes(name)} onClick={() => onToggle(name)}
-            className={cn("doodle-disaster relative flex min-w-0 flex-col gap-1 rounded-none px-1 py-4 font-display text-sm font-bold text-ink sm:text-base", picked.includes(name) && "doodle-selected")}>
+            className={cn("doodle-disaster relative flex min-w-0 flex-col gap-1 rounded-none px-1 py-4 font-display text-sm font-bold sm:text-base", picked.includes(name) && "doodle-selected")}>
             <InkOutline />
             <DisasterIcon name={name} />
             <span>{name}</span>
           </PillButton>
         ))}
       </div>
-      <Select.Root value={region} onValueChange={setRegion}>
+      <Select.Root value={region} onValueChange={onRegionChange}>
         <Select.Trigger aria-label="Country" className="doodle-region relative mt-6 flex h-12 w-full items-center justify-between gap-2 px-4 text-left text-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
           <InkOutline wide />
           <Select.Value placeholder="Choose your region." />
           <Select.Icon>
-            <svg aria-hidden="true" viewBox="0 0 24 18" className="h-4 w-5 fill-pitch"><path d="m3 4 18-1-9 12Z" /></svg>
+            <svg aria-hidden="true" viewBox="0 0 24 18" className="h-4 w-5 fill-current"><path d="m3 4 18-1-9 12Z" /></svg>
           </Select.Icon>
         </Select.Trigger>
         <Select.Portal>
-          <Select.Content position="popper" sideOffset={6} className="relative z-50 min-w-[var(--radix-select-trigger-width)] rounded-lg bg-card p-2 text-card-foreground shadow-soft">
-            <InkOutline wide />
+          <Select.Content position="popper" sideOffset={6} className="relative z-50 min-w-[var(--radix-select-trigger-width)] rounded-lg border-0 bg-card p-2 text-card-foreground shadow-soft outline-none">
             <Select.Viewport>
               {catalog.getRegions().map((country) => <Select.Item key={country} value={country} className="cursor-pointer rounded-md px-3 py-2 outline-none data-[highlighted]:bg-accent"><Select.ItemText>{country}</Select.ItemText></Select.Item>)}
             </Select.Viewport>

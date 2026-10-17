@@ -6,7 +6,7 @@ import { StackedCard } from "@/components/brand/StackedCard";
 import { TextArea } from "@/components/brand/OptionCard";
 import { DisasterPicker } from "@/components/brand/DisasterPicker";
 import { APP_TITLE } from "@/config/app";
-import { session, useSession, DESCRIPTION_MIN, DESCRIPTION_MAX } from "@/state/session";
+import { session, useSession, isIntakeReady, DESCRIPTION_MIN, DESCRIPTION_MAX } from "@/state/session";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -23,9 +23,9 @@ export const Route = createFileRoute("/")({
 });
 
 function Start() {
-  const { disasters: picked, description } = useSession();
+  const { disasters: picked, description, region } = useSession();
   const len = description.trim().length;
-  const ready = picked.length > 0 && len >= DESCRIPTION_MIN;
+  const ready = isIntakeReady({ disasters: picked, description, region });
 
   return (
     <>
@@ -44,7 +44,7 @@ function Start() {
         <StackedCard>
           <h2 className="text-xl text-ink">What are you preparing for?</h2>
           <p className="mt-1 text-sm text-slate">Pick at least one to get started.</p>
-          <DisasterPicker picked={picked} onToggle={session.toggleDisaster} />
+          <DisasterPicker picked={picked} onToggle={session.toggleDisaster} region={region} onRegionChange={session.setRegion} />
         </StackedCard>
 
         <StackedCard variant="accent">
