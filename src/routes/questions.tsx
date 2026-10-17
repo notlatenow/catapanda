@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useRef, useState } from "react";
-import { ArrowLeft, Check, X } from "lucide-react";
+import { ArrowLeft, X } from "lucide-react";
 import mascots from "@/assets/friends-waist.png.asset.json";
 import blueBackground from "@/assets/question-blue.webp";
 import redBackground from "@/assets/question-red.webp";
@@ -99,23 +99,23 @@ export function Questions() {
       <div className="mx-auto flex w-full max-w-xl flex-1 items-center px-4 py-12">
         <section key={loading ? "loading" : step} className="question-enter w-full" aria-busy={loading}>
           <StackedCard bottomTab={theme === "yellow" ? "blue" : "yellow"}>
-          <h1 ref={heading} tabIndex={-1} className="text-2xl leading-tight outline-none sm:text-3xl">{loading ? "A little more about your home…" : step === 0 ? "Tell us about your household" : q?.text ?? "Your checklists are next…"}</h1>
+           <h1 ref={heading} tabIndex={-1} className="text-xl font-bold leading-relaxed outline-none">{loading ? "A little more about your home…" : step === 0 ? "Tell us about your household" : q?.text ?? "Your checklists are next…"}</h1>
           {loading ? (
             <div className="mt-8" role="status"><img src={mascots.url} alt="" className="cp-bob h-36 w-48 object-contain object-bottom" /><p className="mt-5 text-slate">Just a moment…</p></div>
           ) : step === 0 ? (
             <form id="household-form" onSubmit={(e) => { e.preventDefault(); void submitHousehold(); }}>
-              <p className="mt-3 text-base text-slate sm:text-lg">Who's at home? Include pets and any needs you'd like us to keep in mind.</p>
-              <TextArea id="household" aria-label="Tell us about your household" aria-describedby="household-hint" className="mt-3 text-base" rows={2} maxLength={DESCRIPTION_MAX} value={s.description} onChange={(e) => session.setDescription(e.target.value)} placeholder="I live with my elderly mother who uses a walker, and we have a cat…" />
+               <p className="mt-3 text-base text-slate">Who's at home? Include pets and any needs you'd like us to keep in mind.</p>
+               <TextArea id="household" aria-label="Tell us about your household" aria-describedby="household-hint" className="question-input mt-3 rounded-3xl text-base" rows={2} maxLength={DESCRIPTION_MAX} value={s.description} onChange={(e) => session.setDescription(e.target.value)} placeholder="I live with my elderly mother who uses a walker, and we have a cat…" />
               <div id="household-hint" className="mt-3 flex justify-between gap-4 text-sm text-slate"><span>{s.description.trim().length < 10 ? "At least 10 characters." : "Never stored or shared."}</span><span>{s.description.length}/{DESCRIPTION_MAX}</span></div>
             </form>
           ) : q ? (
-            <div className="mt-7">
-              {q.type !== "text" && <div className="grid gap-3 sm:max-w-lg">{q.options.map((option, index) => (
-                <PillButton key={option} aria-pressed={!answer.skipped && answer.choice === option} onClick={() => { session.setAnswer(q.id, { choice: option, text: undefined, skipped: false }); if (option.toLowerCase() !== "other") nextQuestion(); }} className={cn("min-h-14 justify-start whitespace-normal rounded-lg border-2 border-sand bg-snow px-4 py-3 text-left text-ink hover:border-bright hover:bg-pale hover:text-ink", !answer.skipped && answer.choice === option && "border-bright bg-pale text-ink")}>
-                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded border border-current text-xs">{String.fromCharCode(65 + index)}</span><span className="flex-1">{option}</span>{!answer.skipped && answer.choice === option && <Check size={18} />}
+             <div className="mt-3">
+               {q.type !== "text" && <div className="flex flex-wrap gap-2">{q.options.map((option) => (
+                 <PillButton key={option} aria-pressed={!answer.skipped && answer.choice === option} onClick={() => { session.setAnswer(q.id, { choice: option, text: undefined, skipped: false }); if (option.toLowerCase() !== "other") nextQuestion(); }} className={cn("min-h-11 max-w-full whitespace-normal rounded-full border border-sand bg-snow px-4 py-2 text-base font-bold text-ink hover:border-bright hover:bg-snow hover:text-ink active:bg-pale active:text-ink", !answer.skipped && answer.choice === option && "border-bright bg-pale text-ink ring-1 ring-bright hover:bg-pale")}>
+                   {option}
                 </PillButton>
               ))}</div>}
-              {textQuestion && <TextArea autoFocus aria-label="Your answer" className="mt-3 text-base" rows={1} maxLength={100} placeholder="Your answer…" value={answer.text ?? ""} onChange={(e) => session.setAnswer(q.id, { text: e.target.value, skipped: false })} />}
+               {textQuestion && <TextArea autoFocus aria-label="Your answer" className="question-input mt-3 rounded-3xl text-base" rows={1} maxLength={100} placeholder="Your answer…" value={answer.text ?? ""} onChange={(e) => session.setAnswer(q.id, { text: e.target.value, skipped: false })} />}
             </div>
           ) : null}
           </StackedCard>

@@ -8,3 +8,4 @@
 - [x] Verify immediate option advance, typed Next, individual skip, Back, fallback and phone layout.
 - [x] Redesign question screens with three comic backgrounds, stacked content boxes and simplified Next controls; verify the flow.
 - [x] Compact the question box, place Back/Start over/Next underneath, and replace the three backgrounds with clean PNG redraws; verify phone and desktop layouts.
+- [ ] Match reference question typography and word-only pill answers without skip; verify selection, typing and phone layout.
