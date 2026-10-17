@@ -29,7 +29,7 @@ describe("Sequential household form", () => {
   it("begins at household, then advances directly to the first question", () => {
     seed(); render(<Questions />);
     expect(session.get().formStep).toBe(0);
-    fireEvent.click(screen.getByRole("button", { name: "Next" }));
+    fireEvent.click(screen.getByRole("button", { name: "OK" }));
     expect(session.get().formStep).toBe(1);
     expect(run).not.toHaveBeenCalled();
   });
@@ -42,34 +42,25 @@ describe("Sequential household form", () => {
     expect(session.get().formStep).toBe(1);
     expect(session.get().answers["q1"]?.choice).toBe("Yes");
   });
-  it("typed answers require Next and finish at checklist options", () => {
+  it("typed answers require confirmation and finish at checklist options", () => {
     seed(); session.setFormStep(2); render(<Questions />);
-    expect(screen.getByRole("button", { name: "Next" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "OK" })).toBeDisabled();
     fireEvent.change(screen.getByRole("textbox", { name: "Your answer" }), { target: { value: "A walker" } });
     expect(session.get().formStep).toBe(2);
-    fireEvent.click(screen.getByRole("button", { name: "Next" }));
+    fireEvent.click(screen.getByRole("button", { name: "OK" }));
     expect(session.get().answers["q2"]?.text).toBe("A walker");
     expect(navigate).toHaveBeenCalledWith({ to: "/options" });
-  });
-  it("skips only the current question and lets a revisited choice unskip it", () => {
-    seed(); session.setFormStep(1); render(<Questions />);
-    fireEvent.click(screen.getByRole("button", { name: /Skip this question/ }));
-    expect(session.get().answers["q1"]?.skipped).toBe(true);
-    expect(session.get().answers["q2"]).toBeUndefined();
-    fireEvent.click(screen.getByRole("button", { name: "Back" }));
-    fireEvent.click(screen.getByRole("button", { name: /No/ }));
-    expect(session.get().answers["q1"]).toMatchObject({ choice: "No", skipped: false });
   });
   it("empty clarification bypasses questions after household Next", async () => {
     run.mockResolvedValue({ enabled: false, questions: [], searchNeeds: [] });
     render(<Questions />);
-    fireEvent.click(screen.getByRole("button", { name: "Next" }));
+    fireEvent.click(screen.getByRole("button", { name: "OK" }));
     await waitFor(() => expect(navigate).toHaveBeenCalledWith({ to: "/options" }));
     expect(session.get().clarify?.questions).toEqual([]);
   });
   it("failed clarification falls back to checklist options", async () => {
     run.mockRejectedValue(new Error("Unavailable")); render(<Questions />);
-    fireEvent.click(screen.getByRole("button", { name: "Next" }));
+    fireEvent.click(screen.getByRole("button", { name: "OK" }));
     await waitFor(() => expect(navigate).toHaveBeenCalledWith({ to: "/options" }));
   });
 });

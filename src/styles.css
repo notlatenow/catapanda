@@ -158,6 +158,7 @@
 .question-red { --question-color: var(--brick); }
 .question-yellow { --question-color: var(--welcome); }
 .question-screen { background-color: var(--question-color); }
+.question-input:hover, .question-input:focus { border-color: var(--bright); }
 .question-next {
   min-width: 69px;
   min-height: 44px;
