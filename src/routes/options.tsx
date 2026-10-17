@@ -32,11 +32,11 @@ function Options() {
     { id: "personalized", name: "Personal Picks", art: personalPicksArt, tilt: "rotate-[10deg]" },
   ];
   const lists = disasters.map((d) => ({ id: d, name: `${d} basics` }));
-  const featuredText = "font-display block py-6 text-center text-3xl leading-tight text-slate sm:text-4xl";
+  const featuredText = "font-display block py-2 text-center text-3xl leading-tight text-slate sm:text-4xl";
   if (disasters.length > 0 && waiting) {
     return (
-      <main className="fixed inset-0 z-50 isolate flex overflow-y-auto text-ink">
-        <img src={darkBackground} alt="" className="pointer-events-none fixed inset-0 -z-10 h-full w-full object-cover" />
+      <main className="relative isolate flex min-h-svh flex-1 text-ink">
+        <img src={darkBackground} alt="" className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover" />
         <div className="m-auto w-full max-w-xl px-4 py-12">
           <ListsLoading disasters={disasters} phase={personal?.phase ?? 0} />
         </div>
