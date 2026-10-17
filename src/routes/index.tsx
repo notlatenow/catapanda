@@ -58,6 +58,7 @@ function Start() {
           <img src={letsGoButton} alt="" className="h-full w-full object-contain" />
         </PillButton>
       </div>
+      </div>
     </>
   );
 }
