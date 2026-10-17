@@ -85,8 +85,13 @@ function SharePage() {
           <p className="mt-4 text-xs font-bold uppercase tracking-wide text-slate">Message preview</p>
           <p className="mt-1 whitespace-pre-wrap break-words rounded-2xl bg-linen p-4 text-sm text-ink">{msg}</p>
         </StackedCard>
-        <ul className="flex flex-wrap justify-center gap-x-5 gap-y-4">
-          {links.map((l, i) => (
+        <ul className="flex flex-wrap items-center justify-center gap-x-5 gap-y-4">
+          {links.flatMap((l, i) => [
+            ...(l.label === "Facebook" ? [<li key="back">
+          <Link to="/checklist" aria-label="Back" className="group block rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+            <img src={backArt} alt="BACK!" width={96} className="w-24 -rotate-6 transition-transform motion-safe:duration-150 group-hover:rotate-0 group-hover:scale-125 group-active:scale-110" />
+          </Link>
+        </li>] : []),
             <li key={l.label}>
               <a
                 href={l.href}
@@ -99,15 +104,10 @@ function SharePage() {
                 </span>
                 <span className="font-display text-sm font-bold text-snow">{l.label}</span>
               </a>
-            </li>
-          ))}
+            </li>,
+          ])}
         </ul>
       </Page>
-      <div className="flex justify-center px-4 pb-6">
-        <Link to="/checklist" aria-label="Back" className="group rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-          <img src={backArt} alt="BACK!" width={140} className="w-32 -rotate-6 transition-transform motion-safe:duration-150 group-hover:rotate-0 group-hover:scale-125 group-active:scale-110" />
-        </Link>
-      </div>
     </>
   );
 }
