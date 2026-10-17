@@ -11,8 +11,7 @@ export function SiteHeader() {
   const link = "rounded-full px-2 py-1.5 text-sm sm:px-4 sm:text-base font-bold text-sun hover:text-snow active:text-sky";
   return (
     <header className={cn("halftone-ink relative z-10", home ? "pb-28" : "pb-4")} style={{ clipPath: INK_EDGE }}>
-      <nav className="mx-auto grid max-w-xl grid-cols-[minmax(0,1fr)_auto] items-center gap-2 px-4 py-4">
-        <Link to="/" onClick={() => session.reset()} className="min-w-0 font-display text-xl font-bold text-snow">CataPanda</Link>
+      <nav className="mx-auto flex max-w-xl items-center justify-end gap-2 px-4 py-4">
         <div className="flex shrink-0 gap-1">
           <Link to="/" onClick={() => session.reset()} className={link} activeOptions={{ exact: true }}>Home</Link>
           <Link to="/about" className={link}>About</Link>
