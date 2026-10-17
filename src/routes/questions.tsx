@@ -3,6 +3,10 @@ import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Check, X } from "lucide-react";
 import mascots from "@/assets/friends-waist.png.asset.json";
+import blueBackground from "@/assets/question-blue.jpg.asset.json";
+import redBackground from "@/assets/question-red.jpg.asset.json";
+import yellowBackground from "@/assets/question-yellow.jpg.asset.json";
+import { StackedCard } from "@/components/brand/StackedCard";
 import { TextArea } from "@/components/brand/OptionCard";
 import { PillButton } from "@/components/brand/PillButton";
 import { cn } from "@/lib/utils";
@@ -82,47 +86,47 @@ export function Questions() {
   }
 
   const nextDisabled = step === 0 ? !isHouseholdReady(s.description) : textQuestion ? !answer.text?.trim() : !answer.choice;
+  const theme = ["blue", "red", "yellow"][step % 3];
+  const background = [blueBackground, redBackground, yellowBackground][step % 3] ?? blueBackground;
 
   return (
-    <main className="flex min-h-svh flex-col bg-sky text-snow">
+    <main className={cn("question-screen relative isolate flex min-h-svh flex-col text-ink", `question-${theme}`)}>
+      <img src={background.url} alt="" className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover" />
       <div className="mx-auto flex w-full max-w-4xl items-center justify-between px-6 py-5 sm:px-10">
         <PillButton onClick={back} aria-label="Back" title="Back" className="h-11 w-11 bg-transparent p-0 text-pale hover:bg-ocean hover:text-snow"><ArrowLeft size={23} /></PillButton>
-        <span className="text-sm font-bold text-pale">Your home, your plan.</span>
         <PillButton onClick={() => { request.current += 1; session.reset(); void navigate({ to: "/" }); }} aria-label="Exit form" title="Exit form" className="h-11 w-11 bg-transparent p-0 text-pale hover:bg-ocean hover:text-snow"><X size={23} /></PillButton>
       </div>
       <div className="mx-auto flex w-full max-w-3xl flex-1 items-center px-6 py-10 sm:px-10">
         <section key={loading ? "loading" : step} className="question-enter w-full" aria-busy={loading}>
-          <div className="mb-5 flex items-center gap-3 text-welcome">
-            <span className="font-display text-lg font-semibold">{String(step + 1).padStart(2, "0")}</span><ArrowRight size={20} />
-          </div>
+          <StackedCard>
           <h1 ref={heading} tabIndex={-1} className="text-3xl leading-tight outline-none sm:text-4xl">{loading ? "A little more about your home…" : step === 0 ? "Tell us about your household" : q?.text ?? "Your checklists are next…"}</h1>
           {loading ? (
-            <div className="mt-8" role="status"><img src={mascots.url} alt="" className="cp-bob h-36 w-48 object-contain object-bottom" /><p className="mt-5 text-pale">Just a moment…</p></div>
+            <div className="mt-8" role="status"><img src={mascots.url} alt="" className="cp-bob h-36 w-48 object-contain object-bottom" /><p className="mt-5 text-slate">Just a moment…</p></div>
           ) : step === 0 ? (
             <form onSubmit={(e) => { e.preventDefault(); void submitHousehold(); }}>
-              <p className="mt-4 text-lg text-pale">Who's at home? Include pets and any needs you'd like us to keep in mind.</p>
-              <TextArea id="household" aria-label="Tell us about your household" aria-describedby="household-hint" className="mt-7 rounded-lg border-0 border-b-2 border-pale bg-transparent px-0 text-lg text-snow placeholder:text-pale/60 focus:border-welcome" rows={4} maxLength={DESCRIPTION_MAX} value={s.description} onChange={(e) => session.setDescription(e.target.value)} placeholder="I live with my elderly mother who uses a walker, and we have a cat…" />
-              <div id="household-hint" className="mt-3 flex justify-between gap-4 text-sm text-pale"><span>{s.description.trim().length < 10 ? "At least 10 characters." : "Never stored or shared."}</span><span>{s.description.length}/{DESCRIPTION_MAX}</span></div>
-              <PillButton type="submit" disabled={nextDisabled} className="mt-8 bg-welcome text-panda hover:bg-snow hover:text-panda">Next <ArrowRight size={18} /></PillButton>
+              <p className="mt-4 text-lg text-slate">Who's at home? Include pets and any needs you'd like us to keep in mind.</p>
+              <TextArea id="household" aria-label="Tell us about your household" aria-describedby="household-hint" className="mt-7 rounded-lg border-0 border-b-2 border-sand bg-transparent px-0 text-lg text-ink placeholder:text-slate/70 focus:border-bright" rows={4} maxLength={DESCRIPTION_MAX} value={s.description} onChange={(e) => session.setDescription(e.target.value)} placeholder="I live with my elderly mother who uses a walker, and we have a cat…" />
+              <div id="household-hint" className="mt-3 flex justify-between gap-4 text-sm text-slate"><span>{s.description.trim().length < 10 ? "At least 10 characters." : "Never stored or shared."}</span><span>{s.description.length}/{DESCRIPTION_MAX}</span></div>
+              <PillButton type="submit" disabled={nextDisabled} className="question-next mt-8">Next</PillButton>
             </form>
           ) : q ? (
             <div className="mt-7">
               {q.type !== "text" && <div className="grid gap-3 sm:max-w-lg">{q.options.map((option, index) => (
-                <PillButton key={option} aria-pressed={!answer.skipped && answer.choice === option} onClick={() => { session.setAnswer(q.id, { choice: option, text: undefined, skipped: false }); if (option.toLowerCase() !== "other") nextQuestion(); }} className={cn("min-h-14 justify-start whitespace-normal rounded-lg border-2 border-pale/40 bg-transparent px-4 py-3 text-left text-snow hover:border-welcome hover:bg-pale hover:text-ink", !answer.skipped && answer.choice === option && "border-welcome bg-pale text-ink")}>
+                <PillButton key={option} aria-pressed={!answer.skipped && answer.choice === option} onClick={() => { session.setAnswer(q.id, { choice: option, text: undefined, skipped: false }); if (option.toLowerCase() !== "other") nextQuestion(); }} className={cn("min-h-14 justify-start whitespace-normal rounded-lg border-2 border-sand bg-snow px-4 py-3 text-left text-ink hover:border-bright hover:bg-pale hover:text-ink", !answer.skipped && answer.choice === option && "border-bright bg-pale text-ink")}>
                   <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded border border-current text-xs">{String.fromCharCode(65 + index)}</span><span className="flex-1">{option}</span>{!answer.skipped && answer.choice === option && <Check size={18} />}
                 </PillButton>
               ))}</div>}
-              {textQuestion && <TextArea autoFocus aria-label="Your answer" className="mt-5 rounded-lg border-0 border-b-2 border-pale bg-transparent px-0 text-lg text-snow placeholder:text-pale/60 focus:border-welcome" rows={3} maxLength={100} placeholder="Your answer…" value={answer.text ?? ""} onChange={(e) => session.setAnswer(q.id, { text: e.target.value, skipped: false })} />}
+              {textQuestion && <TextArea autoFocus aria-label="Your answer" className="mt-5 rounded-lg border-0 border-b-2 border-sand bg-transparent px-0 text-lg text-ink placeholder:text-slate/70 focus:border-bright" rows={3} maxLength={100} placeholder="Your answer…" value={answer.text ?? ""} onChange={(e) => session.setAnswer(q.id, { text: e.target.value, skipped: false })} />}
               <div className="mt-8 flex flex-wrap items-center gap-5">
-                {(textQuestion || answer.choice) && <PillButton disabled={nextDisabled} onClick={nextQuestion} className="bg-welcome text-panda hover:bg-snow hover:text-panda">Next <ArrowRight size={18} /></PillButton>}
-                <PillButton onClick={() => { session.setAnswer(q.id, { skipped: true }); nextQuestion(); }} className="bg-transparent px-0 text-pale hover:bg-transparent hover:text-snow">Skip this question <ArrowRight size={16} /></PillButton>
+                {(textQuestion || answer.choice) && <PillButton disabled={nextDisabled} onClick={nextQuestion} className="question-next">Next</PillButton>}
+                <PillButton onClick={() => { session.setAnswer(q.id, { skipped: true }); nextQuestion(); }} className="bg-transparent px-0 text-slate hover:bg-transparent hover:text-ink">Skip this question <ArrowRight size={16} /></PillButton>
               </div>
             </div>
           ) : null}
+          </StackedCard>
         </section>
       </div>
       <div className="mx-auto flex w-full max-w-4xl items-center justify-between gap-4 px-6 py-5 text-xs text-pale sm:px-10">
-        <span>{step === 0 ? "Your household" : `Question ${step} of ${questions.length}`}</span>
         <div className="flex items-center gap-1.5" aria-label={`Step ${step + 1}`}>
           {Array.from({ length: questions.length + 1 }, (_, i) => <span key={i} className={cn("h-1.5 w-5 rounded-full", i <= step ? "bg-welcome" : "bg-pale/25")} />)}
         </div>
