@@ -105,7 +105,7 @@ export function Questions() {
           ) : step === 0 ? (
             <form id="household-form" onSubmit={(e) => { e.preventDefault(); void submitHousehold(); }}>
               <p className="mt-3 text-base text-slate sm:text-lg">Who's at home? Include pets and any needs you'd like us to keep in mind.</p>
-              <TextArea id="household" aria-label="Tell us about your household" aria-describedby="household-hint" className="mt-3 rounded-3xl text-base" rows={2} maxLength={DESCRIPTION_MAX} value={s.description} onChange={(e) => session.setDescription(e.target.value)} placeholder="I live with my elderly mother who uses a walker, and we have a cat…" />
+              <TextArea id="household" aria-label="Tell us about your household" aria-describedby="household-hint" className="mt-3 text-base" rows={2} maxLength={DESCRIPTION_MAX} value={s.description} onChange={(e) => session.setDescription(e.target.value)} placeholder="I live with my elderly mother who uses a walker, and we have a cat…" />
               <div id="household-hint" className="mt-3 flex justify-between gap-4 text-sm text-slate"><span>{s.description.trim().length < 10 ? "At least 10 characters." : "Never stored or shared."}</span><span>{s.description.length}/{DESCRIPTION_MAX}</span></div>
             </form>
           ) : q ? (
@@ -115,7 +115,7 @@ export function Questions() {
                   <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded border border-current text-xs">{String.fromCharCode(65 + index)}</span><span className="flex-1">{option}</span>{!answer.skipped && answer.choice === option && <Check size={18} />}
                 </PillButton>
               ))}</div>}
-              {textQuestion && <TextArea autoFocus aria-label="Your answer" className="mt-3 rounded-3xl text-base" rows={1} maxLength={100} placeholder="Your answer…" value={answer.text ?? ""} onChange={(e) => session.setAnswer(q.id, { text: e.target.value, skipped: false })} />}
+              {textQuestion && <TextArea autoFocus aria-label="Your answer" className="mt-3 text-base" rows={1} maxLength={100} placeholder="Your answer…" value={answer.text ?? ""} onChange={(e) => session.setAnswer(q.id, { text: e.target.value, skipped: false })} />}
               <div className="mt-8 flex flex-wrap items-center gap-5">
                 <PillButton onClick={() => { session.setAnswer(q.id, { skipped: true }); nextQuestion(); }} className="bg-transparent px-0 text-slate hover:bg-transparent hover:text-ink">Skip this question <ArrowRight size={16} /></PillButton>
               </div>
