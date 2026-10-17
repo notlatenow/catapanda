@@ -19,7 +19,7 @@ export function SiteHeader() {
           <img src={logoAsset.url} alt="CataPanda" className="mr-auto h-auto max-h-12 w-28 shrink-0 object-contain sm:w-32" />
         )}
         {pathname === "/share" && (
-          <img src={logoAsset.url} alt="CataPanda" className="absolute left-4 top-0 h-auto max-h-30 w-70 max-w-[calc(100%-2rem)] object-contain sm:w-80" />
+          <img src={logoAsset.url} alt="CataPanda" className="absolute left-2.5 top-0 h-auto max-h-30 w-70 max-w-[calc(100%-2rem)] object-contain object-left sm:w-80" />
         )}
         <div className="flex shrink-0 gap-1">
           <Link to="/" onClick={() => session.reset()} className={link} activeOptions={{ exact: true }}>Home</Link>
