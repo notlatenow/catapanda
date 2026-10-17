@@ -39,9 +39,9 @@ function About() {
         <img
           src={friends.url}
           alt="The CataPanda cat and panda hugging"
-          className="pointer-events-none absolute inset-x-0 bottom-full mx-auto -mb-3 w-64"
+          className="pointer-events-none absolute inset-x-0 bottom-full z-0 mx-auto -mb-3 w-64"
         />
-        <div className="relative">
+        <div className="relative z-10">
           <Section title="About CataPanda">
         <p>Hi! CataPanda (short for Catastrophic Pandamonium) helps you get ready for earthquakes, floods and typhoons in Taiwan.</p>
         <p>Pick what you're preparing for, tell us a little about your home, and we'll hand you a clear, doable checklist. No panic, just a plan.</p>
