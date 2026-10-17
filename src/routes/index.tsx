@@ -3,7 +3,7 @@ import logo from "@/assets/web-logo.png.asset.json";
 import mascots from "@/assets/web-mascots.png.asset.json";
 import { Page } from "@/components/brand/AppLayout";
 import { PillButton } from "@/components/brand/PillButton";
-import letsGoButton from "@/assets/lets-go-button.png";
+import letsGoButton from "@/assets/lets-go-button-clean.png";
 import { StackedCard } from "@/components/brand/StackedCard";
 import { TextArea } from "@/components/brand/OptionCard";
 import { DisasterPicker } from "@/components/brand/DisasterPicker";
