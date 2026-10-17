@@ -39,7 +39,7 @@ function Start() {
           <p className="mt-2 text-ink">We get it: nobody wants natural disasters. But when one comes, you'll know how to prepare thanks to our gov-backed checklist. Sourced from {catalog.getSources().length} official government resources across Asia, so you know it's legit. Tell us what you're prepping for and who's at home...</p>
         </StackedCard>
 
-        <StackedCard>
+        <StackedCard bottomTab="yellow">
           <h2 className="text-xl text-ink">What are you preparing for?</h2>
           <p className="mt-1 text-sm text-slate">Pick at least one to get started.</p>
           <DisasterPicker picked={picked} onToggle={session.toggleDisaster} region={region} onRegionChange={session.setRegion} />
