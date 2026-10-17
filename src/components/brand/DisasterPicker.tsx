@@ -26,12 +26,15 @@ function DisasterIcon({ name }: { name: string }) {
     <svg aria-hidden="true" viewBox="0 0 32 32" className="h-16 w-16 max-w-full fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <defs>
         <filter id={textureId} x="-10%" y="-10%" width="120%" height="120%" colorInterpolationFilters="sRGB">
-          <feTurbulence type="fractalNoise" baseFrequency="1.8" numOctaves="3" seed={name === "Earthquake" ? 7 : name === "Flood" ? 19 : 31} result="grain" />
-          <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.333 0.333 0.333 0 0" />
+          <feTurbulence type="fractalNoise" baseFrequency="0.12 0.24" numOctaves="2" seed={name === "Earthquake" ? 7 : name === "Flood" ? 19 : 31} result="inkPressure" />
+          <feTurbulence type="fractalNoise" baseFrequency="0.85 2.6" numOctaves="3" seed={name === "Earthquake" ? 11 : name === "Flood" ? 23 : 37} result="paperFibers" />
+          <feComposite in="paperFibers" in2="inkPressure" operator="arithmetic" k1="1" k2="0.12" k3="0" k4="0" result="dryBrush" />
+          <feColorMatrix in="dryBrush" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.333 0.333 0.333 0 0" />
           <feComponentTransfer>
-            <feFuncA type="discrete" tableValues="0 0 0 1 1 1 1 1" />
+            <feFuncA type="discrete" tableValues="0 0 0 1 1 1 1 1 1 1 1 1" />
           </feComponentTransfer>
-          <feComposite in="SourceGraphic" operator="in" />
+          <feComposite in="SourceGraphic" operator="in" result="stampedInk" />
+          <feDisplacementMap in="stampedInk" in2="paperFibers" scale="0.22" xChannelSelector="R" yChannelSelector="G" />
         </filter>
       </defs>
       <g filter={`url(#${textureId})`}>
