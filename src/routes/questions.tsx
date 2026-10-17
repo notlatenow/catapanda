@@ -98,7 +98,7 @@ export function Questions() {
       </div>
       <div className="mx-auto flex w-full max-w-xl flex-1 items-center px-4 py-12">
         <section key={loading ? "loading" : step} className="question-enter w-full" aria-busy={loading}>
-          <StackedCard bottomTab={theme === "yellow" ? "red" : "yellow"}>
+          <StackedCard bottomTab={theme === "yellow" ? "blue" : "yellow"}>
           <h1 ref={heading} tabIndex={-1} className="text-2xl leading-tight outline-none sm:text-3xl">{loading ? "A little more about your home…" : step === 0 ? "Tell us about your household" : q?.text ?? "Your checklists are next…"}</h1>
           {loading ? (
             <div className="mt-8" role="status"><img src={mascots.url} alt="" className="cp-bob h-36 w-48 object-contain object-bottom" /><p className="mt-5 text-slate">Just a moment…</p></div>
@@ -128,7 +128,7 @@ export function Questions() {
       </div>
       <div className="flex w-full items-center justify-end gap-4 px-6 py-5 text-xs text-pale sm:px-10">
         <div className="flex items-center gap-1.5" aria-label={`Step ${step + 1}`}>
-          {Array.from({ length: questions.length + 1 }, (_, i) => <span key={i} className={cn("h-1.5 w-5 rounded-full", i <= step ? (theme === "yellow" ? "bg-brick" : "bg-welcome") : "bg-pale/25")} />)}
+          {Array.from({ length: questions.length + 1 }, (_, i) => <span key={i} className={cn("h-1.5 w-5 rounded-full", i <= step ? (theme === "yellow" ? "bg-bright" : "bg-welcome") : "bg-pale/25")} />)}
         </div>
       </div>
     </main>
