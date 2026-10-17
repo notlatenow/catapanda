@@ -3,8 +3,8 @@ import { cn } from "@/lib/utils";
 
 type Props = { children: ReactNode; variant?: "standard" | "accent" | "welcome"; bottomTab?: "gold" | "yellow"; className?: string };
 
-/** Signature layered card: Panda Black tab above, Sunset Gold (or White on accent) tab below. */
-export function StackedCard({ children, variant = "standard", bottomTab = "gold", className }: Props) {
+/** Signature layered card: Panda Black tab above, yellow or white tab below, without shadows. */
+export function StackedCard({ children, variant = "standard", bottomTab = "yellow", className }: Props) {
   const accent = variant === "accent";
   const welcome = variant === "welcome";
   return (
@@ -14,7 +14,6 @@ export function StackedCard({ children, variant = "standard", bottomTab = "gold"
       <div
         className={cn(
           "relative rounded-3xl p-5 sm:p-6",
-          !welcome && !accent && bottomTab !== "yellow" && "shadow-soft",
           accent ? "bg-brick text-snow [&_h1]:text-panda [&_h2]:text-panda [&_h3]:text-panda" : welcome ? "bg-welcome text-ink" : "bg-card text-card-foreground",
         )}
       >
