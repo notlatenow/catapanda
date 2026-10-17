@@ -1,5 +1,4 @@
 import * as Select from "@radix-ui/react-select";
-import { useId } from "react";
 import { PillButton } from "./PillButton";
 import { catalog } from "@/services/catalog";
 import { cn } from "@/lib/utils";
