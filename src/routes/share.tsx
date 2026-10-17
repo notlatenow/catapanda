@@ -1,9 +1,8 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 import { useState } from "react";
 import { Mail, MessageCircle } from "lucide-react";
 import { Page, FlowNav } from "@/components/brand/AppLayout";
-import { cn } from "@/lib/utils";
 import { StackedCard } from "@/components/brand/StackedCard";
 import { buildAll } from "@/lib/checklists";
 import { buildEmailShare, buildShareMessage, smsShareHref, xShareHref } from "@/lib/share";
