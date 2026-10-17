@@ -37,10 +37,10 @@ describe("Sequential household form", () => {
     seed(); session.setFormStep(1); render(<Questions />);
     fireEvent.click(screen.getByRole("button", { name: /Yes/ }));
     expect(session.get().formStep).toBe(2);
-    expect(session.get().answers.q1).toMatchObject({ choice: "Yes", skipped: false });
+    expect(session.get().answers["q1"]).toMatchObject({ choice: "Yes", skipped: false });
     fireEvent.click(screen.getByRole("button", { name: "Back" }));
     expect(session.get().formStep).toBe(1);
-    expect(session.get().answers.q1?.choice).toBe("Yes");
+    expect(session.get().answers["q1"]?.choice).toBe("Yes");
   });
   it("typed answers require Next and finish at checklist options", () => {
     seed(); session.setFormStep(2); render(<Questions />);
@@ -48,17 +48,17 @@ describe("Sequential household form", () => {
     fireEvent.change(screen.getByRole("textbox", { name: "Your answer" }), { target: { value: "A walker" } });
     expect(session.get().formStep).toBe(2);
     fireEvent.click(screen.getByRole("button", { name: "Next" }));
-    expect(session.get().answers.q2?.text).toBe("A walker");
+    expect(session.get().answers["q2"]?.text).toBe("A walker");
     expect(navigate).toHaveBeenCalledWith({ to: "/options" });
   });
   it("skips only the current question and lets a revisited choice unskip it", () => {
     seed(); session.setFormStep(1); render(<Questions />);
     fireEvent.click(screen.getByRole("button", { name: /Skip this question/ }));
-    expect(session.get().answers.q1?.skipped).toBe(true);
-    expect(session.get().answers.q2).toBeUndefined();
+    expect(session.get().answers["q1"]?.skipped).toBe(true);
+    expect(session.get().answers["q2"]).toBeUndefined();
     fireEvent.click(screen.getByRole("button", { name: "Back" }));
     fireEvent.click(screen.getByRole("button", { name: /No/ }));
-    expect(session.get().answers.q1).toMatchObject({ choice: "No", skipped: false });
+    expect(session.get().answers["q1"]).toMatchObject({ choice: "No", skipped: false });
   });
   it("empty clarification bypasses questions after household Next", async () => {
     run.mockResolvedValue({ enabled: false, questions: [], searchNeeds: [] });
