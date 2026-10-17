@@ -32,7 +32,7 @@ export function SiteHeader() {
 }
 
 export function Page({ children }: { children: ReactNode }) {
-  const centered = useRouterState({ select: (state) => state.location.pathname === "/share" });
+  const centered = useRouterState({ select: (state) => state.location.pathname === "/share" || state.location.pathname === "/options" });
   return <main className={cn("mx-auto flex w-full max-w-xl flex-col gap-6 px-4 pt-6 pb-4", centered && "flex-1 justify-center")}>{children}</main>;
 }
 
