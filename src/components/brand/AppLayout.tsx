@@ -10,7 +10,7 @@ export function SiteHeader() {
   const home = useRouterState({ select: (state) => state.location.pathname === "/" });
   const link = "rounded-full px-2 py-1.5 text-sm sm:px-4 sm:text-base font-bold text-sun hover:text-snow active:text-sky";
   return (
-    <header className={cn("halftone-ink relative z-10", home ? "pb-28" : "pb-4")} style={{ clipPath: INK_EDGE }}>
+    <header className={cn("halftone-ink relative z-10", home ? "pb-20" : "pb-4")} style={{ clipPath: INK_EDGE }}>
       <nav className="mx-auto flex max-w-xl items-center justify-end gap-2 px-4 py-4">
         <div className="flex shrink-0 gap-1">
           <Link to="/" onClick={() => session.reset()} className={link} activeOptions={{ exact: true }}>Home</Link>
