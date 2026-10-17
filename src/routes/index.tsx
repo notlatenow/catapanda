@@ -33,6 +33,7 @@ function Start() {
       <div className="pointer-events-none relative z-20 -mt-36 flex justify-center overflow-hidden" >
         <img src={logo.url} alt="Catastrophic Pandamonium" className="w-[120%] max-w-none shrink-0 sm:w-full sm:max-w-2xl" />
       </div>
+      <div className="-mt-6 sm:-mt-8">
       <Page>
         <StackedCard variant="welcome">
           <h1 className="text-2xl text-ink">Let's get your home ready.</h1>
@@ -56,6 +57,7 @@ function Start() {
         >
           <img src={letsGoButton} alt="" className="h-full w-full object-contain" />
         </PillButton>
+      </div>
       </div>
     </>
   );
