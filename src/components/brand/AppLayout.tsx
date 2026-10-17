@@ -12,10 +12,14 @@ export function SiteHeader() {
   const home = pathname === "/";
   const link = "rounded-full px-2 py-1.5 text-sm sm:px-4 sm:text-base font-bold text-sun hover:text-snow active:text-sky";
   return (
-    <header className={cn("halftone-ink relative z-10", home ? "pb-20" : "pb-4")} style={{ clipPath: INK_EDGE }}>
-      <nav className={cn("mx-auto flex max-w-xl items-center justify-end gap-2 px-4 py-4", pathname === "/share" && "flex-wrap")}>
-        {(pathname === "/options" || pathname === "/share") && (
-          <img src={logoAsset.url} alt="CataPanda" className={cn("mr-auto h-auto shrink-0 object-contain", pathname === "/share" ? "max-h-30 w-70 max-w-full sm:w-80" : "max-h-12 w-28 sm:w-32")} />
+    <header className={cn("relative z-10", home ? "pb-20" : "pb-4", pathname === "/share" && "mb-24")}>
+      <div aria-hidden="true" className="halftone-ink absolute inset-0" style={{ clipPath: INK_EDGE }} />
+      <nav className="relative mx-auto flex max-w-xl items-center justify-end gap-2 px-4 py-4">
+        {pathname === "/options" && (
+          <img src={logoAsset.url} alt="CataPanda" className="mr-auto h-auto max-h-12 w-28 shrink-0 object-contain sm:w-32" />
+        )}
+        {pathname === "/share" && (
+          <img src={logoAsset.url} alt="CataPanda" className="absolute left-4 top-12 h-auto max-h-30 w-70 max-w-[calc(100%-2rem)] object-contain sm:w-80" />
         )}
         <div className="flex shrink-0 gap-1">
           <Link to="/" onClick={() => session.reset()} className={link} activeOptions={{ exact: true }}>Home</Link>
