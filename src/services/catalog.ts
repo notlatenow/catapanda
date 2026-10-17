@@ -6,6 +6,7 @@ import itemsData from "@/data/catalog/items.json";
 import disastersData from "@/data/catalog/disasters.json";
 import referenceData from "@/data/catalog/reference.json";
 import allowedSitesData from "@/data/catalog/allowed-sites.json";
+import regionsData from "@/data/catalog/regions.json";
 
 export type Priority = "essential" | "important" | "nice-to-have" | "conditional";
 export type HouseholdFact = "infant" | "elderly" | "personalAids" | "pet";
@@ -56,6 +57,7 @@ const source: CatalogSource = {
 };
 
 export const catalog = {
+  getRegions: (): string[] => [...regionsData],
   getAllowedSites: (): string[] => [...allowedSitesData],
   getDisasters: () => source.disasters,
   getDisaster: (name: string) => source.disasters.find((d) => d.name === name),

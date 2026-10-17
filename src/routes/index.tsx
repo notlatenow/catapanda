@@ -3,8 +3,8 @@ import logo from "@/assets/web-logo.png.asset.json";
 import mascots from "@/assets/web-mascots.png.asset.json";
 import { Page, FlowNav } from "@/components/brand/AppLayout";
 import { StackedCard } from "@/components/brand/StackedCard";
-import { OptionCard, TextArea } from "@/components/brand/OptionCard";
-import { catalog } from "@/services/catalog";
+import { TextArea } from "@/components/brand/OptionCard";
+import { DisasterPicker } from "@/components/brand/DisasterPicker";
 import { APP_TITLE } from "@/config/app";
 import { session, useSession, DESCRIPTION_MIN, DESCRIPTION_MAX } from "@/state/session";
 
@@ -23,7 +23,6 @@ export const Route = createFileRoute("/")({
 });
 
 function Start() {
-  const disasters = catalog.getDisasters();
   const { disasters: picked, description } = useSession();
   const len = description.trim().length;
   const ready = picked.length > 0 && len >= DESCRIPTION_MIN;
@@ -44,12 +43,8 @@ function Start() {
 
         <StackedCard>
           <h2 className="text-xl text-ink">What are you preparing for?</h2>
-          <p className="mt-1 text-sm text-slate" aria-live="polite">{picked.length ? "Pick one or more." : "Pick at least one to get started."}</p>
-          <div className="mt-4 grid gap-3">
-            {disasters.map((d) => (
-              <OptionCard key={d.name} name={d.name} tagline={d.tagline} selected={picked.includes(d.name)} onClick={() => session.toggleDisaster(d.name)} />
-            ))}
-          </div>
+          <p className="mt-1 text-sm text-slate">Pick at least one to get started.</p>
+          <DisasterPicker picked={picked} onToggle={session.toggleDisaster} />
         </StackedCard>
 
         <StackedCard variant="accent">

@@ -1,3 +1,4 @@
+- [ ] Replace homepage disaster choices with hand-drawn horizontal buttons and a country dropdown; verify selection and small-screen layout.
 - [x] Add managed official-source search, private generic queries, and visit budget.
 - [x] Integrate background searches and approved citations into Suggest/Review and checklist rows.
 - [x] Update Tier 3 copy and verify search/fallback flows (eight tests and live oxygen-device checklist).
