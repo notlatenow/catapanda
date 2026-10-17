@@ -15,7 +15,7 @@ export function SiteHeader() {
     <header className={cn("halftone-ink relative z-10", home ? "pb-20" : "pb-4")} style={{ clipPath: INK_EDGE }}>
       <nav className="mx-auto flex max-w-xl items-center justify-end gap-2 px-4 py-4">
         {(pathname === "/options" || pathname === "/share") && (
-          <img src={logoAsset.url} alt="CataPanda" className="mr-auto h-auto max-h-12 w-28 shrink-0 object-contain sm:w-32" />
+          <img src={logoAsset.url} alt="CataPanda" className={cn("mr-auto h-auto shrink-0 object-contain", pathname === "/share" ? "max-h-15 w-35 sm:w-40" : "max-h-12 w-28 sm:w-32")} />
         )}
         <div className="flex shrink-0 gap-1">
           <Link to="/" onClick={() => session.reset()} className={link} activeOptions={{ exact: true }}>Home</Link>
