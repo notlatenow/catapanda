@@ -97,14 +97,14 @@ export function Questions() {
         <PillButton onClick={() => { request.current += 1; session.reset(); void navigate({ to: "/" }); }} aria-label="Exit form" title="Exit form" className="h-11 w-11 bg-transparent p-0 text-pale hover:bg-ocean hover:text-snow"><X size={23} /></PillButton>
       </div>
       <div className="mx-auto flex w-full max-w-xl flex-1 items-center px-4 py-12">
-        <section key={loading ? "loading" : step} className="question-enter w-full" aria-busy={loading}>
+        <section key={loading ? "loading" : step} className="question-enter w-full text-sm" aria-busy={loading}>
           <StackedCard bottomTab={theme === "yellow" ? "blue" : "yellow"}>
            <h1 ref={heading} tabIndex={-1} className="text-lg font-bold leading-7 outline-none">{loading ? "A little more about your home…" : step === 0 ? "Tell us about your household" : q?.text ?? "Your checklists are next…"}</h1>
           {loading ? (
             <div className="mt-8" role="status"><img src={mascots.url} alt="" className="cp-bob h-36 w-48 object-contain object-bottom" /><p className="mt-5 text-slate">Just a moment…</p></div>
           ) : step === 0 ? (
             <form id="household-form" onSubmit={(e) => { e.preventDefault(); void submitHousehold(); }}>
-               <p className="mt-3 text-base text-slate">Who's at home? Include pets and any needs you'd like us to keep in mind.</p>
+               <p className="mt-3 text-sm text-slate">Who's at home? Include pets and any needs you'd like us to keep in mind.</p>
                <TextArea id="household" aria-label="Tell us about your household" aria-describedby="household-hint" className="question-input mt-3 rounded-3xl text-base" rows={2} maxLength={DESCRIPTION_MAX} value={s.description} onChange={(e) => session.setDescription(e.target.value)} placeholder="I live with my elderly mother who uses a walker, and we have a cat…" />
               <div id="household-hint" className="mt-3 flex justify-between gap-4 text-sm text-slate"><span>{s.description.trim().length < 10 ? "At least 10 characters." : "Never stored or shared."}</span><span>{s.description.length}/{DESCRIPTION_MAX}</span></div>
             </form>
