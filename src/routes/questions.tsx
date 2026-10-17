@@ -93,8 +93,8 @@ export function Questions() {
     <main className={cn("question-screen relative isolate flex min-h-svh flex-col text-ink", `question-${theme}`)}>
       <img src={background} alt="" className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover" />
       <div className="mx-auto flex w-full max-w-4xl items-center justify-between px-6 py-5 sm:px-10">
-        <PillButton onClick={back} aria-label="Back" title="Back" className="h-11 w-11 bg-transparent p-0 text-pale hover:bg-ocean hover:text-snow"><ArrowLeft size={23} /></PillButton>
-        <PillButton onClick={() => { request.current += 1; session.reset(); void navigate({ to: "/" }); }} aria-label="Exit form" title="Exit form" className="h-11 w-11 bg-transparent p-0 text-pale hover:bg-ocean hover:text-snow"><X size={23} /></PillButton>
+        <PillButton onClick={back} aria-label="Back" title="Back" className="question-icon h-11 w-11 bg-transparent p-0 text-pale hover:bg-pitch hover:text-snow"><ArrowLeft size={23} /></PillButton>
+        <PillButton onClick={() => { request.current += 1; session.reset(); void navigate({ to: "/" }); }} aria-label="Exit form" title="Exit form" className="question-icon h-11 w-11 bg-transparent p-0 text-pale hover:bg-pitch hover:text-snow"><X size={23} /></PillButton>
       </div>
       <div className="mx-auto flex w-full max-w-xl flex-1 items-center px-4 py-12">
         <section key={loading ? "loading" : step} className="question-enter w-full text-sm" aria-busy={loading}>
