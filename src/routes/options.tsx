@@ -37,7 +37,7 @@ function Options() {
         {disasters.length > 0 && waiting && <ListsLoading disasters={disasters} phase={personal?.phase ?? 0} />}
         <StackedCard>
           <h1 className="text-2xl text-ink">CataPanda Prep</h1>
-          <p className="mt-2 text-slate">{disasters.length ? "Pick a checklist to open." : "Head back to home and pick at least one disaster first."}</p>
+          <p className="mt-2 text-slate">{disasters.length ? "Pick a checklist to open." : "Head back home and pick at least one disaster first."}</p>
           {disasters.length > 0 && (
             <>
               <div className="mt-4 grid grid-cols-2 gap-3">
