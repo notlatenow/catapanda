@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils";
 
-type Props = { name: string; tagline?: string; selected?: boolean; onClick?: () => void };
+type Props = { name: string; tagline?: string; selected?: boolean; onClick?: () => void; nameClassName?: string };
 
-export function OptionCard({ name, tagline, selected, onClick }: Props) {
+export function OptionCard({ name, tagline, selected, onClick, nameClassName }: Props) {
   return (
     <button
       type="button"
@@ -13,7 +13,7 @@ export function OptionCard({ name, tagline, selected, onClick }: Props) {
         selected ? "border-2 border-bright bg-pale" : "border-sand hover:border-bright",
       )}
     >
-      <span className="block font-display text-lg font-bold text-ink">{name}</span>
+      <span className={cn("block text-ink", nameClassName ?? "font-display text-lg font-bold")}>{name}</span>
       {tagline && <span className="mt-0.5 block text-sm text-slate">{tagline}</span>}
     </button>
   );
