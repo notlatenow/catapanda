@@ -25,11 +25,12 @@ function Options() {
   const hasQuestions = !!clarify?.questions.length;
   const personal = usePersonalization();
   const waiting = !personal || personal.status === "running";
-  const lists = [
-    { id: "top10", name: "Top 10", tagline: "The ten things to get first" },
-    { id: "personalized", name: "Personalized checklist", tagline: "Everything for your household, in one place" },
-    ...disasters.map((d) => ({ id: d, name: d, tagline: `The full ${d.toLowerCase()} list` })),
+  const featured = [
+    { id: "top10", name: "Top Tips" },
+    { id: "personalized", name: "Personal Picks" },
   ];
+  const lists = disasters.map((d) => ({ id: d, name: d, tagline: `The full ${d.toLowerCase()} list` }));
+  const featuredText = "font-display block py-6 text-center text-3xl leading-tight text-slate sm:text-4xl";
   return (
     <>
       <Page>
@@ -38,19 +39,24 @@ function Options() {
           <h1 className="text-2xl text-ink">Your checklists</h1>
           <p className="mt-2 text-slate">Pick a checklist to open.</p>
           {disasters.length > 0 && (
-            <div className="mt-4 grid gap-3">
-              {lists.map((l) =>
-                waiting && (l.id === "top10" || l.id === "personalized") ? (
-                  <div key={l.id} className="opacity-60" aria-disabled="true">
-                    <OptionCard name={l.name} tagline="Almost ready…" />
-                  </div>
-                ) : (
+            <>
+              <div className="mt-4 grid grid-cols-2 gap-3">
+                {featured.map((l) =>
+                  waiting ? (
+                    <span key={l.id} className={`${featuredText} opacity-60`} aria-disabled="true">{l.name}</span>
+                  ) : (
+                    <Link key={l.id} to="/checklist" search={{ list: l.id }} className={`${featuredText} hover:text-ink`}>{l.name}</Link>
+                  ),
+                )}
+              </div>
+              <div className="mt-4 grid gap-3">
+                {lists.map((l) => (
                   <Link key={l.id} to="/checklist" search={{ list: l.id }}>
                     <OptionCard name={l.name} tagline={l.tagline} />
                   </Link>
-                ),
-              )}
-            </div>
+                ))}
+              </div>
+            </>
           )}
         </StackedCard>
         {disasters.length === 0 && <PlaceholderNote>Head back to the start and pick at least one disaster first.</PlaceholderNote>}
