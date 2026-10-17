@@ -44,9 +44,9 @@ function Options() {
               <div className="mt-4 grid grid-cols-2 gap-3">
                 {featured.map((l) =>
                   waiting ? (
-                    <span key={l.id} className={`${featuredText} opacity-60`} aria-disabled="true">{l.art ? <img src={l.art} alt={l.name} width={1172} height={683} className="mx-auto h-auto w-full" /> : l.name}</span>
+                    <span key={l.id} className={`${featuredText} opacity-60`} aria-disabled="true">{l.art ? <img src={l.art} alt={l.name} width={1186} height={697} className="mx-auto h-auto w-full" /> : l.name}</span>
                   ) : (
-                    <Link key={l.id} to="/checklist" search={{ list: l.id }} className={`${featuredText} hover:text-ink motion-safe:transition-transform hover:scale-105`}>{l.art ? <img src={l.art} alt={l.name} width={1172} height={683} className="mx-auto h-auto w-full" /> : l.name}</Link>
+                    <Link key={l.id} to="/checklist" search={{ list: l.id }} className={`${featuredText} hover:text-ink motion-safe:transition-transform hover:scale-105`}>{l.art ? <img src={l.art} alt={l.name} width={1186} height={697} className="mx-auto h-auto w-full" /> : l.name}</Link>
                   ),
                 )}
               </div>
