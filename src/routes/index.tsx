@@ -32,8 +32,10 @@ function Start() {
 
   return (
     <>
+      <div className="relative z-20 -mt-24 flex justify-center overflow-hidden" >
+        <img src={logo.url} alt="Catastrophic Pandamonium" className="w-[120%] max-w-none shrink-0 sm:w-full sm:max-w-2xl" />
+      </div>
       <Page>
-        <img src={logo.url} alt="Catastrophic Pandamonium" className="mx-auto w-full max-w-md" />
         <StackedCard variant="welcome">
           <h1 className="text-2xl text-ink">Let's get your home ready.</h1>
           <p className="mt-2 text-ink">We get it: nobody wants natural disasters. But when one comes, you'll know how to prepare thanks to our gov-backed checklist. Sourced from {catalog.getSources().length} official government resources across Asia, so you know it's legit. Tell us what you're prepping for and who's at home...</p>
