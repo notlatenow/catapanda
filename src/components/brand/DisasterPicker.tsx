@@ -31,7 +31,7 @@ function DisasterIcon({ name }: { name: string }) {
           <feComposite in="paperFibers" in2="inkPressure" operator="arithmetic" k1="1" k2="0.12" k3="0" k4="0" result="dryBrush" />
           <feColorMatrix in="dryBrush" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.333 0.333 0.333 0 0" />
           <feComponentTransfer>
-            <feFuncA type="discrete" tableValues="0 0 1 1 1 1 1 1 1 1 1 1" />
+            <feFuncA type="discrete" tableValues="0 0 0 1 1 1 1 1 1 1 1 1" />
           </feComponentTransfer>
           <feComposite in="SourceGraphic" operator="in" result="stampedInk" />
           <feDisplacementMap in="stampedInk" in2="paperFibers" scale="0.22" xChannelSelector="R" yChannelSelector="G" />
