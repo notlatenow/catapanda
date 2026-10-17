@@ -1,15 +1,15 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-type Props = { children: ReactNode; variant?: "standard" | "accent" | "welcome"; bottomTab?: "gold" | "yellow" | "blue"; className?: string };
+type Props = { children: ReactNode; variant?: "standard" | "accent" | "welcome"; bottomTab?: "gold" | "yellow" | "blue"; topTab?: "panda" | "blue"; className?: string };
 
 /** Signature layered card: Panda Black tab above, yellow or white tab below, without shadows. */
-export function StackedCard({ children, variant = "standard", bottomTab = "yellow", className }: Props) {
+export function StackedCard({ children, variant = "standard", bottomTab = "yellow", topTab = "panda", className }: Props) {
   const accent = variant === "accent";
   const welcome = variant === "welcome";
   return (
     <div className={cn("relative py-2", className)}>
-      <div aria-hidden className="absolute inset-x-4 top-0 h-8 rounded-3xl bg-panda" />
+      <div aria-hidden className={cn("absolute inset-x-4 top-0 h-8 rounded-3xl", topTab === "blue" ? "bg-loading-tab" : "bg-panda")} />
       <div aria-hidden className={cn("absolute inset-x-4 bottom-0 h-8 rounded-3xl", accent || welcome ? "bg-snow" : bottomTab === "yellow" ? "bg-intake-tab" : bottomTab === "blue" ? "bg-bright" : "bg-gold")} />
       <div
         className={cn(

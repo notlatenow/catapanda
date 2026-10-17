@@ -52,7 +52,7 @@ export function ListsLoading({ disasters, phase }: { disasters: string[]; phase:
   const frame = reduced ? FRAMES[0] : FRAMES[frameTick % FRAMES.length];
 
   return (
-    <StackedCard>
+    <StackedCard topTab="blue">
       <div className="flex flex-col items-center gap-3 py-4 text-center" role="status" aria-live="polite">
         <h1 className="text-2xl text-ink">Working hard on your lists</h1>
         <img src={frame} alt="The CataPanda cat and panda hard at work" className={reduced ? "w-32" : "cp-bob w-32"} />
