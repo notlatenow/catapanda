@@ -23,7 +23,7 @@ function InkOutline({ wide = false, name = "Earthquake" }: { wide?: boolean; nam
 function DisasterIcon({ name }: { name: string }) {
   const textureId = useId();
   return (
-    <svg aria-hidden="true" viewBox="0 0 32 32" className="h-16 w-16 max-w-full fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg aria-hidden="true" viewBox="0 0 32 32" className={cn("h-16 w-16 max-w-full fill-none stroke-current", name === "Flood" ? "rotate-[8deg]" : "-rotate-[8deg]")} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <defs>
         <filter id={textureId} x="-10%" y="-10%" width="120%" height="120%" colorInterpolationFilters="sRGB">
           <feTurbulence type="fractalNoise" baseFrequency="0.12 0.24" numOctaves="2" seed={name === "Earthquake" ? 7 : name === "Flood" ? 19 : 31} result="inkPressure" />
