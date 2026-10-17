@@ -6,6 +6,7 @@ import { useSession } from "@/state/session";
 import { usePersonalization } from "@/state/personalize";
 import { ListsLoading } from "@/components/ListsLoading";
 import topTipsArt from "@/assets/top-tips-wordart.png";
+import darkBackground from "@/assets/question-dark.webp";
 import personalPicksArt from "@/assets/personal-picks-wordart.png";
 
 export const Route = createFileRoute("/options")({
@@ -32,10 +33,19 @@ function Options() {
   ];
   const lists = disasters.map((d) => ({ id: d, name: `${d} basics` }));
   const featuredText = "font-display block py-6 text-center text-3xl leading-tight text-slate sm:text-4xl";
+  if (disasters.length > 0 && waiting) {
+    return (
+      <main className="fixed inset-0 z-50 isolate flex overflow-y-auto text-ink">
+        <img src={darkBackground} alt="" className="pointer-events-none fixed inset-0 -z-10 h-full w-full object-cover" />
+        <div className="m-auto w-full max-w-xl px-4 py-12">
+          <ListsLoading disasters={disasters} phase={personal?.phase ?? 0} />
+        </div>
+      </main>
+    );
+  }
   return (
     <>
       <Page>
-        {disasters.length > 0 && waiting && <ListsLoading disasters={disasters} phase={personal?.phase ?? 0} />}
         <StackedCard>
           {disasters.length ? (
             <h1 className="text-2xl text-ink">Choose a checklist:</h1>

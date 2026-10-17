@@ -6,6 +6,7 @@ import mascots from "@/assets/friends-waist.png.asset.json";
 import blueBackground from "@/assets/question-blue.webp";
 import redBackground from "@/assets/question-red.webp";
 import yellowBackground from "@/assets/question-yellow.webp";
+import darkBackground from "@/assets/question-dark.webp";
 import { StackedCard } from "@/components/brand/StackedCard";
 import { TextArea } from "@/components/brand/OptionCard";
 import { PillButton } from "@/components/brand/PillButton";
@@ -87,14 +88,16 @@ export function Questions() {
 
   const nextDisabled = step === 0 ? !isHouseholdReady(s.description) : textQuestion ? !answer.text?.trim() : !answer.choice;
   const theme = ["red", "blue", "yellow"][step % 3];
-  const background = [redBackground, blueBackground, yellowBackground][step % 3] ?? redBackground;
+  const background = loading ? darkBackground : [redBackground, blueBackground, yellowBackground][step % 3] ?? redBackground;
 
   return (
     <main className={cn("question-screen relative isolate flex min-h-svh flex-col text-ink", `question-${theme}`)}>
       <img src={background} alt="" className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover" />
-      <div className="fixed inset-x-0 bottom-[max(1rem,env(safe-area-inset-bottom))] z-10 mx-auto flex w-full max-w-4xl gap-1.5 px-6 sm:px-10" aria-label={`Step ${step + 1}`}>
+      {!loading && (
+        <div className="fixed inset-x-0 bottom-[max(1rem,env(safe-area-inset-bottom))] z-10 mx-auto flex w-full max-w-4xl gap-1.5 px-6 sm:px-10" aria-label={`Step ${step + 1}`}>
         {Array.from({ length: questions.length + 1 }, (_, i) => <span key={i} className={cn("h-1.5 min-w-0 flex-1 rounded-full", i <= step ? "bg-snow" : "bg-pale/25")} />)}
       </div>
+      )}
       <div className="mx-auto flex w-full max-w-4xl items-center justify-between px-6 py-5 sm:px-10">
         <PillButton onClick={back} aria-label="Back" title="Back" className="question-icon h-11 w-11 bg-transparent p-0 text-pale hover:bg-pitch hover:text-snow"><ArrowLeft size={23} /></PillButton>
         <PillButton onClick={() => { request.current += 1; session.reset(); void navigate({ to: "/" }); }} aria-label="Exit form" title="Exit form" className="question-icon h-11 w-11 bg-transparent p-0 text-pale hover:bg-pitch hover:text-snow"><X size={23} /></PillButton>
