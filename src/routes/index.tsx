@@ -40,7 +40,7 @@ function Start() {
         </StackedCard>
 
         <StackedCard bottomTab="yellow">
-          <h2 className="text-xl text-ink">What are you preparing for?</h2>
+          <h2 className="text-2xl text-ink">What are you preparing for?</h2>
           <p className="mt-1 text-sm text-slate">Pick at least one to get started.</p>
           <DisasterPicker picked={picked} onToggle={session.toggleDisaster} region={region} onRegionChange={session.setRegion} />
         </StackedCard>
