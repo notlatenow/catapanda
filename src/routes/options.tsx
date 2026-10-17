@@ -36,7 +36,7 @@ function Options() {
       <Page>
         {disasters.length > 0 && waiting && <ListsLoading disasters={disasters} phase={personal?.phase ?? 0} />}
         <StackedCard>
-          <h1 className="text-2xl text-ink">Your checklists</h1>
+          <h1 className="text-2xl text-ink">CataPanda Prep</h1>
           <p className="mt-2 text-slate">Pick a checklist to open.</p>
           {disasters.length > 0 && (
             <>
