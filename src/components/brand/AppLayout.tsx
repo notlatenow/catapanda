@@ -33,11 +33,11 @@ export function FlowNav({ back, next, nextLabel = "Next", nextDisabled, startOve
   const enabled = "border-2 border-transparent bg-panda text-snow hover:border-flow-hover hover:bg-flow-hover hover:text-flow-hover-text active:bg-flow-hover active:text-flow-hover-text";
   return (
     <div className="mx-auto max-w-xl px-4 pb-6">
-      <div className="flex items-center justify-between gap-2 py-2.5">
+      <div className={cn("flex items-center gap-2 py-2.5", !back && !startOver ? "justify-center" : "justify-between")}>
         {back ? (
           <Link to={back} className={cn(pillVariants({ variant: "primary" }), small, enabled)}>Back</Link>
-        ) : <span />}
-        {startOver ? <Link to="/" onClick={() => session.reset()} className="text-sm font-bold text-dusk hover:text-snow active:text-sun">Start over</Link> : <span />}
+        ) : startOver ? <span /> : null}
+        {startOver ? <Link to="/" onClick={() => session.reset()} className="text-sm font-bold text-dusk hover:text-snow active:text-sun">Start over</Link> : back ? <span /> : null}
         {next && nextDisabled ? (
           <PillButton type="button" disabled className={cn(small, "border-2 border-dusk bg-sky text-dusk disabled:opacity-100")}>{nextLabel}</PillButton>
         ) : next ? (

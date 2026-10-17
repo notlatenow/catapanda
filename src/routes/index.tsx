@@ -64,7 +64,7 @@ function Start() {
           </div>
         </StackedCard>
       </Page>
-      <FlowNav next="/questions" nextDisabled={!ready} />
+      <FlowNav next="/questions" nextLabel="Let's go!" nextDisabled={!ready} startOver={false} />
     </>
   );
 }
