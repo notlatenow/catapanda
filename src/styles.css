@@ -50,6 +50,7 @@
   --color-pitch: var(--pitch);
   --color-sun: var(--sun);
   --color-welcome: var(--welcome);
+  --color-intake-tab: var(--intake-tab);
   --color-dusk: var(--dusk);
   --color-haze: var(--haze);
   --color-flow-hover: var(--flow-hover);
@@ -77,6 +78,7 @@
   --pitch: #000000;
   --sun: #d99b00;
   --welcome: #e6a700;
+  --intake-tab: #d49a00;
   --dusk: #103654;
   --haze: #0063ad;
   --flow-hover: #103654;

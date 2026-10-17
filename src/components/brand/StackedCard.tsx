@@ -10,7 +10,7 @@ export function StackedCard({ children, variant = "standard", bottomTab = "gold"
   return (
     <div className={cn("relative py-2", className)}>
       <div aria-hidden className="absolute inset-x-4 top-0 h-8 rounded-3xl bg-panda" />
-      <div aria-hidden className={cn("absolute inset-x-4 bottom-0 h-8 rounded-3xl", accent || welcome ? "bg-snow" : bottomTab === "yellow" ? "bg-welcome" : "bg-gold")} />
+      <div aria-hidden className={cn("absolute inset-x-4 bottom-0 h-8 rounded-3xl", accent || welcome ? "bg-snow" : bottomTab === "yellow" ? "bg-intake-tab" : "bg-gold")} />
       <div
         className={cn(
           "relative rounded-3xl p-5 sm:p-6",
