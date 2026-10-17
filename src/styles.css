@@ -114,8 +114,11 @@
     color: var(--color-foreground);
     font-family: var(--font-sans);
   }
-  h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 700; }
+  h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 400; }
 }
+
+/* Fredoka stays regular even when shared controls include weight utilities. */
+h1, h2, h3, h4, .font-display, .question-next { font-weight: 400; }
 
 @utility shadow-soft { box-shadow: var(--shadow-soft); }
 
