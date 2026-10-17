@@ -34,6 +34,7 @@
   --color-ring: var(--ring);
   /* Brand palette */
   --color-sky: var(--sky);
+  --color-loading-tab: var(--loading-tab);
   --color-panda: var(--panda);
   --color-gold: var(--gold);
   --color-brick: var(--brick);
@@ -60,6 +61,7 @@
 :root {
   --radius: 1rem;
   --sky: #04508a;
+  --loading-tab: #214f86;
   --panda: #1c1c1e;
   --gold: #db903d;
   --brick: #b6423c;
