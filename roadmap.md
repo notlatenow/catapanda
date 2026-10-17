@@ -6,4 +6,4 @@
 - [x] Update share channels, email layout, mobile SMS syntax and verify desktop/mobile sharing (three tests and full desktop/iOS/Android browser journeys).
 - [x] Move household entry into a seamless full-page, one-question-at-a-time form; enable Home with disaster and region only.
 - [x] Verify immediate option advance, typed Next, individual skip, Back, fallback and phone layout.
-- [ ] Redesign question screens with three comic backgrounds, stacked content boxes and simplified Next controls; verify the flow.
+- [x] Redesign question screens with three comic backgrounds, stacked content boxes and simplified Next controls; verify the flow.
