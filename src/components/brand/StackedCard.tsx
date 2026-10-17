@@ -13,7 +13,8 @@ export function StackedCard({ children, variant = "standard", className }: Props
       <div aria-hidden className={cn("absolute inset-x-4 bottom-0 h-8 rounded-3xl", accent || welcome ? "bg-snow" : "bg-gold")} />
       <div
         className={cn(
-          "relative rounded-3xl p-5 shadow-soft sm:p-6",
+          "relative rounded-3xl p-5 sm:p-6",
+          !welcome && "shadow-soft",
           accent ? "bg-brick text-snow [&_h1]:text-panda [&_h2]:text-panda [&_h3]:text-panda" : welcome ? "bg-welcome text-ink" : "bg-card text-card-foreground",
         )}
       >
