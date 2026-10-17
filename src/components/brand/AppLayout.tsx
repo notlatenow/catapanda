@@ -70,7 +70,7 @@ export function SiteFooter() {
     <footer className="mx-auto max-w-xl px-4 pb-8 pt-2 text-center text-sm text-pale">
       {home
         ? "Your privacy is protected. The household description you enter is used only to build your lists. We don't store it or share it."
-        : <><strong>Gov-vetted items</strong> are verified against official government sources. <strong>AI items</strong> are personalized AI recommendations. Always double-check our lists to ensure they meet your needs.</>}
+        : <><strong className="text-gold">Gov-vetted items</strong> are verified against government sources. <strong className="text-gold">AI items</strong> are personalized recommendations. Always review our lists to ensure they meet your needs.</>}
     </footer>
   );
 }
