@@ -92,8 +92,8 @@ export function Questions() {
   return (
     <main className={cn("question-screen relative isolate flex min-h-svh flex-col text-ink", `question-${theme}`)}>
       <img src={background} alt="" className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover" />
-      <div className="absolute inset-x-0 top-0 flex gap-1.5" aria-label={`Step ${step + 1}`}>
-        {Array.from({ length: questions.length + 1 }, (_, i) => <span key={i} className={cn("h-1.5 min-w-0 flex-1 rounded-full", i <= step ? (theme === "yellow" ? "bg-bright" : "bg-welcome") : "bg-pale/25")} />)}
+      <div className="fixed inset-x-0 bottom-[max(1rem,env(safe-area-inset-bottom))] z-10 flex gap-1.5" aria-label={`Step ${step + 1}`}>
+        {Array.from({ length: questions.length + 1 }, (_, i) => <span key={i} className={cn("h-1.5 min-w-0 flex-1 rounded-full", i <= step ? "bg-snow" : "bg-pale/25")} />)}
       </div>
       <div className="mx-auto flex w-full max-w-4xl items-center justify-between px-6 py-5 sm:px-10">
         <PillButton onClick={back} aria-label="Back" title="Back" className="question-icon h-11 w-11 bg-transparent p-0 text-pale hover:bg-pitch hover:text-snow"><ArrowLeft size={23} /></PillButton>
