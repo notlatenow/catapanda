@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, Check, X } from "lucide-react";
+import { ArrowLeft, Check, X } from "lucide-react";
 import mascots from "@/assets/friends-waist.png.asset.json";
 import blueBackground from "@/assets/question-blue.webp";
 import redBackground from "@/assets/question-red.webp";
@@ -86,8 +86,8 @@ export function Questions() {
   }
 
   const nextDisabled = step === 0 ? !isHouseholdReady(s.description) : textQuestion ? !answer.text?.trim() : !answer.choice;
-  const theme = ["blue", "red", "yellow"][step % 3];
-  const background = [blueBackground, redBackground, yellowBackground][step % 3] ?? blueBackground;
+  const theme = ["red", "blue", "yellow"][step % 3];
+  const background = [redBackground, blueBackground, yellowBackground][step % 3] ?? redBackground;
 
   return (
     <main className={cn("question-screen relative isolate flex min-h-svh flex-col text-ink", `question-${theme}`)}>
@@ -98,7 +98,7 @@ export function Questions() {
       </div>
       <div className="mx-auto flex w-full max-w-xl flex-1 items-center px-4 py-12">
         <section key={loading ? "loading" : step} className="question-enter w-full" aria-busy={loading}>
-          <StackedCard>
+          <StackedCard bottomTab={theme === "yellow" ? "red" : "yellow"}>
           <h1 ref={heading} tabIndex={-1} className="text-2xl leading-tight outline-none sm:text-3xl">{loading ? "A little more about your home…" : step === 0 ? "Tell us about your household" : q?.text ?? "Your checklists are next…"}</h1>
           {loading ? (
             <div className="mt-8" role="status"><img src={mascots.url} alt="" className="cp-bob h-36 w-48 object-contain object-bottom" /><p className="mt-5 text-slate">Just a moment…</p></div>
@@ -116,22 +116,19 @@ export function Questions() {
                 </PillButton>
               ))}</div>}
               {textQuestion && <TextArea autoFocus aria-label="Your answer" className="mt-3 text-base" rows={1} maxLength={100} placeholder="Your answer…" value={answer.text ?? ""} onChange={(e) => session.setAnswer(q.id, { text: e.target.value, skipped: false })} />}
-              <div className="mt-8 flex flex-wrap items-center gap-5">
-                <PillButton onClick={() => { session.setAnswer(q.id, { skipped: true }); nextQuestion(); }} className="bg-transparent px-0 text-slate hover:bg-transparent hover:text-ink">Skip this question <ArrowRight size={16} /></PillButton>
-              </div>
             </div>
           ) : null}
           </StackedCard>
           <div className="mt-6 flex justify-start sm:mt-8">
             {!loading && (step === 0 || textQuestion || answer.choice) ? (
-              <PillButton type={step === 0 ? "submit" : "button"} form={step === 0 ? "household-form" : undefined} disabled={nextDisabled} onClick={step === 0 ? undefined : nextQuestion} className="question-next">Next</PillButton>
+              <PillButton type={step === 0 ? "submit" : "button"} form={step === 0 ? "household-form" : undefined} disabled={nextDisabled} onClick={step === 0 ? undefined : nextQuestion} className="question-next">{step === 0 || textQuestion ? "OK" : "Next"}</PillButton>
             ) : null}
           </div>
         </section>
       </div>
       <div className="flex w-full items-center justify-end gap-4 px-6 py-5 text-xs text-pale sm:px-10">
         <div className="flex items-center gap-1.5" aria-label={`Step ${step + 1}`}>
-          {Array.from({ length: questions.length + 1 }, (_, i) => <span key={i} className={cn("h-1.5 w-5 rounded-full", i <= step ? "bg-welcome" : "bg-pale/25")} />)}
+          {Array.from({ length: questions.length + 1 }, (_, i) => <span key={i} className={cn("h-1.5 w-5 rounded-full", i <= step ? (theme === "yellow" ? "bg-brick" : "bg-welcome") : "bg-pale/25")} />)}
         </div>
       </div>
     </main>
