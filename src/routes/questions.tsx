@@ -105,7 +105,7 @@ export function Questions() {
           ) : step === 0 ? (
             <form id="household-form" onSubmit={(e) => { e.preventDefault(); void submitHousehold(); }}>
                <p className="mt-3 text-sm text-slate">Who's at home? Include pets and any needs you'd like us to keep in mind.</p>
-               <TextArea id="household" aria-label="Tell us about your household" aria-describedby="household-hint" className="question-input mt-3 rounded-3xl text-base" rows={2} maxLength={DESCRIPTION_MAX} value={s.description} onChange={(e) => session.setDescription(e.target.value)} placeholder="I live with my elderly mother who uses a walker, and we have a cat…" />
+               <TextArea id="household" aria-label="Tell us about your household" aria-describedby="household-hint" className="question-input mt-3 rounded-3xl font-sans text-sm font-normal" rows={2} maxLength={DESCRIPTION_MAX} value={s.description} onChange={(e) => session.setDescription(e.target.value)} placeholder="I live with my elderly mother who uses a walker, and we have a cat…" />
               <div id="household-hint" className="mt-3 flex justify-between gap-4 text-sm text-slate"><span>{s.description.trim().length < 10 ? "At least 10 characters." : "Never stored or shared."}</span><span>{s.description.length}/{DESCRIPTION_MAX}</span></div>
             </form>
           ) : q ? (
@@ -115,7 +115,7 @@ export function Questions() {
                    {option}
                 </PillButton>
               ))}</div>}
-               {textQuestion && <TextArea autoFocus aria-label="Your answer" className="question-input mt-3 rounded-3xl text-base" rows={1} maxLength={100} placeholder="Your answer…" value={answer.text ?? ""} onChange={(e) => session.setAnswer(q.id, { text: e.target.value, skipped: false })} />}
+               {textQuestion && <TextArea autoFocus aria-label="Your answer" className="question-input mt-3 rounded-3xl font-sans text-sm font-normal" rows={1} maxLength={100} placeholder="Your answer…" value={answer.text ?? ""} onChange={(e) => session.setAnswer(q.id, { text: e.target.value, skipped: false })} />}
             </div>
           ) : null}
           </StackedCard>
