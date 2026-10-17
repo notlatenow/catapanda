@@ -49,6 +49,7 @@
   --color-abyss: var(--abyss);
   --color-pitch: var(--pitch);
   --color-sun: var(--sun);
+  --color-welcome: var(--welcome);
   --color-dusk: var(--dusk);
   --color-haze: var(--haze);
   --color-flow-hover: var(--flow-hover);
@@ -75,6 +76,7 @@
   --ink-base: #141416;
   --pitch: #000000;
   --sun: #d99b00;
+  --welcome: #ffbf00;
   --dusk: #103654;
   --haze: #0063ad;
   --flow-hover: #103654;
