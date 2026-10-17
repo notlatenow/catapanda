@@ -122,14 +122,14 @@ export function Questions() {
             </div>
           ) : null}
           </StackedCard>
-          <div className="mt-6 flex justify-end sm:mt-8">
+          <div className="mt-6 flex justify-start sm:mt-8">
             {!loading && (step === 0 || textQuestion || answer.choice) ? (
               <PillButton type={step === 0 ? "submit" : "button"} form={step === 0 ? "household-form" : undefined} disabled={nextDisabled} onClick={step === 0 ? undefined : nextQuestion} className="question-next">Next</PillButton>
             ) : null}
           </div>
         </section>
       </div>
-      <div className="mx-auto flex w-full max-w-4xl items-center justify-between gap-4 px-6 py-5 text-xs text-pale sm:px-10">
+      <div className="flex w-full items-center justify-end gap-4 px-6 py-5 text-xs text-pale sm:px-10">
         <div className="flex items-center gap-1.5" aria-label={`Step ${step + 1}`}>
           {Array.from({ length: questions.length + 1 }, (_, i) => <span key={i} className={cn("h-1.5 w-5 rounded-full", i <= step ? "bg-welcome" : "bg-pale/25")} />)}
         </div>
