@@ -99,7 +99,7 @@ export function Questions() {
       <div className="mx-auto flex w-full max-w-xl flex-1 items-center px-4 py-12">
         <section key={loading ? "loading" : step} className="question-enter w-full" aria-busy={loading}>
           <StackedCard bottomTab={theme === "yellow" ? "blue" : "yellow"}>
-           <h1 ref={heading} tabIndex={-1} className="text-xl font-bold leading-relaxed outline-none">{loading ? "A little more about your home…" : step === 0 ? "Tell us about your household" : q?.text ?? "Your checklists are next…"}</h1>
+           <h1 ref={heading} tabIndex={-1} className="text-lg font-bold leading-7 outline-none">{loading ? "A little more about your home…" : step === 0 ? "Tell us about your household" : q?.text ?? "Your checklists are next…"}</h1>
           {loading ? (
             <div className="mt-8" role="status"><img src={mascots.url} alt="" className="cp-bob h-36 w-48 object-contain object-bottom" /><p className="mt-5 text-slate">Just a moment…</p></div>
           ) : step === 0 ? (
@@ -111,7 +111,7 @@ export function Questions() {
           ) : q ? (
              <div className="mt-3">
                {q.type !== "text" && <div className="flex flex-wrap gap-2">{q.options.map((option) => (
-                 <PillButton key={option} aria-pressed={!answer.skipped && answer.choice === option} onClick={() => { session.setAnswer(q.id, { choice: option, text: undefined, skipped: false }); if (option.toLowerCase() !== "other") nextQuestion(); }} className={cn("min-h-11 max-w-full whitespace-normal rounded-full border border-sand bg-snow px-4 py-2 text-base font-bold text-ink hover:border-bright hover:bg-snow hover:text-ink active:bg-pale active:text-ink", !answer.skipped && answer.choice === option && "border-bright bg-pale text-ink ring-1 ring-bright hover:bg-pale")}>
+                 <PillButton key={option} aria-pressed={!answer.skipped && answer.choice === option} onClick={() => { session.setAnswer(q.id, { choice: option, text: undefined, skipped: false }); if (option.toLowerCase() !== "other") nextQuestion(); }} className={cn("min-h-11 max-w-full whitespace-normal rounded-full border border-sand bg-snow px-4 py-2 text-sm font-bold text-ink hover:border-bright hover:bg-snow hover:text-ink active:bg-pale active:text-ink", !answer.skipped && answer.choice === option && "border-bright bg-pale text-ink ring-1 ring-bright hover:bg-pale")}>
                    {option}
                 </PillButton>
               ))}</div>}
