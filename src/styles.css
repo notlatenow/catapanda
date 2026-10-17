@@ -159,15 +159,16 @@
 .question-yellow { --question-color: var(--welcome); }
 .question-screen { background-color: var(--question-color); }
 .question-next {
-  min-width: 96px;
-  min-height: 56px;
+  min-width: 69px;
+  min-height: 44px;
+  padding: 10px 16px;
   font-family: var(--font-display);
-  font-size: 1.25rem;
+  font-size: 0.875rem;
+  line-height: 20px;
   background-color: var(--panda);
   color: var(--snow);
   border: 2px solid var(--panda);
 }
 .question-next:hover { background-color: var(--snow); color: var(--panda); }
 .question-next:active { background-color: var(--question-color); color: var(--panda); }
-@media (min-width: 640px) { .question-next { min-width: 112px; min-height: 64px; } }
 @media (prefers-reduced-motion: reduce) { .question-enter { animation: none; } }

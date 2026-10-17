@@ -96,7 +96,7 @@ export function Questions() {
         <PillButton onClick={back} aria-label="Back" title="Back" className="h-11 w-11 bg-transparent p-0 text-pale hover:bg-ocean hover:text-snow"><ArrowLeft size={23} /></PillButton>
         <PillButton onClick={() => { request.current += 1; session.reset(); void navigate({ to: "/" }); }} aria-label="Exit form" title="Exit form" className="h-11 w-11 bg-transparent p-0 text-pale hover:bg-ocean hover:text-snow"><X size={23} /></PillButton>
       </div>
-      <div className="mx-auto flex w-full max-w-2xl flex-1 items-center px-5 py-12 sm:px-8">
+      <div className="mx-auto flex w-full max-w-xl flex-1 items-center px-4 py-12">
         <section key={loading ? "loading" : step} className="question-enter w-full" aria-busy={loading}>
           <StackedCard>
           <h1 ref={heading} tabIndex={-1} className="text-2xl leading-tight outline-none sm:text-3xl">{loading ? "A little more about your home…" : step === 0 ? "Tell us about your household" : q?.text ?? "Your checklists are next…"}</h1>
@@ -105,7 +105,7 @@ export function Questions() {
           ) : step === 0 ? (
             <form id="household-form" onSubmit={(e) => { e.preventDefault(); void submitHousehold(); }}>
               <p className="mt-3 text-base text-slate sm:text-lg">Who's at home? Include pets and any needs you'd like us to keep in mind.</p>
-              <TextArea id="household" aria-label="Tell us about your household" aria-describedby="household-hint" className="mt-5 rounded-lg border-0 border-b-2 border-sand bg-transparent px-0 text-lg text-ink placeholder:text-slate/70 focus:border-bright" rows={3} maxLength={DESCRIPTION_MAX} value={s.description} onChange={(e) => session.setDescription(e.target.value)} placeholder="I live with my elderly mother who uses a walker, and we have a cat…" />
+              <TextArea id="household" aria-label="Tell us about your household" aria-describedby="household-hint" className="mt-3 text-base" rows={2} maxLength={DESCRIPTION_MAX} value={s.description} onChange={(e) => session.setDescription(e.target.value)} placeholder="I live with my elderly mother who uses a walker, and we have a cat…" />
               <div id="household-hint" className="mt-3 flex justify-between gap-4 text-sm text-slate"><span>{s.description.trim().length < 10 ? "At least 10 characters." : "Never stored or shared."}</span><span>{s.description.length}/{DESCRIPTION_MAX}</span></div>
             </form>
           ) : q ? (
@@ -115,7 +115,7 @@ export function Questions() {
                   <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded border border-current text-xs">{String.fromCharCode(65 + index)}</span><span className="flex-1">{option}</span>{!answer.skipped && answer.choice === option && <Check size={18} />}
                 </PillButton>
               ))}</div>}
-              {textQuestion && <TextArea autoFocus aria-label="Your answer" className="mt-5 rounded-lg border-0 border-b-2 border-sand bg-transparent px-0 text-lg text-ink placeholder:text-slate/70 focus:border-bright" rows={3} maxLength={100} placeholder="Your answer…" value={answer.text ?? ""} onChange={(e) => session.setAnswer(q.id, { text: e.target.value, skipped: false })} />}
+              {textQuestion && <TextArea autoFocus aria-label="Your answer" className="mt-3 text-base" rows={1} maxLength={100} placeholder="Your answer…" value={answer.text ?? ""} onChange={(e) => session.setAnswer(q.id, { text: e.target.value, skipped: false })} />}
               <div className="mt-8 flex flex-wrap items-center gap-5">
                 <PillButton onClick={() => { session.setAnswer(q.id, { skipped: true }); nextQuestion(); }} className="bg-transparent px-0 text-slate hover:bg-transparent hover:text-ink">Skip this question <ArrowRight size={16} /></PillButton>
               </div>
