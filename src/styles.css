@@ -169,6 +169,6 @@
   color: var(--snow);
   border: 2px solid var(--panda);
 }
-.question-next:hover { background-color: var(--snow); color: var(--panda); }
-.question-next:active { background-color: var(--question-color); color: var(--panda); }
+.question-next:hover { background-color: var(--snow); color: var(--panda); border-color: transparent; }
+.question-next:active { background-color: var(--question-color); color: var(--panda); border-color: transparent; }
 @media (prefers-reduced-motion: reduce) { .question-enter { animation: none; } }
