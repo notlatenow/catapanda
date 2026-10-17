@@ -45,12 +45,12 @@ export function DisasterPicker({ picked, onToggle, region, onRegionChange }: { p
             className={cn("doodle-disaster relative flex min-w-0 flex-col gap-1 rounded-none px-1 py-4 font-display text-sm font-bold sm:text-base", picked.includes(name) && "doodle-selected")}>
             <InkOutline name={name} />
             <DisasterIcon name={name} />
-            <span className={cn("font-sans font-normal", picked.includes(name) ? "text-pitch" : "text-slate")}>{name}</span>
+            <span className={cn("font-sans text-sm font-normal", picked.includes(name) ? "text-pitch" : "text-slate")}>{name}</span>
           </PillButton>
         ))}
       </div>
       <Select.Root value={region} onValueChange={(value) => onRegionChange(value === "reset-region" ? "" : value)}>
-        <Select.Trigger aria-label="Country" className="doodle-region relative mt-6 flex h-12 w-full items-center justify-between gap-2 px-4 text-left text-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+        <Select.Trigger aria-label="Country" className="doodle-region relative mt-6 flex h-12 w-full items-center justify-between gap-2 px-4 text-left text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
           <InkOutline wide />
           <span className={cn("font-sans font-normal", !region && "text-slate")}><Select.Value placeholder="Choose your region." /></span>
           <Select.Icon>
@@ -58,7 +58,7 @@ export function DisasterPicker({ picked, onToggle, region, onRegionChange }: { p
           </Select.Icon>
         </Select.Trigger>
         <Select.Portal>
-          <Select.Content position="popper" sideOffset={6} className="relative z-50 min-w-[var(--radix-select-trigger-width)] rounded-lg border-0 bg-card p-2 text-card-foreground shadow-soft outline-none">
+          <Select.Content position="popper" sideOffset={6} className="relative z-50 min-w-[var(--radix-select-trigger-width)] rounded-lg border-0 bg-card p-2 text-sm text-card-foreground shadow-soft outline-none">
             <Select.Viewport>
               <Select.Item value="reset-region" className="cursor-pointer rounded-md px-3 py-2 text-slate outline-none data-[highlighted]:bg-accent"><Select.ItemText>Choose your region.</Select.ItemText></Select.Item>
               {catalog.getRegions().map((country) => <Select.Item key={country} value={country} className="cursor-pointer rounded-md px-3 py-2 outline-none data-[highlighted]:bg-accent"><Select.ItemText>{country}</Select.ItemText></Select.Item>)}
