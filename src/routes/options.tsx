@@ -68,7 +68,6 @@ function Options() {
           )}
         </StackedCard>
       </Page>
-      {disasters.length > 0 && <FlowNav back={hasQuestions ? "/questions" : "/"} next="/checklist" />}
     </>
   );
 }
