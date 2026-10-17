@@ -9,7 +9,7 @@ function InkOutline({ wide = false }: { wide?: boolean }) {
     <svg aria-hidden="true" className="ink-outline" viewBox="0 0 200 100" preserveAspectRatio="none">
       <path className="ink-contour" d="M17 4 C42 2 65 5 91 3 C120 2 151 4 179 3 Q195 2 195 17 C194 35 197 57 195 78 Q196 95 181 95 C154 97 131 94 104 96 C73 97 47 95 20 96 Q5 97 5 81 C3 61 6 43 4 25 Q3 5 17 4 Z" />
       {wide ? <>
-        <path className="ink-embellishment" d="M8 29 Q7 57 9 72 M16 86 29 87 M34 87 37 87 M171 13 183 14" />
+        <path className="ink-embellishment" d="M16 86 29 87 M34 87 37 87 M171 13 183 14" />
         <path className="ink-pressure" d="M5 51 5 78 Q4 96 20 96 M133 96 163 96" />
       </> : <>
         <path className="ink-embellishment" d="M13 68 Q12 86 21 87 L32 87 M39 87 43 87 M183 17 Q185 29 183 37 M184 44 184 48 M26 11 45 10" />
