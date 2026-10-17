@@ -6,6 +6,7 @@ import { useSession } from "@/state/session";
 import { usePersonalization } from "@/state/personalize";
 import { ListsLoading } from "@/components/ListsLoading";
 import topTipsArt from "@/assets/top-tips-wordart.png";
+import personalPicksArt from "@/assets/personal-picks-wordart.png";
 
 export const Route = createFileRoute("/options")({
   head: () => ({
@@ -28,7 +29,7 @@ function Options() {
   const waiting = !personal || personal.status === "running";
   const featured = [
     { id: "top10", name: "Top Tips", art: topTipsArt },
-    { id: "personalized", name: "Personal Picks", art: undefined as string | undefined },
+    { id: "personalized", name: "Personal Picks", art: personalPicksArt },
   ];
   const lists = disasters.map((d) => ({ id: d, name: d, tagline: `The full ${d.toLowerCase()} list` }));
   const featuredText = "font-display block py-6 text-center text-3xl leading-tight text-slate sm:text-4xl";
@@ -44,9 +45,9 @@ function Options() {
               <div className="mt-4 grid grid-cols-2 gap-3">
                 {featured.map((l) =>
                   waiting ? (
-                    <span key={l.id} className={`${featuredText} opacity-60`} aria-disabled="true">{l.art ? <img src={l.art} alt={l.name} width={1186} height={697} className="mx-auto h-auto w-full" /> : l.name}</span>
+                    <span key={l.id} className={`${featuredText} opacity-60`} aria-disabled="true">{l.art ? <img src={l.art} alt={l.name} className="mx-auto h-auto w-full" /> : l.name}</span>
                   ) : (
-                    <Link key={l.id} to="/checklist" search={{ list: l.id }} className={`${featuredText} hover:text-ink motion-safe:transition-transform hover:scale-105`}>{l.art ? <img src={l.art} alt={l.name} width={1186} height={697} className="mx-auto h-auto w-full" /> : l.name}</Link>
+                    <Link key={l.id} to="/checklist" search={{ list: l.id }} className={`${featuredText} hover:text-ink motion-safe:transition-transform hover:scale-105`}>{l.art ? <img src={l.art} alt={l.name} className="mx-auto h-auto w-full" /> : l.name}</Link>
                   ),
                 )}
               </div>
