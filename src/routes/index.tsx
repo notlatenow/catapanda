@@ -57,7 +57,7 @@ function Start() {
           aria-label="Let's go!"
           disabled={!ready}
           onClick={() => { if (ready) { session.setFormStep(0); void navigate({ to: "/questions" }); } }}
-          className="h-36 w-60 max-w-full rounded-none bg-transparent p-0 hover:bg-transparent active:bg-transparent transition-transform duration-100 ease-out hover:rotate-12 active:scale-95 disabled:opacity-50 disabled:grayscale motion-reduce:hover:rotate-0 motion-reduce:active:scale-100 motion-reduce:transform-none motion-reduce:transition-none"
+          className="h-36 w-60 max-w-full rounded-none bg-transparent p-0 hover:bg-transparent active:bg-transparent transition-transform duration-100 ease-out hover:rotate-12 hover:scale-125 active:scale-95 disabled:opacity-50 disabled:grayscale motion-reduce:hover:rotate-0 motion-reduce:active:scale-100 motion-reduce:transform-none motion-reduce:transition-none"
         >
           <img src={letsGoButton} alt="" className="h-full w-full object-contain" />
         </PillButton>
