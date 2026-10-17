@@ -1,132 +1,132 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { useEffect, useState } from "react";
-import mascots from "@/assets/web-mascots.png.asset.json";
-import { Page, FlowNav } from "@/components/brand/AppLayout";
-import { StackedCard } from "@/components/brand/StackedCard";
-import { TextField } from "@/components/brand/OptionCard";
+import { useEffect, useRef, useState } from "react";
+import { ArrowLeft, ArrowRight, Check, X } from "lucide-react";
+import mascots from "@/assets/friends-waist.png.asset.json";
+import { TextArea } from "@/components/brand/OptionCard";
 import { PillButton } from "@/components/brand/PillButton";
 import { cn } from "@/lib/utils";
 import { clarify } from "@/lib/clarify.functions";
-import { session, useSession, clarifyKey } from "@/state/session";
+import { session, useSession, clarifyKey, isIntakeReady, isHouseholdReady, DESCRIPTION_MAX } from "@/state/session";
 import { startBackgroundSearch } from "@/state/search";
 
 export const Route = createFileRoute("/questions")({
-  head: () => ({
-    meta: [
-      { title: "A few quick questions — CataPanda" },
-      { name: "description", content: "Answer a few questions so CataPanda can tailor your disaster prep checklist." },
-      { property: "og:title", content: "A few quick questions — CataPanda" },
-      { property: "og:description", content: "Tailor your disaster prep checklist." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-    ],
-  }),
+  head: () => ({ meta: [
+    { title: "Your household — CataPanda" },
+    { name: "description", content: "Tell CataPanda about your household, one question at a time, for personalized disaster prep in Taiwan." },
+    { property: "og:title", content: "Your household — CataPanda" },
+    { property: "og:description", content: "A few household details for a clear, doable disaster prep checklist." },
+    { property: "og:type", content: "website" },
+    { name: "twitter:card", content: "summary" },
+  ] }),
   component: Questions,
 });
 
-const TIMEOUT_MS = 20000;
-
-function Questions() {
+export function Questions() {
   const s = useSession();
   const navigate = useNavigate();
   const run = useServerFn(clarify);
   const key = clarifyKey(s);
-  const fresh = s.clarify?.key === key;
-  const [loading, setLoading] = useState(!fresh);
+  const [loading, setLoading] = useState(false);
+  const request = useRef(0);
+  const heading = useRef<HTMLHeadingElement>(null);
+  const step = s.formStep;
+  const questions = s.clarify?.key === key ? s.clarify.questions : [];
+  const q = questions[step - 1];
+  const answer = q ? s.answers[q.id] ?? {} : {};
+  const other = answer.choice?.toLowerCase() === "other";
+  const textQuestion = q?.type === "text" || other;
 
   useEffect(() => {
-    if (!s.disasters.length || !s.description.trim()) { void navigate({ to: "/", replace: true }); return; }
-    if (fresh) {
-      startBackgroundSearch(s.clarify?.searchNeeds ?? []);
-      if (!s.clarify?.questions.length) void navigate({ to: "/options", replace: true });
-      setLoading(false);
-      return;
-    }
-    let alive = true;
-    setLoading(true);
-    const timeout = new Promise<null>((r) => setTimeout(() => r(null), TIMEOUT_MS));
-    Promise.race([run({ data: { description: s.description.trim(), disasters: s.disasters } }), timeout])
-      .catch(() => null)
-      .then((res) => {
-        if (!alive) return;
-        session.setClarify({ key, questions: res?.questions ?? [], searchNeeds: res?.searchNeeds ?? [] });
-        startBackgroundSearch(res?.searchNeeds ?? []);
-        if (!res || !res.questions.length) void navigate({ to: "/options", replace: true });
-        else setLoading(false);
-      });
-    return () => { alive = false; };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [key]);
+    if (!isIntakeReady(s)) void navigate({ to: "/", replace: true });
+  }, [s.disasters.length, s.region, navigate]);
+  useEffect(() => { heading.current?.focus(); }, [step, loading]);
+  useEffect(() => () => { request.current += 1; }, []);
 
-  if (loading || !s.clarify?.questions.length) {
-    return (
-      <Page>
-        <StackedCard>
-          <div className="flex flex-col items-center gap-3 py-6 text-center" role="status">
-            <img src={mascots.url} alt="" className="w-24 animate-bounce" />
-            <h1 className="text-xl text-ink">Getting to know your household…</h1>
-            <p className="text-slate">Thinking up a few quick questions. Just a moment!</p>
-          </div>
-        </StackedCard>
-      </Page>
-    );
+  function nextQuestion() {
+    if (step >= questions.length) void navigate({ to: "/options" });
+    else session.setFormStep(step + 1);
   }
 
-  const { questions } = s.clarify;
+  async function submitHousehold() {
+    if (!isHouseholdReady(s.description) || loading) return;
+    if (s.clarify?.key === key) {
+      startBackgroundSearch(s.clarify.searchNeeds);
+      if (questions.length) session.setFormStep(1);
+      else void navigate({ to: "/options" });
+      return;
+    }
+    const id = ++request.current;
+    setLoading(true);
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    try {
+      const result = await Promise.race([
+        run({ data: { description: s.description.trim(), disasters: s.disasters } }).catch(() => null),
+        new Promise<null>((resolve) => { timer = setTimeout(() => resolve(null), 20000); }),
+      ]);
+      if (id !== request.current) return;
+      session.setClarify({ key, questions: result?.questions ?? [], searchNeeds: result?.searchNeeds ?? [] });
+      startBackgroundSearch(result?.searchNeeds ?? []);
+      if (result?.questions.length) session.setFormStep(1);
+      else void navigate({ to: "/options" });
+    } finally {
+      if (timer) clearTimeout(timer);
+      if (id === request.current) setLoading(false);
+    }
+  }
+
+  function back() {
+    if (loading) { request.current += 1; setLoading(false); }
+    else if (step > 0) session.setFormStep(step - 1);
+    else void navigate({ to: "/" });
+  }
+
+  const nextDisabled = step === 0 ? !isHouseholdReady(s.description) : textQuestion ? !answer.text?.trim() : !answer.choice;
+
   return (
-    <>
-      <Page>
-        <StackedCard>
-          <h1 className="text-2xl text-ink">A few quick questions</h1>
-          <p className="mt-2 text-sm text-slate">Feel free to skip these questions, but the more info we have, the better your checklists will be.</p>
-          <div className="mt-4 flex flex-wrap gap-2">
-            <PillButton variant="secondary" className="px-4 py-2 text-sm" onClick={() => session.skipAll()} disabled={questions.every((q) => s.answers[q.id]?.skipped)}>Skip all</PillButton>
-            {questions.some((q) => s.answers[q.id]?.skipped) && (
-              <PillButton variant="secondary" className="px-4 py-2 text-sm" onClick={() => session.undoSkipAll()}>Undo skip all</PillButton>
-            )}
+    <main className="flex min-h-svh flex-col bg-sky text-snow">
+      <div className="mx-auto flex w-full max-w-4xl items-center justify-between px-6 py-5 sm:px-10">
+        <PillButton onClick={back} aria-label="Back" title="Back" className="h-11 w-11 bg-transparent p-0 text-pale hover:bg-ocean hover:text-snow"><ArrowLeft size={23} /></PillButton>
+        <span className="text-sm font-bold text-pale">Your home, your plan.</span>
+        <PillButton onClick={() => { request.current += 1; session.reset(); void navigate({ to: "/" }); }} aria-label="Exit form" title="Exit form" className="h-11 w-11 bg-transparent p-0 text-pale hover:bg-ocean hover:text-snow"><X size={23} /></PillButton>
+      </div>
+      <div className="mx-auto flex w-full max-w-3xl flex-1 items-center px-6 py-10 sm:px-10">
+        <section key={loading ? "loading" : step} className="question-enter w-full" aria-busy={loading}>
+          <div className="mb-5 flex items-center gap-3 text-welcome">
+            <span className="font-display text-lg font-semibold">{String(step + 1).padStart(2, "0")}</span><ArrowRight size={20} />
           </div>
-        </StackedCard>
-        {questions.map((q) => {
-          const a = s.answers[q.id] ?? {};
-          return (
-            <StackedCard key={q.id}>
-              <div className={cn(a.skipped && "opacity-50")}>
-                <div className="flex items-start justify-between gap-3">
-                  <h2 className="text-lg text-ink">{q.text}</h2>
-                  <button type="button" onClick={() => session.setAnswer(q.id, { skipped: !a.skipped })} className="shrink-0 text-sm font-bold text-bright underline-offset-4 hover:underline">
-                    {a.skipped ? "Undo skip" : "Skip"}
-                  </button>
-                </div>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {q.options.map((o) => (
-                    <button
-                      key={o}
-                      type="button"
-                      aria-pressed={a.choice === o}
-                      onClick={() => session.setAnswer(q.id, { choice: a.choice === o ? undefined : o, skipped: false })}
-                      className={cn(
-                        "rounded-full border px-4 py-2 text-sm font-bold transition-colors",
-                        a.choice === o ? "border-2 border-bright bg-pale text-ink" : "border-sand bg-snow text-ink hover:border-bright",
-                      )}
-                    >
-                      {o}
-                    </button>
-                  ))}
-                </div>
-                <TextField
-                  className="mt-3"
-                  maxLength={100}
-                  placeholder="Anything to add? (optional)"
-                  value={a.text ?? ""}
-                  onChange={(e) => session.setAnswer(q.id, { text: e.target.value.slice(0, 100), skipped: false })}
-                />
+          <h1 ref={heading} tabIndex={-1} className="text-3xl leading-tight outline-none sm:text-4xl">{loading ? "A little more about your home…" : step === 0 ? "Tell us about your household" : q?.text ?? "Your checklists are next…"}</h1>
+          {loading ? (
+            <div className="mt-8" role="status"><img src={mascots.url} alt="" className="cp-bob h-36 w-48 object-contain object-bottom" /><p className="mt-5 text-pale">Just a moment…</p></div>
+          ) : step === 0 ? (
+            <form onSubmit={(e) => { e.preventDefault(); void submitHousehold(); }}>
+              <p className="mt-4 text-lg text-pale">Who's at home? Include pets and any needs you'd like us to keep in mind.</p>
+              <TextArea id="household" aria-label="Tell us about your household" aria-describedby="household-hint" className="mt-7 rounded-lg border-0 border-b-2 border-pale bg-transparent px-0 text-lg text-snow placeholder:text-pale/60 focus:border-welcome" rows={4} maxLength={DESCRIPTION_MAX} value={s.description} onChange={(e) => session.setDescription(e.target.value)} placeholder="I live with my elderly mother who uses a walker, and we have a cat…" />
+              <div id="household-hint" className="mt-3 flex justify-between gap-4 text-sm text-pale"><span>{s.description.trim().length < 10 ? "At least 10 characters." : "Never stored or shared."}</span><span>{s.description.length}/{DESCRIPTION_MAX}</span></div>
+              <PillButton type="submit" disabled={nextDisabled} className="mt-8 bg-welcome text-panda hover:bg-snow hover:text-panda">Next <ArrowRight size={18} /></PillButton>
+            </form>
+          ) : q ? (
+            <div className="mt-7">
+              {q.type !== "text" && <div className="grid gap-3 sm:max-w-lg">{q.options.map((option, index) => (
+                <PillButton key={option} aria-pressed={!answer.skipped && answer.choice === option} onClick={() => { session.setAnswer(q.id, { choice: option, text: undefined, skipped: false }); if (option.toLowerCase() !== "other") nextQuestion(); }} className={cn("min-h-14 justify-start whitespace-normal rounded-lg border-2 border-pale/40 bg-transparent px-4 py-3 text-left text-snow hover:border-welcome hover:bg-pale hover:text-ink", !answer.skipped && answer.choice === option && "border-welcome bg-pale text-ink")}>
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded border border-current text-xs">{String.fromCharCode(65 + index)}</span><span className="flex-1">{option}</span>{!answer.skipped && answer.choice === option && <Check size={18} />}
+                </PillButton>
+              ))}</div>}
+              {textQuestion && <TextArea autoFocus aria-label="Your answer" className="mt-5 rounded-lg border-0 border-b-2 border-pale bg-transparent px-0 text-lg text-snow placeholder:text-pale/60 focus:border-welcome" rows={3} maxLength={100} placeholder="Your answer…" value={answer.text ?? ""} onChange={(e) => session.setAnswer(q.id, { text: e.target.value, skipped: false })} />}
+              <div className="mt-8 flex flex-wrap items-center gap-5">
+                {(textQuestion || answer.choice) && <PillButton disabled={nextDisabled} onClick={nextQuestion} className="bg-welcome text-panda hover:bg-snow hover:text-panda">Next <ArrowRight size={18} /></PillButton>}
+                <PillButton onClick={() => { session.setAnswer(q.id, { skipped: true }); nextQuestion(); }} className="bg-transparent px-0 text-pale hover:bg-transparent hover:text-snow">Skip this question <ArrowRight size={16} /></PillButton>
               </div>
-            </StackedCard>
-          );
-        })}
-      </Page>
-      <FlowNav back="/" next="/options" />
-    </>
+            </div>
+          ) : null}
+        </section>
+      </div>
+      <div className="mx-auto flex w-full max-w-4xl items-center justify-between gap-4 px-6 py-5 text-xs text-pale sm:px-10">
+        <span>{step === 0 ? "Your household" : `Question ${step} of ${questions.length}`}</span>
+        <div className="flex items-center gap-1.5" aria-label={`Step ${step + 1}`}>
+          {Array.from({ length: questions.length + 1 }, (_, i) => <span key={i} className={cn("h-1.5 w-5 rounded-full", i <= step ? "bg-welcome" : "bg-pale/25")} />)}
+        </div>
+      </div>
+    </main>
   );
 }
