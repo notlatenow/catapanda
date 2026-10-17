@@ -8,6 +8,9 @@ import { DisasterPicker } from "@/components/brand/DisasterPicker";
 import { APP_TITLE } from "@/config/app";
 import { catalog } from "@/services/catalog";
 import { session, useSession, isIntakeReady } from "@/state/session";
+import blueBackground from "@/assets/question-blue.webp";
+import redBackground from "@/assets/question-red.webp";
+import yellowBackground from "@/assets/question-yellow.webp";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -19,6 +22,7 @@ export const Route = createFileRoute("/")({
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
+    links: [blueBackground, redBackground, yellowBackground].map((href) => ({ rel: "prefetch", as: "image", href })),
   }),
   component: Start,
 });
