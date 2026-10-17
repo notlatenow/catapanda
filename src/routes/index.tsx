@@ -40,7 +40,7 @@ function Start() {
       <div className="-mt-6 sm:-mt-8">
       <Page>
         <StackedCard variant="welcome">
-          <h1 className="text-2xl text-ink">Let's get your home ready.</h1>
+          <h1 className="text-2xl text-pitch">Let's get your home ready.</h1>
           <p className="mt-2 text-sm text-ink">We get it: nobody wants natural disasters. But when one comes, you'll know how to prepare thanks to our gov-backed checklist. Sourced from {catalog.getSources().length} official government resources across Asia, so you know it's legit. Tell us what you're prepping for and who's at home...</p>
         </StackedCard>
 
