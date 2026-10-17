@@ -14,7 +14,7 @@ export function StackedCard({ children, variant = "standard", bottomTab = "yello
       <div
         className={cn(
           "relative rounded-3xl p-5 sm:p-6",
-          accent ? "bg-brick text-snow [&_h1]:text-panda [&_h2]:text-panda [&_h3]:text-panda" : welcome ? "bg-welcome text-ink" : "bg-card text-card-foreground",
+          accent ? "bg-brick text-snow [&_h1]:text-panda [&_h2]:text-panda [&_h3]:text-panda" : welcome ? "bg-brick text-snow" : "bg-card text-card-foreground",
         )}
       >
         {children}
