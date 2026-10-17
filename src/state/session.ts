@@ -26,9 +26,10 @@ export type Session = {
   clarify: Clarify | null; // result for the current disasters + description
   answers: Record<string, Answer>;
   personal: Personal | null; // AI personalization for the current inputs
+  formStep: number; // 0 = household; subsequent steps are clarifying questions
 };
 
-const initial: Session = { visit: 0, disasters: [], region: "", description: "", facts: [], clarify: null, answers: {}, personal: null };
+const initial: Session = { visit: 0, disasters: [], region: "", description: "", facts: [], clarify: null, answers: {}, personal: null, formStep: 0 };
 let state: Session = initial;
 const listeners = new Set<() => void>();
 
@@ -47,6 +48,7 @@ export const session = {
     set({ disasters: state.disasters.includes(name) ? state.disasters.filter((d) => d !== name) : [...state.disasters, name] }),
   setDescription: (description: string) => set({ description }),
   setRegion: (region: string) => set({ region }),
+  setFormStep: (formStep: number) => set({ formStep: Math.max(0, formStep) }),
   setFacts: (facts: HouseholdFact[]) => set({ facts }),
   setClarify: (clarify: Clarify) => set({ clarify, answers: {} }),
   setAnswer: (id: string, a: Answer) => set({ answers: { ...state.answers, [id]: { ...state.answers[id], ...a } } }),
@@ -71,7 +73,11 @@ export function useSession(): Session {
 export const DESCRIPTION_MIN = 10;
 export const DESCRIPTION_MAX = 250;
 
-export function isIntakeReady(s: Pick<Session, "disasters" | "region" | "description">): boolean {
-  const length = s.description.trim().length;
-  return s.disasters.length > 0 && s.region.length > 0 && length >= DESCRIPTION_MIN && length <= DESCRIPTION_MAX;
+export function isIntakeReady(s: Pick<Session, "disasters" | "region">): boolean {
+  return s.disasters.length > 0 && s.region.length > 0;
+}
+
+export function isHouseholdReady(description: string): boolean {
+  const length = description.trim().length;
+  return length >= DESCRIPTION_MIN && length <= DESCRIPTION_MAX;
 }
