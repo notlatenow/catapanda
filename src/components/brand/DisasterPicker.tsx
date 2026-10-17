@@ -19,7 +19,7 @@ function InkOutline({ wide = false }: { wide?: boolean }) {
 
 function DisasterIcon({ name }: { name: string }) {
   return (
-    <svg aria-hidden="true" viewBox="0 0 32 32" className="h-16 w-16 max-w-full fill-none stroke-current" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg aria-hidden="true" viewBox="0 0 32 32" className="h-16 w-16 max-w-full fill-none stroke-current" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
       {name === "Earthquake" ? <>
         <path d="M4 13 15.5 4 28 13 M7 11v15h6 M25 11v15h-5" />
         <path d="m17 10-3 6 5 2-4 6 2 5 M10 16v3 M22 16v3" />
@@ -47,7 +47,7 @@ export function DisasterPicker({ picked, onToggle, region, onRegionChange }: { p
           </PillButton>
         ))}
       </div>
-      <Select.Root value={region} onValueChange={onRegionChange}>
+      <Select.Root value={region} onValueChange={(value) => onRegionChange(value === "reset-region" ? "" : value)}>
         <Select.Trigger aria-label="Country" className="doodle-region relative mt-6 flex h-12 w-full items-center justify-between gap-2 px-4 text-left text-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
           <InkOutline wide />
           <Select.Value placeholder="Choose your region." />
@@ -58,6 +58,7 @@ export function DisasterPicker({ picked, onToggle, region, onRegionChange }: { p
         <Select.Portal>
           <Select.Content position="popper" sideOffset={6} className="relative z-50 min-w-[var(--radix-select-trigger-width)] rounded-lg border-0 bg-card p-2 text-card-foreground shadow-soft outline-none">
             <Select.Viewport>
+              <Select.Item value="reset-region" className="cursor-pointer rounded-md px-3 py-2 outline-none data-[highlighted]:bg-accent"><Select.ItemText>Choose your region.</Select.ItemText></Select.Item>
               {catalog.getRegions().map((country) => <Select.Item key={country} value={country} className="cursor-pointer rounded-md px-3 py-2 outline-none data-[highlighted]:bg-accent"><Select.ItemText>{country}</Select.ItemText></Select.Item>)}
             </Select.Viewport>
           </Select.Content>
