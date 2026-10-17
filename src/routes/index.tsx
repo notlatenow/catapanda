@@ -1,6 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import logo from "@/assets/web-logo.png.asset.json";
-import mascots from "@/assets/web-mascots.png.asset.json";
 import { Page } from "@/components/brand/AppLayout";
 import { PillButton } from "@/components/brand/PillButton";
 import letsGoButton from "@/assets/lets-go-button-clean.png";
@@ -8,6 +7,7 @@ import { StackedCard } from "@/components/brand/StackedCard";
 import { TextArea } from "@/components/brand/OptionCard";
 import { DisasterPicker } from "@/components/brand/DisasterPicker";
 import { APP_TITLE } from "@/config/app";
+import { catalog } from "@/services/catalog";
 import { session, useSession, isIntakeReady, DESCRIPTION_MIN, DESCRIPTION_MAX } from "@/state/session";
 
 export const Route = createFileRoute("/")({
@@ -34,14 +34,9 @@ function Start() {
     <>
       <Page>
         <img src={logo.url} alt="Catastrophic Pandamonium" className="mx-auto w-full max-w-md" />
-        <StackedCard>
-          <div className="flex items-center gap-4">
-            <div className="flex-1">
-              <h1 className="text-2xl text-ink">Let's get your home ready.</h1>
-              <p className="mt-2 text-slate">Tell us what you're prepping for and who's at home. We'll put together a friendly, government-backed checklist made just for you.</p>
-            </div>
-            <img src={mascots.url} alt="CataPanda mascots" className="w-24 shrink-0" />
-          </div>
+        <StackedCard variant="welcome">
+          <h1 className="text-2xl text-ink">Let's get your home ready.</h1>
+          <p className="mt-2 text-ink">We get it: nobody wants natural disasters. But when one comes, you'll know how to prepare thanks to our gov-backed checklist. Sourced from {catalog.getSources().length} official government resources across Asia, so you know it's legit. Tell us what you're prepping for and who's at home...</p>
         </StackedCard>
 
         <StackedCard>

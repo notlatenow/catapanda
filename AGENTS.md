@@ -15,6 +15,7 @@
 - App public URL comes only from `src/config/app.ts` (`VITE_APP_URL` override) so hosting can change without code edits.
 - No database tables or logging for household input — privacy requirement (Cloud is used only for server-side AI).
 - Brand UI primitives (StackedCard, PillButton, OptionCard, FlowNav) live in `src/components/brand/`; reuse them for consistent design.
+- Homepage welcome styling uses a dedicated StackedCard variant, and its source count comes from catalog.getSources() so other cards and catalog updates remain consistent.
 - Homepage disaster and region controls live in the brand DisasterPicker, with catalog-sourced country options and decorative SVG pen strokes, so intake styling stays isolated from checklist logic.
 - Region selection lives in visit-only session state and homepage readiness uses isIntakeReady, so required inputs survive back navigation and clear on Start over without persistence.
 - All AI calls go through `runAI` in `src/lib/ai.server.ts` (provider, model, endpoint live only there) so the provider can be swapped in one place.
