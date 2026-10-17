@@ -1,4 +1,5 @@
 import * as Select from "@radix-ui/react-select";
+import { useId } from "react";
 import { PillButton } from "./PillButton";
 import { catalog } from "@/services/catalog";
 import { cn } from "@/lib/utils";
@@ -20,8 +21,20 @@ function InkOutline({ wide = false, name = "Earthquake" }: { wide?: boolean; nam
 }
 
 function DisasterIcon({ name }: { name: string }) {
+  const textureId = useId();
   return (
-    <svg aria-hidden="true" viewBox="0 0 32 32" className="h-16 w-16 max-w-full fill-none stroke-current" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <svg aria-hidden="true" viewBox="0 0 32 32" className="h-16 w-16 max-w-full fill-none stroke-current" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
+      <defs>
+        <filter id={textureId} x="-10%" y="-10%" width="120%" height="120%" colorInterpolationFilters="sRGB">
+          <feTurbulence type="fractalNoise" baseFrequency="1.8" numOctaves="3" seed={name === "Earthquake" ? 7 : name === "Flood" ? 19 : 31} result="grain" />
+          <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.333 0.333 0.333 0 0" />
+          <feComponentTransfer>
+            <feFuncA type="discrete" tableValues="0 0 0 1 1 1 1 1" />
+          </feComponentTransfer>
+          <feComposite in="SourceGraphic" operator="in" />
+        </filter>
+      </defs>
+      <g filter={`url(#${textureId})`}>
       {name === "Earthquake" ? <>
         <path d="M4 13 15.5 4 28 13 M7 11v15h6 M25 11v15h-5" />
         <path d="m17 10-3 6 5 2-4 6 2 5 M10 16v3 M22 16v3" />
@@ -32,6 +45,7 @@ function DisasterIcon({ name }: { name: string }) {
         <path d="M7 14a5 5 0 0 1 1-10 6 6 0 0 1 11-1 5 5 0 0 1 7 9" />
         <path d="M4 17h13c6 0 6-8 2-8 M7 22h17c6 0 6-8 2-8 M11 27h7c5 0 7-2 7-5" />
       </g>}
+      </g>
     </svg>
   );
 }
