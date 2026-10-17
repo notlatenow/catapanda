@@ -154,9 +154,9 @@
   to { opacity: 1; transform: translateY(0); }
 }
 .question-enter { animation: question-enter 180ms ease-out; }
-.question-blue { --question-color: #086fc3; }
-.question-red { --question-color: #d34638; }
-.question-yellow { --question-color: #fdc11b; }
+.question-blue { --question-color: var(--sky); }
+.question-red { --question-color: var(--brick); }
+.question-yellow { --question-color: var(--welcome); }
 .question-screen { background-color: var(--question-color); }
 .question-next {
   min-width: 69px;
