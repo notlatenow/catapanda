@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
-import { pillVariants } from "./PillButton";
+import { PillButton, pillVariants } from "./PillButton";
 import { cn } from "@/lib/utils";
 import { session } from "@/state/session";
 
@@ -30,17 +30,18 @@ type FlowPath = "/" | "/questions" | "/options" | "/checklist" | "/share";
 
 export function FlowNav({ back, next, nextLabel = "Next", nextDisabled, startOver = true }: { back?: FlowPath | undefined; next?: FlowPath | undefined; nextLabel?: string; nextDisabled?: boolean; startOver?: boolean }) {
   const small = "px-4 py-2.5 text-sm";
+  const enabled = "border-2 border-transparent bg-panda text-snow hover:border-flow-hover hover:bg-flow-hover hover:text-flow-hover-text active:bg-flow-hover active:text-flow-hover-text";
   return (
     <div className="mx-auto max-w-xl px-4 pb-6">
       <div className="flex items-center justify-between gap-2 py-2.5">
         {back ? (
-          <Link to={back} className={cn(pillVariants({ variant: "primary" }), small, "border-2 border-dusk bg-sky text-dusk hover:border-panda hover:bg-panda hover:text-snow active:bg-panda")}>Back</Link>
+          <Link to={back} className={cn(pillVariants({ variant: "primary" }), small, enabled)}>Back</Link>
         ) : <span />}
         {startOver ? <Link to="/" onClick={() => session.reset()} className="text-sm font-bold text-dusk hover:text-snow active:text-sun">Start over</Link> : <span />}
         {next && nextDisabled ? (
-          <button type="button" disabled className={cn(pillVariants({ variant: "primary" }), small, "border-2 border-transparent bg-panda/50 text-haze disabled:opacity-100")}>{nextLabel}</button>
+          <PillButton type="button" disabled className={cn(small, "border-2 border-dusk bg-sky text-dusk disabled:opacity-100")}>{nextLabel}</PillButton>
         ) : next ? (
-          <Link to={next} className={cn(pillVariants({ variant: "primary" }), small, "border-2 border-dusk bg-sky text-dusk hover:border-panda hover:bg-panda hover:text-snow active:bg-panda")}>{nextLabel}</Link>
+          <Link to={next} className={cn(pillVariants({ variant: "primary" }), small, enabled)}>{nextLabel}</Link>
         ) : <span />}
       </div>
     </div>
