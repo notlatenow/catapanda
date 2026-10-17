@@ -118,7 +118,11 @@ export function Questions() {
                    {option}
                 </PillButton>
               ))}</div>}
-               {textQuestion && <TextArea autoFocus aria-label="Your answer" className="question-input mt-3 rounded-3xl font-sans text-sm font-normal" rows={1} maxLength={100} placeholder="Your answer…" value={answer.text ?? ""} onChange={(e) => session.setAnswer(q.id, { text: e.target.value, skipped: false })} />}
+                {textQuestion && <TextArea autoFocus aria-label="Your answer" className="question-input mt-3 rounded-3xl font-sans text-sm font-normal" rows={1} maxLength={100} placeholder="Your answer…" value={answer.text ?? ""} onChange={(e) => session.setAnswer(q.id, { text: e.target.value, skipped: false })} onKeyDown={(e) => {
+                  if (e.key !== "Enter" || e.nativeEvent.isComposing || e.keyCode === 229) return;
+                  e.preventDefault();
+                  if (!nextDisabled) nextQuestion();
+                }} />}
             </div>
           ) : null}
           </StackedCard>

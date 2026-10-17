@@ -10,3 +10,4 @@
 - [x] Compact the question box, place Back/Start over/Next underneath, and replace the three backgrounds with clean PNG redraws; verify phone and desktop layouts.
 - [x] Match reference question typography and word-only pill answers without skip; verify selection, typing and phone layout.
 - [x] Stretch question progress segments across the top of every screen, preserving height and gaps; verified at 375px, 603px, 768px and 1280px widths.
+- [x] Make Enter confirm typed clarifying answers like OK; verified validation, Other, and IME typing with nine tests and live Enter navigation.

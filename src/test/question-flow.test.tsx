@@ -51,6 +51,46 @@ describe("Sequential household form", () => {
     expect(session.get().answers["q2"]?.text).toBe("A walker");
     expect(navigate).toHaveBeenCalledWith({ to: "/options" });
   });
+  it("Enter confirms a typed clarifying answer like OK", () => {
+    seed(); session.setFormStep(2); render(<Questions />);
+    const textbox = screen.getByRole("textbox", { name: "Your answer" });
+    fireEvent.change(textbox, { target: { value: "A walker" } });
+    expect(fireEvent.keyDown(textbox, { key: "Enter" })).toBe(false);
+    expect(session.get().answers["q2"]?.text).toBe("A walker");
+    expect(navigate).toHaveBeenCalledWith({ to: "/options" });
+  });
+  it("Enter cannot confirm an empty or whitespace-only answer", () => {
+    seed(); session.setFormStep(2); render(<Questions />);
+    const textbox = screen.getByRole("textbox", { name: "Your answer" });
+    fireEvent.keyDown(textbox, { key: "Enter" });
+    fireEvent.change(textbox, { target: { value: "   " } });
+    fireEvent.keyDown(textbox, { key: "Enter" });
+    expect(navigate).not.toHaveBeenCalled();
+    expect(session.get().formStep).toBe(2);
+  });
+  it("Enter confirms Other text and advances to the next question", () => {
+    session.setClarify({ key: clarifyKey(session.get()), searchNeeds: [], questions: [
+      { id: "q1", text: "Which aid?", type: "choice", options: ["Walker", "Other"] },
+      { id: "q2", text: "Which device?", type: "text", options: [] },
+    ] });
+    session.setFormStep(1); render(<Questions />);
+    fireEvent.click(screen.getByRole("button", { name: "Other" }));
+    const textbox = screen.getByRole("textbox", { name: "Your answer" });
+    fireEvent.change(textbox, { target: { value: "A cane" } });
+    fireEvent.keyDown(textbox, { key: "Enter" });
+    expect(session.get().answers["q1"]).toMatchObject({ choice: "Other", text: "A cane" });
+    expect(session.get().formStep).toBe(2);
+  });
+  it("Enter used to finish IME composition does not submit", () => {
+    seed(); session.setFormStep(2); render(<Questions />);
+    const textbox = screen.getByRole("textbox", { name: "Your answer" });
+    fireEvent.change(textbox, { target: { value: "助行器" } });
+    fireEvent.keyDown(textbox, { key: "Enter", isComposing: true });
+    fireEvent.keyDown(textbox, { key: "Enter", keyCode: 229 });
+    expect(navigate).not.toHaveBeenCalled();
+    fireEvent.keyDown(textbox, { key: "Enter" });
+    expect(navigate).toHaveBeenCalledWith({ to: "/options" });
+  });
   it("empty clarification bypasses questions after household Next", async () => {
     run.mockResolvedValue({ enabled: false, questions: [], searchNeeds: [] });
     render(<Questions />);
