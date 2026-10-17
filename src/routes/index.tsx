@@ -1,7 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import logo from "@/assets/web-logo.png.asset.json";
 import mascots from "@/assets/web-mascots.png.asset.json";
-import { Page, FlowNav } from "@/components/brand/AppLayout";
+import { Page } from "@/components/brand/AppLayout";
+import { PillButton } from "@/components/brand/PillButton";
+import letsGoButton from "@/assets/lets-go-button.png";
 import { StackedCard } from "@/components/brand/StackedCard";
 import { TextArea } from "@/components/brand/OptionCard";
 import { DisasterPicker } from "@/components/brand/DisasterPicker";
@@ -23,6 +25,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Start() {
+  const navigate = useNavigate();
   const { disasters: picked, description, region } = useSession();
   const len = description.trim().length;
   const ready = isIntakeReady({ disasters: picked, description, region });
@@ -64,7 +67,17 @@ function Start() {
           </div>
         </StackedCard>
       </Page>
-      <FlowNav next="/questions" nextLabel="Let's go!" nextDisabled={!ready} startOver={false} />
+      <div className="mx-auto flex max-w-xl justify-center px-4 pb-6">
+        <PillButton
+          type="button"
+          aria-label="Let's go!"
+          disabled={!ready}
+          onClick={() => { if (ready) void navigate({ to: "/questions" }); }}
+          className="h-36 w-60 max-w-full rounded-none bg-transparent p-0 hover:bg-transparent active:bg-transparent transition-transform hover:rotate-2 active:scale-95 disabled:opacity-50 disabled:grayscale motion-reduce:transform-none motion-reduce:transition-none"
+        >
+          <img src={letsGoButton} alt="" className="h-full w-full object-contain" />
+        </PillButton>
+      </div>
     </>
   );
 }
