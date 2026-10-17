@@ -33,6 +33,11 @@ describe("Sequential household form", () => {
     expect(session.get().formStep).toBe(1);
     expect(run).not.toHaveBeenCalled();
   });
+  it("Enter on the household question acts like OK", () => {
+    seed(); render(<Questions />);
+    expect(fireEvent.keyDown(screen.getByRole("textbox", { name: "Tell us about your household" }), { key: "Enter" })).toBe(false);
+    expect(session.get().formStep).toBe(1);
+  });
   it("option selection immediately advances and Back keeps the answer", () => {
     seed(); session.setFormStep(1); render(<Questions />);
     fireEvent.click(screen.getByRole("button", { name: /Yes/ }));
