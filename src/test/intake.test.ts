@@ -10,6 +10,15 @@ describe("Required homepage inputs", () => {
     expect(isIntakeReady({ ...valid, region: "" })).toBe(false);
     expect(isIntakeReady(valid)).toBe(true);
   });
+  it("disables Next when the region is cleared while keeping other input", () => {
+    session.toggleDisaster("Earthquake");
+    session.setDescription(valid.description);
+    session.setRegion("Taiwan");
+    expect(isIntakeReady(session.get())).toBe(true);
+    session.setRegion("");
+    expect(isIntakeReady(session.get())).toBe(false);
+    expect(session.get()).toMatchObject({ region: "", disasters: ["Earthquake"], description: valid.description });
+  });
   it("requires at least one disaster", () => {
     expect(isIntakeReady({ ...valid, disasters: [] })).toBe(false);
     expect(isIntakeReady(valid)).toBe(true);
