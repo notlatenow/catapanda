@@ -13,7 +13,7 @@ export function SiteHeader() {
   const logoHeader = pathname === "/share" || pathname === "/options" || pathname === "/checklist";
   const link = "rounded-full px-2 py-1.5 text-sm sm:px-4 sm:text-base font-bold text-sun hover:text-snow active:text-sky";
   return (
-    <header className={cn("relative z-10", home ? "pb-20" : "pb-4", logoHeader && "mb-40")}>
+    <header className={cn("relative z-10", home ? "pb-20" : "pb-4", logoHeader && (pathname === "/share" ? "mb-16" : "mb-40"))}>
       <div aria-hidden="true" className="halftone-ink absolute inset-0" style={{ clipPath: INK_EDGE }} />
       <nav className="relative mx-auto flex max-w-xl items-center justify-end gap-2 px-4 py-4">
         {logoHeader && (
@@ -32,7 +32,8 @@ export function SiteHeader() {
 }
 
 export function Page({ children }: { children: ReactNode }) {
-  return <main className="mx-auto flex max-w-xl flex-col gap-6 px-4 pt-6 pb-4">{children}</main>;
+  const centered = useRouterState({ select: (state) => state.location.pathname === "/share" });
+  return <main className={cn("mx-auto flex w-full max-w-xl flex-col gap-6 px-4 pt-6 pb-4", centered && "flex-1 justify-center")}>{children}</main>;
 }
 
 type FlowPath = "/" | "/questions" | "/options" | "/checklist" | "/share";
@@ -67,7 +68,7 @@ export function SiteFooter() {
   const { disasters } = useSession();
   if (pathname === "/options" && disasters.length === 0) return null;
   return (
-    <footer className="mx-auto max-w-xl px-4 pb-8 pt-2 text-center text-sm text-pale">
+    <footer className="mx-auto mt-auto max-w-xl px-4 pb-8 pt-2 text-center text-sm text-pale">
       {home
         ? "Your privacy is protected. The household description you enter is used only to build your lists. We don't store it or share it."
         : <><strong className="text-gold">Gov-vetted items</strong> are verified against government sources. <strong className="text-gold">AI items</strong> are personalized recommendations. Always review our lists to ensure they meet your needs.</>}
