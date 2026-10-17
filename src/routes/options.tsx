@@ -31,7 +31,7 @@ function Options() {
     { id: "top10", name: "Top Tips", art: topTipsArt, tilt: "-rotate-[5deg]" },
     { id: "personalized", name: "Personal Picks", art: personalPicksArt, tilt: "rotate-[10deg]" },
   ];
-  const lists = disasters.map((d) => ({ id: d, name: d, tagline: `The full ${d.toLowerCase()} list` }));
+  const lists = disasters.map((d) => ({ id: d, name: `${d} standard checklist` }));
   const featuredText = "font-display block py-6 text-center text-3xl leading-tight text-slate sm:text-4xl";
   return (
     <>
@@ -39,10 +39,7 @@ function Options() {
         {disasters.length > 0 && waiting && <ListsLoading disasters={disasters} phase={personal?.phase ?? 0} />}
         <StackedCard>
           {disasters.length ? (
-            <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-              <h1 className="text-2xl text-ink">CataPanda Prep</h1>
-              <p className="text-right text-slate">Pick a checklist to open.</p>
-            </div>
+            <h1 className="text-2xl text-ink">Choose a checklist:</h1>
           ) : (
             <>
               <h1 className="text-2xl text-ink">CataPanda Prep</h1>
@@ -63,7 +60,7 @@ function Options() {
               <div className="mt-4 grid gap-3">
                 {lists.map((l) => (
                   <Link key={l.id} to="/checklist" search={{ list: l.id }}>
-                    <OptionCard name={l.name} tagline={l.tagline} />
+                    <OptionCard name={l.name} />
                   </Link>
                 ))}
               </div>
