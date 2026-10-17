@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, Check, X } from "lucide-react";
+import { ArrowLeft, Check, X } from "lucide-react";
 import mascots from "@/assets/friends-waist.png.asset.json";
 import blueBackground from "@/assets/question-blue.webp";
 import redBackground from "@/assets/question-red.webp";
