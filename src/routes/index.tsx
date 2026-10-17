@@ -32,7 +32,7 @@ function Start() {
 
   return (
     <>
-      <div className="relative z-20 -mt-24 flex justify-center overflow-hidden" >
+      <div className="relative z-20 -mt-32 flex justify-center overflow-hidden" >
         <img src={logo.url} alt="Catastrophic Pandamonium" className="w-[120%] max-w-none shrink-0 sm:w-full sm:max-w-2xl" />
       </div>
       <Page>
