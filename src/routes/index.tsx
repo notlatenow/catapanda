@@ -73,7 +73,7 @@ function Start() {
           aria-label="Let's go!"
           disabled={!ready}
           onClick={() => { if (ready) void navigate({ to: "/questions" }); }}
-          className="h-36 w-60 max-w-full rounded-none bg-transparent p-0 hover:bg-transparent active:bg-transparent transition-transform hover:rotate-2 active:scale-95 disabled:opacity-50 disabled:grayscale motion-reduce:transform-none motion-reduce:transition-none"
+          className="h-36 w-60 max-w-full rounded-none bg-transparent p-0 hover:bg-transparent active:bg-transparent transition-transform duration-300 ease-out hover:rotate-12 active:scale-95 disabled:opacity-50 disabled:grayscale motion-reduce:rotate-0 motion-reduce:transform-none motion-reduce:transition-none"
         >
           <img src={letsGoButton} alt="" className="h-full w-full object-contain" />
         </PillButton>
