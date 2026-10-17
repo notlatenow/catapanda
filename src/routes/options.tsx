@@ -28,7 +28,7 @@ function Options() {
   const personal = usePersonalization();
   const waiting = !personal || personal.status === "running";
   const featured = [
-    { id: "top10", name: "Top Tips", art: topTipsArt, tilt: "-rotate-[25deg]" },
+    { id: "top10", name: "Top Tips", art: topTipsArt, tilt: "-rotate-[15deg]" },
     { id: "personalized", name: "Personal Picks", art: personalPicksArt, tilt: "rotate-[10deg]" },
   ];
   const lists = disasters.map((d) => ({ id: d, name: d, tagline: `The full ${d.toLowerCase()} list` }));
