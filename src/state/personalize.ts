@@ -57,3 +57,11 @@ export function usePersonalization() {
 
 export const FALLBACK_MESSAGE =
   "Our personalized picks are taking a little nap right now, so here are your trusty gov-vetted lists. They've got you covered!";
+
+/** True while the full-screen "Working hard on your lists" screen should replace the Options page. */
+export function useListsLoading(pathname: string) {
+  const s = useSession();
+  if (pathname !== "/options" || s.disasters.length === 0) return false;
+  const p = s.personal?.key === personalKey(s) ? s.personal : null;
+  return !p || p.status === "running";
+}

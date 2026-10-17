@@ -14,6 +14,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteHeader, SiteFooter } from "@/components/brand/AppLayout";
+import { useListsLoading } from "@/state/personalize";
 
 function NotFoundComponent() {
   return (
@@ -117,7 +118,9 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-  const form = useRouterState({ select: (state) => state.location.pathname === "/questions" });
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
+  const listsLoading = useListsLoading(pathname);
+  const form = pathname === "/questions" || listsLoading;
 
   return (
     <QueryClientProvider client={queryClient}>
