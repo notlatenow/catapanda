@@ -58,7 +58,7 @@ export function SiteFooter() {
   return (
     <footer className="mx-auto max-w-xl px-4 pb-8 pt-2 text-center text-sm text-pale">
       {home
-        ? <><span className="block">Your privacy is protected.</span><span className="block">The household description you enter is used only to build your lists. We don't store it or share it.</span></>
+        ? "Your privacy is protected. The household description you enter is used only to build your lists. We don't store it or share it."
         : "Gov-vetted items are checked against government sources. Items marked 'AI' are AI recommendations — check them against your own needs."}
     </footer>
   );
