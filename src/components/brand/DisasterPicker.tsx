@@ -20,10 +20,10 @@ function InkOutline({ wide = false, name = "Earthquake" }: { wide?: boolean; nam
   );
 }
 
-function DisasterIcon({ name }: { name: string }) {
+function DisasterIcon({ name, selected }: { name: string; selected: boolean }) {
   const textureId = useId();
   return (
-    <svg aria-hidden="true" viewBox="0 0 32 32" className={cn("h-16 w-16 max-w-full fill-none stroke-current", name === "Flood" ? "rotate-[8deg]" : "-rotate-[8deg]")} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg aria-hidden="true" viewBox="0 0 32 32" className={cn("h-16 w-16 max-w-full fill-none stroke-current motion-safe:transition-transform motion-safe:duration-150", selected ? "rotate-0" : name === "Flood" ? "rotate-[8deg]" : "-rotate-[8deg]")} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <defs>
         <filter id={textureId} x="-10%" y="-10%" width="120%" height="120%" colorInterpolationFilters="sRGB">
           <feTurbulence type="fractalNoise" baseFrequency="0.12 0.24" numOctaves="2" seed={name === "Earthquake" ? 7 : name === "Flood" ? 19 : 31} result="inkPressure" />
@@ -61,7 +61,7 @@ export function DisasterPicker({ picked, onToggle, region, onRegionChange }: { p
           <PillButton key={name} type="button" aria-pressed={picked.includes(name)} onClick={() => onToggle(name)}
             className={cn("doodle-disaster relative flex min-w-0 flex-col gap-1 rounded-none px-1 py-4 font-display text-sm font-bold sm:text-base", picked.includes(name) && "doodle-selected")}>
             <InkOutline name={name} />
-            <DisasterIcon name={name} />
+            <DisasterIcon name={name} selected={picked.includes(name)} />
             <span className={cn("font-sans text-sm font-normal", picked.includes(name) ? "text-pitch" : "text-slate")}>{name}</span>
           </PillButton>
         ))}
