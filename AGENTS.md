@@ -17,7 +17,8 @@
 - Brand UI primitives (StackedCard, PillButton, OptionCard, FlowNav) live in `src/components/brand/`; reuse them for consistent design.
 - Homepage welcome styling uses a dedicated StackedCard variant, and its source count comes from catalog.getSources() so other cards and catalog updates remain consistent.
 - Homepage disaster and region controls live in the brand DisasterPicker, with catalog-sourced country options and decorative SVG pen strokes, so intake styling stays isolated from checklist logic.
-- Region selection lives in visit-only session state and homepage readiness uses isIntakeReady, so required inputs survive back navigation and clear on Start over without persistence.
+- Region selection and form position live in visit-only session state; isIntakeReady gates disaster/region and isHouseholdReady gates household text separately so each step enforces its own inputs without persistence.
+- The /questions route owns the household-first sequential form, and the root shell hides regular navigation/footer there so all question types share one immersive experience.
 - All AI calls go through `runAI` in `src/lib/ai.server.ts` (provider, model, endpoint live only there) so the provider can be swapped in one place.
 - AI on/off is the `AI_ENABLED` server env setting (unset = on; "false"/"off"/"0" = off); when off or failing, every AI step returns empty and the plain-logic flow is used.
 - AI steps pass user text only inside delimited `<user_data>` and never log inputs/outputs.

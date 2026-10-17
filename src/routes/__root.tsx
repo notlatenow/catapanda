@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
   type ErrorComponentProps,
@@ -116,12 +117,13 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const form = useRouterState({ select: (state) => state.location.pathname === "/questions" });
 
   return (
     <QueryClientProvider client={queryClient}>
-      <SiteHeader />
+      {!form && <SiteHeader />}
       <Outlet />
-      <SiteFooter />
+      {!form && <SiteFooter />}
     </QueryClientProvider>
   );
 }

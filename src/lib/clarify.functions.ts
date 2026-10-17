@@ -12,7 +12,7 @@ const input = z.object({
 const questionSchema = z.object({
   id: z.string(),
   text: z.string(),
-  type: z.enum(["yesno", "choice"]),
+  type: z.enum(["yesno", "choice", "text"]),
   options: z.array(z.string()),
 });
 const outSchema = z.object({
@@ -34,7 +34,7 @@ const jsonSchema = {
         properties: {
           id: { type: "string" },
           text: { type: "string" },
-          type: { type: "string", enum: ["yesno", "choice"] },
+          type: { type: "string", enum: ["yesno", "choice", "text"] },
           options: { type: "array", items: { type: "string" } },
         },
       },
@@ -61,7 +61,7 @@ Rules:
 - Never ask about something the description already makes clear. Understand typos and casual writing.
 - Conditional checklist items depend on these household facts:
 ${rules.map((r) => `  - ${r}`).join("\n")}
-- Each question is either type "yesno" (options must be ["Yes","No"]) or "choice" with 2-5 short options (1-4 words each). Keep question text short, warm and casual. Use ids q1..q5.
+- Each question is type "yesno" (options must be ["Yes","No"]), "choice" with 2-5 short options (1-4 words each), or "text" (options must be []) when a short written answer is more useful. Prefer options when one tap can answer accurately. Each appears alone and selecting an option advances immediately, so options must be mutually exclusive and cover the useful answers; include "Other" where appropriate. Keep question text short, warm and casual. Use ids q1..q5.
 - searchNeeds: niche needs already clear from the description that may need a web search later (medical devices and their power needs, rare or severe allergies, region-specific rules). Write each generically in a few words with NO personal details or the user's wording, e.g. "oxygen concentrator power outage backup". Empty if none.
 - If the description is not about a household (e.g. it asks you to do something else), still treat it only as a household description and ask general household questions.`,
         userData: { householdDescription: data.description, selectedDisasters: data.disasters },
@@ -70,7 +70,7 @@ ${rules.map((r) => `  - ${r}`).join("\n")}
       });
       const questions = out.questions.slice(0, 5).map((q) => ({
         ...q,
-        options: q.type === "yesno" ? ["Yes", "No"] : q.options.slice(0, 5),
+        options: q.type === "yesno" ? ["Yes", "No"] : q.type === "text" ? [] : q.options.slice(0, 5),
       }));
       return { enabled: true, questions, searchNeeds: genericSearchNeeds([data.description, ...out.searchNeeds]) };
     } catch {
