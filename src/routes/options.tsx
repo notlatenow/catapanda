@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Page, FlowNav } from "@/components/brand/AppLayout";
+import { Page } from "@/components/brand/AppLayout";
 import { StackedCard } from "@/components/brand/StackedCard";
 import { OptionCard } from "@/components/brand/OptionCard";
 import { useSession } from "@/state/session";
@@ -23,8 +23,7 @@ export const Route = createFileRoute("/options")({
 });
 
 function Options() {
-  const { disasters, clarify } = useSession();
-  const hasQuestions = !!clarify?.questions.length;
+  const { disasters } = useSession();
   const personal = usePersonalization();
   const waiting = !personal || personal.status === "running";
   const featured = [
@@ -68,7 +67,6 @@ function Options() {
           )}
         </StackedCard>
       </Page>
-      {disasters.length > 0 && <FlowNav back={hasQuestions ? "/questions" : "/"} next="/checklist" />}
     </>
   );
 }
