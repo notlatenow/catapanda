@@ -1,6 +1,10 @@
 import { APP_URL } from "@/config/app";
 
 export const SHARE_COUNTRY = "Taiwan";
+export const SHARE_TIPS =
+  "Pack a grab-and-go bag, keep it near the door! Have 3 days of food and water per person. Remember your flashlight and first aid kit.";
+
+const MENTIONED = /grab-and-go|water|food|flashlight|first aid/i;
 
 export function disasterPhrase(disasters: string[]): string {
   const d = disasters.map((x) => x.toLowerCase());
@@ -9,17 +13,28 @@ export function disasterPhrase(disasters: string[]): string {
   return `${d.slice(0, -1).join(", ")} & ${d[d.length - 1]}`;
 }
 
-/** Item names only — never include anything the user typed. */
-export function buildShareMessage(disasters: string[], itemNames: string[]): string {
-  const list = itemNames.map((n, i) => `(${i + 1}) ${n}`).join(", ");
-  return `Made for ${disasterPhrase(disasters)} disasters, here's my top 10 list for disaster prep in ${SHARE_COUNTRY}! Use this free tool to prepare your own list: Catastrophic Pandamonium ${APP_URL}\n\n${list}`;
+/** Up to 2 list items not already covered by the fixed tips text. */
+export function customItems(itemNames: string[]): string[] {
+  return itemNames.filter((n) => !MENTIONED.test(n)).slice(0, 2);
 }
 
-/** Email keeps numbered items and the public URL on separate lines. */
+function customSentence(itemNames: string[]): string {
+  const c = customItems(itemNames);
+  return c.length ? ` And my custom items: ${c.join(" and ")}.` : "";
+}
+
+const header = (d: string[]) => `My top essentials for ${disasterPhrase(d)} prep in ${SHARE_COUNTRY}:`;
+const footer = `Make your own prep list with Catastrophic Pandamonium: ${APP_URL}`;
+
+/** Item names only — never include anything the user typed. */
+export function buildShareMessage(disasters: string[], itemNames: string[]): string {
+  return `${header(disasters)}\n\n${SHARE_TIPS}${customSentence(itemNames)}\n\n${footer}`;
+}
+
 export function buildEmailShare(disasters: string[], itemNames: string[]) {
   return {
-    subject: `My disaster prep Top 10 for ${SHARE_COUNTRY}`,
-    body: `Made for ${disasterPhrase(disasters)} disasters, here's my top 10 list for disaster prep in ${SHARE_COUNTRY}!\r\n\r\n${itemNames.map((name, i) => `${i + 1}. ${name}`).join("\r\n")}\r\n\r\nUse this free tool to prepare your own list: Catastrophic Pandamonium\r\n${APP_URL}`,
+    subject: `My disaster prep essentials for ${SHARE_COUNTRY}`,
+    body: buildShareMessage(disasters, itemNames).replace(/\n/g, "\r\n"),
   };
 }
 
@@ -27,11 +42,11 @@ export function smsShareHref(message: string, ios: boolean): string {
   return `sms:${ios ? "&" : "?"}body=${encodeURIComponent(message)}`;
 }
 
-/** X gets a short post: top 5 items, "+N more", then the app URL. */
+/** X gets a condensed version to fit the post limit. */
 export function buildXShare(disasters: string[], itemNames: string[]): string {
-  const top = itemNames.slice(0, 5).map((n, i) => `${i + 1}. ${n}`).join("\n");
-  const more = itemNames.length > 5 ? ` (+${itemNames.length - 5} more)` : "";
-  return `My top essentials for ${disasterPhrase(disasters)} prep in ${SHARE_COUNTRY}:\n${top}${more}\n\nMake your own list with CataPanda: ${APP_URL}`;
+  const c = customItems(itemNames);
+  const extra = c.length ? ` + ${c.join(", ")}` : "";
+  return `${header(disasters)} grab-and-go bag by the door, 3 days of food & water per person, flashlight, first aid kit${extra}.\n\nMake your own prep list: ${APP_URL}`;
 }
 
 export function xShareHref(disasters: string[], itemNames: string[]): string {
