@@ -7,3 +7,4 @@
 - [x] Move household entry into a seamless full-page, one-question-at-a-time form; enable Home with disaster and region only.
 - [x] Verify immediate option advance, typed Next, individual skip, Back, fallback and phone layout.
 - [x] Redesign question screens with three comic backgrounds, stacked content boxes and simplified Next controls; verify the flow.
+- [x] Compact the question box, place Back/Start over/Next underneath, and replace the three backgrounds with clean PNG redraws; verify phone and desktop layouts.
