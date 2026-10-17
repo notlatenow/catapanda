@@ -9,3 +9,4 @@
 - [x] Redesign question screens with three comic backgrounds, stacked content boxes and simplified Next controls; verify the flow.
 - [x] Compact the question box, place Back/Start over/Next underneath, and replace the three backgrounds with clean PNG redraws; verify phone and desktop layouts.
 - [x] Match reference question typography and word-only pill answers without skip; verify selection, typing and phone layout.
+- [ ] Stretch question progress segments across the top of every screen, preserving height and gaps; verify phone, tablet and desktop.
