@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Page, FlowNav, PlaceholderNote } from "@/components/brand/AppLayout";
+import { Page, FlowNav } from "@/components/brand/AppLayout";
 import { StackedCard } from "@/components/brand/StackedCard";
 import { OptionCard } from "@/components/brand/OptionCard";
 import { useSession } from "@/state/session";
@@ -37,7 +37,7 @@ function Options() {
         {disasters.length > 0 && waiting && <ListsLoading disasters={disasters} phase={personal?.phase ?? 0} />}
         <StackedCard>
           <h1 className="text-2xl text-ink">CataPanda Prep</h1>
-          <p className="mt-2 text-slate">Pick a checklist to open.</p>
+          <p className="mt-2 text-slate">{disasters.length ? "Pick a checklist to open." : "Head back to home and pick at least one disaster first."}</p>
           {disasters.length > 0 && (
             <>
               <div className="mt-4 grid grid-cols-2 gap-3">
@@ -59,9 +59,8 @@ function Options() {
             </>
           )}
         </StackedCard>
-        {disasters.length === 0 && <PlaceholderNote>Head back to the start and pick at least one disaster first.</PlaceholderNote>}
       </Page>
-      <FlowNav back={hasQuestions ? "/questions" : "/"} next={disasters.length ? "/checklist" : undefined} />
+      {disasters.length > 0 && <FlowNav back={hasQuestions ? "/questions" : "/"} next="/checklist" />}
     </>
   );
 }
