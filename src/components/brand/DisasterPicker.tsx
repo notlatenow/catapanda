@@ -21,23 +21,9 @@ function InkOutline({ wide = false, name = "Earthquake" }: { wide?: boolean; nam
 }
 
 function DisasterIcon({ name, selected }: { name: string; selected: boolean }) {
-  const textureId = useId();
   return (
     <svg aria-hidden="true" viewBox="0 0 32 32" className={cn("h-16 w-16 max-w-full fill-none stroke-current motion-safe:transition-transform motion-safe:duration-150", selected ? "rotate-0" : name === "Flood" ? "rotate-[8deg]" : "-rotate-[8deg]")} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <defs>
-        <filter id={textureId} x="-10%" y="-10%" width="120%" height="120%" colorInterpolationFilters="sRGB">
-          <feTurbulence type="fractalNoise" baseFrequency="0.12 0.24" numOctaves="2" seed={name === "Earthquake" ? 7 : name === "Flood" ? 19 : 31} result="inkPressure" />
-          <feTurbulence type="fractalNoise" baseFrequency="0.85 2.6" numOctaves="3" seed={name === "Earthquake" ? 11 : name === "Flood" ? 23 : 37} result="paperFibers" />
-          <feComposite in="paperFibers" in2="inkPressure" operator="arithmetic" k1="1" k2="0.12" k3="0" k4="0" result="dryBrush" />
-          <feColorMatrix in="dryBrush" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.333 0.333 0.333 0 0" />
-          <feComponentTransfer>
-            <feFuncA type="discrete" tableValues="0 0 0 1 1 1 1 1 1 1 1 1" />
-          </feComponentTransfer>
-          <feComposite in="SourceGraphic" operator="in" result="stampedInk" />
-          <feDisplacementMap in="stampedInk" in2="paperFibers" scale="0.22" xChannelSelector="R" yChannelSelector="G" />
-        </filter>
-      </defs>
-      <g filter={`url(#${textureId})`}>
+      <g>
       {name === "Earthquake" ? <>
         <path d="M4 13 15.5 4 28 13 M7 11v15h6 M25 11v15h-5" />
         <path d="m17 10-3 6 5 2-4 6 2 5 M10 16v3 M22 16v3" />
