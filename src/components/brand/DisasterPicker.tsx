@@ -43,7 +43,7 @@ export function DisasterPicker({ picked, onToggle, region, onRegionChange }: { p
             className={cn("doodle-disaster relative flex min-w-0 flex-col gap-1 rounded-none px-1 py-4 font-display text-sm font-bold sm:text-base", picked.includes(name) && "doodle-selected")}>
             <InkOutline />
             <DisasterIcon name={name} />
-            <span className="font-sans font-normal text-slate">{name}</span>
+            <span className={cn("font-sans font-normal", picked.includes(name) ? "text-pitch" : "text-slate")}>{name}</span>
           </PillButton>
         ))}
       </div>
