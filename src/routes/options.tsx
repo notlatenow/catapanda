@@ -31,7 +31,7 @@ function Options() {
     { id: "top10", name: "Top Tips", art: topTipsArt, tilt: "-rotate-[5deg]" },
     { id: "personalized", name: "Personal Picks", art: personalPicksArt, tilt: "rotate-[10deg]" },
   ];
-  const lists = disasters.map((d) => ({ id: d, name: `${d} standard checklist`, tagline: undefined }));
+  const lists = disasters.map((d) => ({ id: d, name: `${d} standard checklist` }));
   const featuredText = "font-display block py-6 text-center text-3xl leading-tight text-slate sm:text-4xl";
   return (
     <>
@@ -60,7 +60,7 @@ function Options() {
               <div className="mt-4 grid gap-3">
                 {lists.map((l) => (
                   <Link key={l.id} to="/checklist" search={{ list: l.id }}>
-                    <OptionCard name={l.name} tagline={l.tagline} />
+                    <OptionCard name={l.name} />
                   </Link>
                 ))}
               </div>
