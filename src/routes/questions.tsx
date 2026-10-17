@@ -99,7 +99,7 @@ export function Questions() {
       <div className="mx-auto flex w-full max-w-xl flex-1 items-center px-4 py-12">
         <section key={loading ? "loading" : step} className="question-enter w-full text-sm" aria-busy={loading}>
           <StackedCard bottomTab={theme === "yellow" ? "blue" : "yellow"}>
-           <h1 ref={heading} tabIndex={-1} className="text-lg font-bold leading-7 outline-none">{loading ? "A little more about your home…" : step === 0 ? "Tell us about your household" : q?.text ?? "Your checklists are next…"}</h1>
+           <h1 ref={heading} tabIndex={-1} className={cn("leading-7 outline-none", !loading && step === 0 ? "text-2xl font-normal" : "text-lg font-bold")}>{loading ? "A little more about your home…" : step === 0 ? "Tell us about your household" : q?.text ?? "Your checklists are next…"}</h1>
           {loading ? (
             <div className="mt-8" role="status"><img src={mascots.url} alt="" className="cp-bob h-36 w-48 object-contain object-bottom" /><p className="mt-5 text-slate">Just a moment…</p></div>
           ) : step === 0 ? (
