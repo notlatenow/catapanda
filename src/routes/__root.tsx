@@ -121,9 +121,11 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {!form && <SiteHeader />}
-      <Outlet />
-      {!form && <SiteFooter />}
+      <div className="flex min-h-dvh flex-col">
+        {!form && <SiteHeader />}
+        <Outlet />
+        {!form && <SiteFooter />}
+      </div>
     </QueryClientProvider>
   );
 }
