@@ -4,10 +4,17 @@ import { PillButton } from "./PillButton";
 import { catalog } from "@/services/catalog";
 import { cn } from "@/lib/utils";
 
-function InkOutline() {
+function InkOutline({ wide = false }: { wide?: boolean }) {
   return (
     <svg aria-hidden="true" className="ink-outline" viewBox="0 0 200 100" preserveAspectRatio="none">
-      <path d="M16 3 Q70 1 119 3 L180 2 Q196 2 197 16 L196 77 Q199 96 181 97 L77 96 L19 98 Q3 98 3 82 L4 29 Q1 3 16 3 Z" />
+      <path className="ink-contour" d="M17 4 C42 2 65 5 91 3 C120 2 151 4 179 3 Q195 2 195 17 C194 35 197 57 195 78 Q196 95 181 95 C154 97 131 94 104 96 C73 97 47 95 20 96 Q5 97 5 81 C3 61 6 43 4 25 Q3 5 17 4 Z" />
+      {wide ? <>
+        <path className="ink-embellishment" d="M8 29 Q7 57 9 72 M16 86 29 87 M34 87 37 87 M171 13 183 14" />
+        <path className="ink-pressure" d="M5 51 5 78 Q4 96 20 96 M133 96 163 96" />
+      </> : <>
+        <path className="ink-embellishment" d="M13 68 Q12 86 21 87 L32 87 M39 87 43 87 M183 17 Q185 29 183 37 M184 44 184 48 M26 11 45 10" />
+        <path className="ink-pressure" d="M5 57 5 81 Q4 96 20 96 M145 96 172 95 M102 3 133 3" />
+      </>}
     </svg>
   );
 }
@@ -46,14 +53,15 @@ export function DisasterPicker({ picked, onToggle }: { picked: string[]; onToggl
       </div>
       <Select.Root value={region} onValueChange={setRegion}>
         <Select.Trigger aria-label="Country" className="doodle-region relative mt-6 flex h-12 w-full items-center justify-between gap-2 px-4 text-left text-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-          <InkOutline />
+          <InkOutline wide />
           <Select.Value placeholder="Choose your region." />
           <Select.Icon>
             <svg aria-hidden="true" viewBox="0 0 24 18" className="h-4 w-5 fill-none stroke-ink" strokeWidth="2.2" strokeLinejoin="round"><path d="m3 4 18-1-9 12Z" /></svg>
           </Select.Icon>
         </Select.Trigger>
         <Select.Portal>
-          <Select.Content position="popper" sideOffset={6} className="z-50 min-w-[var(--radix-select-trigger-width)] rounded-lg border-2 border-ink bg-card p-1 text-card-foreground shadow-soft">
+          <Select.Content position="popper" sideOffset={6} className="relative z-50 min-w-[var(--radix-select-trigger-width)] rounded-lg bg-card p-2 text-card-foreground shadow-soft">
+            <InkOutline wide />
             <Select.Viewport>
               {catalog.getRegions().map((country) => <Select.Item key={country} value={country} className="cursor-pointer rounded-md px-3 py-2 outline-none data-[highlighted]:bg-accent"><Select.ItemText>{country}</Select.ItemText></Select.Item>)}
             </Select.Viewport>
