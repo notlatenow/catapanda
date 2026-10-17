@@ -1,8 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import backArt from "@/assets/back-wordart.png";
 import { useEffect, type ReactNode } from "react";
 import { useState } from "react";
 import { Mail, MessageCircle } from "lucide-react";
-import { Page, FlowNav } from "@/components/brand/AppLayout";
+import { Page } from "@/components/brand/AppLayout";
 import { StackedCard } from "@/components/brand/StackedCard";
 import { buildAll } from "@/lib/checklists";
 import { buildEmailShare, buildShareMessage, smsShareHref, xShareHref } from "@/lib/share";
@@ -102,7 +103,11 @@ function SharePage() {
           ))}
         </ul>
       </Page>
-      <FlowNav back="/checklist" startOver={false} />
+      <div className="flex justify-center px-4 pb-6">
+        <Link to="/checklist" aria-label="Back" className="group rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+          <img src={backArt} alt="BACK!" width={140} className="w-32 -rotate-6 transition-transform motion-safe:duration-150 group-hover:rotate-0 group-hover:scale-125 group-active:scale-110" />
+        </Link>
+      </div>
     </>
   );
 }
