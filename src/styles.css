@@ -110,6 +110,22 @@
 
 @utility shadow-soft { box-shadow: var(--shadow-soft); }
 
+/* Uneven pen outlines stay crisp without stretching the stroke. */
+.ink-outline { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; fill: none; stroke: var(--ink); stroke-width: 2.2; }
+.ink-outline path { vector-effect: non-scaling-stroke; }
+.doodle-disaster { background: var(--snow); transition: background-color 150ms ease; }
+.doodle-disaster:nth-child(1) .ink-outline { transform: rotate(-0.8deg); }
+.doodle-disaster:nth-child(2) .ink-outline { transform: rotate(0.7deg); }
+.doodle-disaster:nth-child(3) .ink-outline { transform: rotate(-0.5deg); }
+.doodle-disaster:hover { background: var(--pale); }
+.doodle-disaster:active { background: var(--pale); }
+.doodle-disaster.doodle-selected { background: var(--pale); }
+.doodle-selected .ink-outline { stroke: var(--bright); stroke-width: 3; }
+.doodle-region { background: var(--snow); color: var(--ink); }
+.doodle-region[data-placeholder] { color: var(--slate); }
+.doodle-region:hover .ink-outline, .doodle-region[data-state="open"] .ink-outline { stroke: var(--bright); }
+@media (prefers-reduced-motion: reduce) { .doodle-disaster { transition: none; } }
+
 @keyframes cp-bob {
   0%, 100% { transform: translateY(0) rotate(0deg); }
   25% { transform: translateY(-6px) rotate(-2deg); }
