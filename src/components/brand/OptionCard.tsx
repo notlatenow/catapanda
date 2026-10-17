@@ -13,7 +13,7 @@ export function OptionCard({ name, tagline, selected, onClick, nameClassName }: 
         selected ? "border-2 border-bright bg-pale" : "border-sand hover:border-bright",
       )}
     >
-      <span className={cn("block font-display text-lg font-bold text-ink", nameClassName)}>{name}</span>
+      <span className={cn("block text-ink", nameClassName ?? "font-display text-lg font-bold")}>{name}</span>
       {tagline && <span className="mt-0.5 block text-sm text-slate">{tagline}</span>}
     </button>
   );
