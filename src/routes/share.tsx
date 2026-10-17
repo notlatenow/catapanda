@@ -79,7 +79,7 @@ function SharePage() {
     <>
       <Page>
         <StackedCard>
-          <h1 className="text-2xl text-ink">Share your Top 10</h1>
+          <h1 className="text-2xl text-ink">Share your top tips!</h1>
           <p className="mt-2 text-slate">Send your list to the people you care about, so they can prep too.</p>
           <p className="mt-4 text-xs font-bold uppercase tracking-wide text-slate">Message preview</p>
           <p className="mt-1 whitespace-pre-wrap break-words rounded-2xl bg-linen p-4 text-sm text-ink">{msg}</p>
