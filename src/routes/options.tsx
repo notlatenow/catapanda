@@ -42,7 +42,7 @@ function Options() {
           <p className="mt-2 text-slate">{disasters.length ? "Pick a checklist to open." : "Head back home and pick at least one disaster first."}</p>
           {disasters.length > 0 && (
             <>
-              <div className="mt-4 grid grid-cols-2 gap-3">
+              <div className="mt-4 grid grid-cols-2 items-center gap-3">
                 {featured.map((l) =>
                   waiting ? (
                     <span key={l.id} className={`${featuredText} opacity-60`} aria-disabled="true">{l.art ? <img src={l.art} alt={l.name} className="mx-auto h-auto w-full" /> : l.name}</span>
