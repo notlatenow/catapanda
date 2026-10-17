@@ -121,7 +121,7 @@ export function Questions() {
           </StackedCard>
           <div className="mt-6 flex justify-start sm:mt-8">
             {!loading && (step === 0 || textQuestion || answer.choice) ? (
-              <PillButton type={step === 0 ? "submit" : "button"} form={step === 0 ? "household-form" : undefined} disabled={nextDisabled} onClick={step === 0 ? undefined : nextQuestion} className="question-next">{textQuestion ? "OK" : "Next"}</PillButton>
+              <PillButton type={step === 0 ? "submit" : "button"} form={step === 0 ? "household-form" : undefined} disabled={nextDisabled} onClick={step === 0 ? undefined : nextQuestion} className="question-next">{step === 0 || textQuestion ? "OK" : "Next"}</PillButton>
             ) : null}
           </div>
         </section>
