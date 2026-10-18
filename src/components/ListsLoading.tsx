@@ -9,7 +9,7 @@ const FRAMES: string[] = [mascots.url];
 
 const PHASE_MESSAGES: Record<0 | 1, string[]> = {
   0: ["Reading about your household…", "Checking official health sites…", "Finding items just for you…"],
-  1: ["Removing duplicates…", "Ranking your Top 10…"],
+  1: ["Removing duplicates…", "Ranking your Top Tips…"],
 };
 
 function useReducedMotion() {
