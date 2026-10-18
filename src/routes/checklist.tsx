@@ -100,7 +100,7 @@ function ChecklistPage() {
                       className={cn("flex h-auto w-full items-center justify-between gap-2 whitespace-normal rounded-none p-0 text-left hover:bg-snow hover:text-inherit", (s.title === "Custom" || s.title === "Combo" || s.title === "Core") && "-mx-5 w-[calc(100%+2.5rem)] bg-snow px-5 py-4 text-slate hover:text-slate sm:-mx-6 sm:w-[calc(100%+3rem)] sm:px-6")}
                     >
                       <span className="min-w-0">
-                        <h2 className={cn("text-xl", s.title === "Custom" ? "text-custom-heading" : s.title === "Combo" ? "text-combo-heading" : s.title === "Core" ? "text-core-heading" : s.title === "Disaster dos & don'ts" ? "text-disaster-advice" : s.title === "Top 10 items" || s.title === "Standard items" ? "text-pitch" : "text-ink")}>{s.title}</h2>
+                        <h2 className={cn("text-xl", s.title === "Custom" ? "text-custom-heading" : s.title === "Combo" ? "text-combo-heading" : s.title === "Core" ? "text-core-heading" : s.title === "Disaster Dos & Dont's" || s.title === "Top 10 items" || s.title === "Standard items" ? "text-pitch" : "text-ink")}>{s.title}</h2>
                         {collapsible && s.note && <span className="mt-1 block text-sm font-normal text-slate">{s.note}</span>}
                         {s.title === "Combo" && current.overlapLine && expanded.has(s.title) && <span className="mt-1 block text-sm font-bold text-slate">{current.overlapLine}</span>}
                       </span>
@@ -135,7 +135,7 @@ function Rows({ rows, onOpen, tone = "default", blackText = false }: { rows: Row
             onClick={() => onOpen(r)}
             className="flex w-full items-center gap-3 py-3 text-left transition-colors hover:bg-pale/60 rounded-none px-2 -mx-2"
           >
-            {r.disaster ? <span className="flex h-11 w-11 shrink-0 items-center justify-center text-ink"><DisasterIcon name={r.disaster} selected small /></span> : <img src={themeIcons[r.theme]} alt="" width={816} height={816} loading="lazy" className={cn("h-11 w-11 shrink-0 object-contain p-1.5", tone === "custom" ? "rounded-full bg-custom-icon" : tone === "combo" ? "rounded-full bg-combo-icon" : tone === "core" ? "rounded-full bg-core-icon" : "rounded-xl bg-pale")} />}
+            {r.disaster ? <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-pale text-ink"><DisasterIcon name={r.disaster} selected small /></span> : <img src={themeIcons[r.theme]} alt="" width={816} height={816} loading="lazy" className={cn("h-11 w-11 shrink-0 object-contain p-1.5", tone === "custom" ? "rounded-full bg-custom-icon" : tone === "combo" ? "rounded-full bg-combo-icon" : tone === "core" ? "rounded-full bg-core-icon" : "rounded-xl bg-pale")} />}
             <span className="min-w-0 flex-1">
               <span className={cn("block font-bold", blackText ? "text-pitch" : "text-ink")}>{r.name}</span>
               <span className={cn("block truncate text-sm", blackText ? "text-pitch" : "text-slate")}>{r.shortNote}</span>
