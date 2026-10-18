@@ -1,13 +1,9 @@
-- [x] Replace homepage disaster choices with hand-drawn horizontal buttons and a country dropdown; verify selection and small-screen layout.
-- [x] Update selection colors, borderless region menu and shared navigation states; verify all required inputs and reset behavior.
-- [x] Add managed official-source search, private generic queries, and visit budget.
-- [x] Integrate background searches and approved citations into Suggest/Review and checklist rows.
-- [x] Update Tier 3 copy and verify search/fallback flows (eight tests and live oxygen-device checklist).
-- [x] Update share channels, email layout, mobile SMS syntax and verify desktop/mobile sharing (three tests and full desktop/iOS/Android browser journeys).
-- [x] Move household entry into a seamless full-page, one-question-at-a-time form; enable Home with disaster and region only.
-- [x] Verify immediate option advance, typed Next, individual skip, Back, fallback and phone layout.
-- [x] Redesign question screens with three comic backgrounds, stacked content boxes and simplified Next controls; verify the flow.
-- [x] Compact the question box, place Back/Start over/Next underneath, and replace the three backgrounds with clean PNG redraws; verify phone and desktop layouts.
-- [x] Match reference question typography and word-only pill answers without skip; verify selection, typing and phone layout.
-- [x] Stretch question progress segments across the top of every screen, preserving height and gaps; verified at 375px, 603px, 768px and 1280px widths.
-- [x] Make Enter confirm typed clarifying answers like OK; verified validation, Other, and IME typing with nine tests and live Enter navigation.
+# Checklist redesign — done
+- [x] 15 hand-drawn theme icons (src/assets/icons/, checklist = catch-all)
+- [x] Theme mapping: src/lib/themes.ts (name → category → catch-all)
+- [x] Clickable rows: icon + name + chevron (src/routes/checklist.tsx)
+- [x] Sliding detail panel: src/components/brand/ItemPanel.tsx (bottom sheet mobile / centered desktop; label chip, What to include ticks visit-only, Take action = stores then sources)
+- [x] Personal Picks: AI duplicates of Basics items dropped; sections expand/collapse
+- [x] "Verify this": panel-open search via fixed generic queries only (VERIFY_NEEDS in search-policy.ts), within 3/visit budget
+- [x] Verified in browser: Earthquake Basics list + First aid kit panel render correctly
+- [ ] Later: Examples as comic drawings (deferred); household-sizing line needs structured people count (free text today)
