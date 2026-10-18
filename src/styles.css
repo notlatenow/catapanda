@@ -82,7 +82,7 @@
   --pitch: #000000;
   --sun: #d99b00;
   --welcome: #e6a700;
-  --custom-bar: #ddaa39;
+  --custom-bar: var(--welcome);
   --custom-icon: #ffe6ab;
   --intake-tab: #d49a00;
   --dusk: #103654;
