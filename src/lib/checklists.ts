@@ -1,6 +1,7 @@
 /** Plain-logic checklist builder (no AI). AI layers on top in later stages. */
 import { catalog, type CatalogItem, type HouseholdFact, type Priority } from "@/services/catalog";
 import type { AIItem, TopPick } from "@/lib/personalize-types";
+import { themeFor, type Theme } from "@/lib/themes";
 
 export type AIInput = { items: AIItem[]; top: TopPick[] } | null;
 
@@ -14,6 +15,10 @@ export type Row = {
   stores: string[];
   sourceCount: number;
   sourceUrl?: string | null | undefined;
+  theme: Theme;
+  detail?: string | undefined;
+  sourceCodes: string[];
+  medical?: boolean | undefined;
 };
 
 export type Section = { title: string; note?: string; rows: Row[] };
