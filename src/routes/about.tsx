@@ -44,7 +44,6 @@ function About() {
         <div className="relative z-10">
           <Section title="About CataPanda">
         <p>CataPanda (short for Catastrophic Pandamonium) helps you get ready for earthquakes, floods and typhoons in Taiwan. Check back later for additional disaster options and more countries!</p>
-        <p>Cat &amp; Panda are here to help. Pick what you're preparing for, tell us a little about your home, and we'll hand you a clear, doable checklist. No panic, just a plan.</p>
           </Section>
         </div>
       </div>
