@@ -20,8 +20,12 @@ const NEEDS: { match: RegExp; query: string }[] = [
   { match: /powered wheelchair|electric wheelchair/i, query: "powered wheelchair emergency power backup" },
   { match: /anaphyla|severe allerg|rare allerg|life.threatening allerg/i, query: "severe allergy emergency supplies disaster preparation" },
   { match: /medical device.*(?:regulation|import)|(?:regulation|import).*medical device/i, query: "Taiwan medical device emergency preparation regulations" },
-  // Generic "verify this" queries for item panels. Item names are matched locally;
-  // only these fixed query strings ever reach the search provider.
+];
+
+// "Verify this" queries for item panels only — never used for background searches
+// from household text. Item names are matched locally; only these fixed query
+// strings ever reach the search provider.
+const VERIFY_NEEDS: { match: RegExp; query: string }[] = [
   { match: /glasses|contact lens/i, query: "emergency kit spare glasses contact lenses preparedness" },
   { match: /hearing aid/i, query: "hearing aid batteries emergency preparedness" },
   { match: /cane|walker|crutch|mobility aid/i, query: "mobility aid emergency evacuation preparedness" },
@@ -34,6 +38,11 @@ const NEEDS: { match: RegExp; query: string }[] = [
   { match: /cash|money|atm/i, query: "emergency cash small bills preparedness" },
 ];
 
+/** Fixed generic verify query for an item name, or null when none applies. */
+export function verifyQueryFor(name: string): string | null {
+  return VERIFY_NEEDS.find((n) => n.match.test(name))?.query ?? null;
+}
+
 export function genericSearchNeeds(texts: string[], answers: QA[] = []): string[] {
   const affirmative = answers.flatMap((a) => {
     if (/^(no|none|not applicable|don't|do not)\b/i.test(a.answer.trim())) return [];
@@ -44,4 +53,5 @@ export function genericSearchNeeds(texts: string[], answers: QA[] = []): string[
   return NEEDS.filter((n) => evidence.some((t) => n.match.test(t))).map((n) => n.query);
 }
 
-export const isGenericSearchQuery = (query: string) => NEEDS.some((n) => n.query === query);
+export const isGenericSearchQuery = (query: string) =>
+  NEEDS.some((n) => n.query === query) || VERIFY_NEEDS.some((n) => n.query === query);

@@ -1,5 +1,5 @@
 import { searchNicheNeed } from "@/lib/search.functions";
-import { genericSearchNeeds } from "@/lib/search-policy";
+import { genericSearchNeeds, verifyQueryFor } from "@/lib/search-policy";
 import type { SearchResult } from "@/lib/search-types";
 import type { QA } from "@/lib/personalize-types";
 import { session } from "@/state/session";
@@ -40,7 +40,7 @@ export async function verifyItemSource(name: string): Promise<SearchResult | nul
     visit = session.get().visit;
     searches = new Map();
   }
-  const [query] = genericSearchNeeds([name]);
+  const query = verifyQueryFor(name);
   if (!query) return null;
   if (!searches.has(query)) {
     if (searches.size >= 3) return null;
