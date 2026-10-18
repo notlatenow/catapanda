@@ -37,6 +37,9 @@ function toRow(i: CatalogItem): Row {
     kind: i.badge === "cataPandaTip" ? "tip" : "catalog",
     stores: i.stores,
     sourceCount: i.sources.length,
+    theme: themeFor(i.name, i.category),
+    detail: i.detailNotes,
+    sourceCodes: i.sources,
   };
 }
 
@@ -62,11 +65,13 @@ function tipRows(): Row[] {
     kind: "tip",
     stores: t.stores,
     sourceCount: t.sources.length,
+    theme: themeFor(t.name, t.category),
+    sourceCodes: t.sources,
   }));
 }
 
 function aiRow(i: AIItem): Row {
-  return { name: i.name, shortNote: i.shortNote, category: i.category, priority: i.priority, kind: "ai", stores: i.stores, sourceCount: 0, sourceUrl: i.sourceUrl };
+  return { name: i.name, shortNote: i.shortNote, category: i.category, priority: i.priority, kind: "ai", stores: i.stores, sourceCount: 0, sourceUrl: i.sourceUrl, theme: themeFor(i.name, i.category), sourceCodes: [], medical: i.medical };
 }
 
 export function buildDisasterList(disaster: string): Checklist {
@@ -93,8 +98,15 @@ export function buildPersonalized(disasters: string[], facts: HouseholdFact[], a
   // AI items: specialization pairs move their catalog item into Custom.
   const byName = new Map(all.map((i) => [i.name, i]));
   const cats = catalog.getCategories();
+  const norm = (n: string) => n.trim().toLowerCase();
+  const catalogNames = new Set(all.map((i) => norm(i.name)));
   const aiItems = [...(ai?.items ?? [])]
     .map((i) => (i.specializes && !byName.has(i.specializes) ? { ...i, specializes: null } : i))
+    // Drop AI picks that duplicate a catalog item already shown in the Basics lists.
+    .filter((i, index, arr) =>
+      i.specializes ||
+      (!catalogNames.has(norm(i.name)) &&
+        arr.findIndex((x) => !x.specializes && norm(x.name) === norm(i.name)) === index))
     .sort((a, b) => cats.indexOf(a.category) - cats.indexOf(b.category));
   const paired = new Set(aiItems.map((i) => i.specializes).filter((n): n is string => !!n));
   const custom: Row[] = tipRows();
