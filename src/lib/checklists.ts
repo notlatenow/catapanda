@@ -19,10 +19,30 @@ export type Row = {
   detail?: string | undefined;
   sourceCodes: string[];
   medical?: boolean | undefined;
+  disaster?: string | undefined;
 };
 
 export type Section = { title: string; note?: string; rows: Row[] };
 export type Checklist = { id: string; title: string; sections: Section[]; showStores: boolean; overlapLine?: string | undefined };
+
+/** Catalog-backed advice, kept separate from the ten ranked items and sharing. */
+export function buildDisasterAdvice(disasters: string[]): Section {
+  return {
+    title: "Disaster dos & don'ts",
+    rows: disasters.flatMap(disaster => (catalog.getDisaster(disaster)?.tips ?? []).slice(0, 3).map(tip => ({
+      name: tip.text,
+      shortNote: "",
+      category: "Disaster advice",
+      priority: "important" as const,
+      kind: "tip" as const,
+      stores: [],
+      sourceCount: tip.sources.length,
+      sourceCodes: tip.sources,
+      theme: "checklist" as const,
+      disaster,
+    }))),
+  };
+}
 
 const rank: Record<Row["priority"], number> = { essential: 0, important: 1, "nice-to-have": 2 };
 

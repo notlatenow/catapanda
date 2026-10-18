@@ -5,7 +5,8 @@ import { Page, FlowNav, PlaceholderNote } from "@/components/brand/AppLayout";
 import { StackedCard } from "@/components/brand/StackedCard";
 import { pillVariants } from "@/components/brand/PillButton";
 import { ItemPanel } from "@/components/brand/ItemPanel";
-import { buildAll, type Checklist, type Row } from "@/lib/checklists";
+import { buildAll, buildDisasterAdvice, type Checklist, type Row } from "@/lib/checklists";
+import { DisasterIcon } from "@/components/brand/DisasterPicker";
 import { themeIcons } from "@/lib/themes";
 import { useSession } from "@/state/session";
 import { cn } from "@/lib/utils";
@@ -57,6 +58,9 @@ function ChecklistPage() {
   const waiting = needsAI && (!personal || personal.status === "running");
   const showFallback = needsAI && personal?.status === "fallback";
   const collapsible = current.id === "personalized";
+  const sections = current.id === "top10"
+    ? [buildDisasterAdvice(disasters), { title: "Top 10 items", rows: current.sections.flatMap(s => s.rows) }]
+    : current.sections;
 
   function toggleSection(title: string) {
     setExpanded((c) => {
@@ -84,12 +88,9 @@ function ChecklistPage() {
         </nav>
         {waiting ? <ListsLoading disasters={disasters} phase={personal?.phase ?? 0} /> : <>
         {showFallback && <p role="status" className="rounded-2xl border border-sand bg-pale p-4 text-sm text-ink">{FALLBACK_MESSAGE}</p>}
-        {current.id === "top10" && (
-          <Link to="/share" className={cn(pillVariants({ variant: "primary" }), "self-center")}>Share your Top Tips</Link>
-        )}
         <StackedCard>
           <h1 className="text-2xl text-ink">{current.id === "top10" ? "Top Tips" : current.id === "personalized" ? "Personal Picks" : `${current.id} Basics`}</h1>
-          {current.sections.map((s) => (
+          {sections.map((s) => (
                 <section key={s.title} className="mt-6">
                     <Button
                       variant="ghost"
@@ -99,7 +100,7 @@ function ChecklistPage() {
                       className={cn("flex h-auto w-full items-center justify-between gap-2 whitespace-normal rounded-none p-0 text-left", (s.title === "Custom" || s.title === "Combo" || s.title === "Core") && "-mx-5 w-[calc(100%+2.5rem)] bg-snow px-5 py-4 text-slate hover:bg-snow hover:text-slate sm:-mx-6 sm:w-[calc(100%+3rem)] sm:px-6")}
                     >
                       <span className="min-w-0">
-                        <h2 className={cn("text-xl", s.title === "Custom" ? "text-custom-heading" : s.title === "Combo" ? "text-combo-heading" : s.title === "Core" ? "text-core-heading" : "text-ink")}>{s.title}</h2>
+                        <h2 className={cn("text-xl", s.title === "Custom" ? "text-custom-heading" : s.title === "Combo" ? "text-combo-heading" : s.title === "Core" ? "text-core-heading" : s.title === "Disaster dos & don'ts" ? "text-disaster-advice" : s.title === "Top 10 items" ? "text-pitch" : "text-ink")}>{s.title}</h2>
                         {(s.title === "Custom" || s.title === "Combo" || s.title === "Core") && s.note && expanded.has(s.title) && <span className="mt-1 block text-sm font-normal text-slate">{s.note}</span>}
                         {s.title === "Combo" && current.overlapLine && expanded.has(s.title) && <span className="mt-1 block text-sm font-bold text-slate">{current.overlapLine}</span>}
                       </span>
@@ -134,7 +135,7 @@ function Rows({ rows, onOpen, tone = "default" }: { rows: Row[]; onOpen: (row: R
             onClick={() => onOpen(r)}
             className="flex w-full items-center gap-3 py-3 text-left transition-colors hover:bg-pale/60 rounded-2xl px-2 -mx-2"
           >
-            <img src={themeIcons[r.theme]} alt="" width={816} height={816} loading="lazy" className={cn("h-11 w-11 shrink-0 object-contain p-1.5", tone === "custom" ? "rounded-full bg-custom-icon" : tone === "combo" ? "rounded-full bg-combo-icon" : tone === "core" ? "rounded-full bg-core-icon" : "rounded-xl bg-pale")} />
+            {r.disaster ? <span className="flex h-11 w-11 shrink-0 items-center justify-center text-ink"><DisasterIcon name={r.disaster} selected small /></span> : <img src={themeIcons[r.theme]} alt="" width={816} height={816} loading="lazy" className={cn("h-11 w-11 shrink-0 object-contain p-1.5", tone === "custom" ? "rounded-full bg-custom-icon" : tone === "combo" ? "rounded-full bg-combo-icon" : tone === "core" ? "rounded-full bg-core-icon" : "rounded-xl bg-pale")} />}
             <span className="min-w-0 flex-1">
               <span className="block font-bold text-ink">{r.name}</span>
               <span className="block truncate text-sm text-slate">{r.shortNote}</span>
