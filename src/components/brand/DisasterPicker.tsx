@@ -21,7 +21,7 @@ export function InkOutline({ wide = false, name = "Earthquake" }: { wide?: boole
 
 export function DisasterIcon({ name, selected, small = false }: { name: string; selected: boolean; small?: boolean }) {
   return (
-    <svg aria-hidden="true" viewBox="0 0 32 32" className={cn("max-w-full fill-none stroke-current motion-safe:transition-transform motion-safe:duration-150", small ? "h-7 w-7 shrink-0" : "h-16 w-16", selected ? "rotate-0" : name === "Flood" ? "rotate-[8deg]" : "-rotate-[8deg]", small && "motion-safe:group-hover:rotate-[8deg] motion-safe:group-active:rotate-[10deg]")} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg aria-hidden="true" viewBox="0 0 32 32" className={cn("max-w-full fill-none stroke-current motion-safe:transition-transform motion-safe:duration-150", small ? "h-7 w-7 shrink-0" : "h-16 w-16", selected ? "rotate-0" : name === "Flood" ? "rotate-[8deg]" : "-rotate-[8deg]", small && "motion-safe:group-active:rotate-[10deg]")} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <g>
       {name === "Earthquake" ? <>
         <path d="M4 13 15.5 4 28 13 M7 11v15h6 M25 11v15h-5" />
