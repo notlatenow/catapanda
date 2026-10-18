@@ -1,19 +1,19 @@
 /** Theme icons: every checklist item maps to one hand-drawn theme icon. */
-import water from "@/assets/icons/theme-water.png";
-import food from "@/assets/icons/theme-food.png";
-import health from "@/assets/icons/theme-health.png";
-import hygiene from "@/assets/icons/theme-hygiene.png";
-import light from "@/assets/icons/theme-light.png";
-import radio from "@/assets/icons/theme-radio.png";
-import documents from "@/assets/icons/theme-documents.png";
-import money from "@/assets/icons/theme-money.png";
-import clothing from "@/assets/icons/theme-clothing.png";
-import tools from "@/assets/icons/theme-tools.png";
-import home from "@/assets/icons/theme-home.png";
-import bag from "@/assets/icons/theme-bag.png";
-import pets from "@/assets/icons/theme-pets.png";
-import aids from "@/assets/icons/theme-aids.png";
-import checklist from "@/assets/icons/theme-checklist.png";
+import water from "@/assets/icons/theme-water.webp";
+import food from "@/assets/icons/theme-food.webp";
+import health from "@/assets/icons/theme-health.webp";
+import hygiene from "@/assets/icons/theme-hygiene.webp";
+import light from "@/assets/icons/theme-light.webp";
+import radio from "@/assets/icons/theme-radio.webp";
+import documents from "@/assets/icons/theme-documents.webp";
+import money from "@/assets/icons/theme-money.webp";
+import clothing from "@/assets/icons/theme-clothing.webp";
+import tools from "@/assets/icons/theme-tools.webp";
+import home from "@/assets/icons/theme-home.webp";
+import bag from "@/assets/icons/theme-bag.webp";
+import pets from "@/assets/icons/theme-pets.webp";
+import aids from "@/assets/icons/theme-aids.webp";
+import checklist from "@/assets/icons/theme-checklist.webp";
 
 export type Theme =
   | "water" | "food" | "health" | "hygiene" | "light" | "radio" | "documents"

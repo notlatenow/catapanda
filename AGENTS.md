@@ -10,6 +10,7 @@
 <!-- LOVABLE:END -->
 
 ## Architecture rules
+- Checklist theme icons use display-sized lossless WebP derivatives through `src/lib/themes.ts`; keep original PNG artwork for future edits while avoiding oversized downloads.
 - Share URL and message formatting live in `src/lib/share.ts`; detect SMS device syntax after hydration so desktop browsers omit SMS without SSR mismatches.
 - Catalog content lives only in `src/data/catalog/*.json`; read it only through `src/services/catalog.ts` (swappable data source).
 - Top Tips disaster advice is built separately from ranked item rows so the advice display cannot alter ranking, item counts, or share-message selection.
