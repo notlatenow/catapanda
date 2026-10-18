@@ -134,6 +134,7 @@ h1, h2, h3, h4, .font-display, .question-next { font-weight: 400; }
 .doodle-disaster:active { background: var(--pale); }
 .doodle-disaster.doodle-selected { background: var(--snow); color: var(--pitch); }
 .doodle-pill:hover, .doodle-pill:active { color: var(--pitch); }
+.doodle-pill:nth-child(n) .ink-outline { transform: none; }
 .doodle-region { background: var(--snow); color: var(--pitch); }
 .doodle-region[data-placeholder] { color: var(--intake-unselected); }
 @media (prefers-reduced-motion: reduce) { .doodle-disaster { transition: none; } }
