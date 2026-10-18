@@ -64,7 +64,7 @@ export function ItemPanel({ row, onClose }: { row: Row; onClose: () => void }) {
       <div className="relative flex max-h-[85vh] w-full max-w-lg flex-col overflow-hidden rounded-t-3xl bg-snow shadow-soft sm:rounded-3xl">
         <div className="mx-auto mt-2 h-1.5 w-10 shrink-0 rounded-full bg-sand sm:hidden" />
         <div className="flex items-start gap-4 p-5 pb-3">
-          <img src={themeIcons[row.theme]} alt="" width={816} height={816} className="h-16 w-16 shrink-0 rounded-2xl bg-pale object-contain p-2" />
+          <img src={themeIcons[row.theme]} alt="" width={816} height={816} className="h-16 w-16 shrink-0 rounded-2xl bg-linen object-contain p-2" />
           <div className="min-w-0 flex-1">
             <h2 className="text-xl leading-6 text-ink">{row.name}</h2>
             <p className="mt-1 text-sm text-slate">{row.shortNote}</p>
@@ -108,7 +108,7 @@ export function ItemPanel({ row, onClose }: { row: Row; onClose: () => void }) {
             {sources.length > 0 && (
               <ul className="mt-3 space-y-2">
                 {sources.map((s) => (
-                  <li key={s.code} className="rounded-2xl border border-sand bg-pale p-3">
+                  <li key={s.code} className="rounded-2xl bg-linen p-3">
                     <p className="text-sm font-bold text-ink">{s.document}</p>
                     <p className="text-xs text-slate">{s.agency}</p>
                     {s.websites[0] && (
@@ -123,13 +123,13 @@ export function ItemPanel({ row, onClose }: { row: Row; onClose: () => void }) {
             {row.kind === "ai" && (
               <div className="mt-3">
                 {row.sourceUrl ? (
-                  <a href={row.sourceUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 rounded-2xl border border-sand bg-pale px-3 py-2 text-sm font-bold text-bright underline-offset-2 hover:underline">
+                  <a href={row.sourceUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 rounded-2xl bg-linen px-3 py-2 text-sm font-bold text-bright underline-offset-2 hover:underline">
                     Verified source <ExternalLink size={14} />
                   </a>
                 ) : verified === "loading" ? (
                   <p className="text-sm text-slate" role="status">Checking official sources…</p>
                 ) : verified ? (
-                  <a href={verified.link} target="_blank" rel="noopener noreferrer" className="block rounded-2xl border border-sand bg-pale p-3">
+                  <a href={verified.link} target="_blank" rel="noopener noreferrer" className="block rounded-2xl bg-linen p-3">
                     <p className="text-sm font-bold text-ink">{verified.title}</p>
                     <span className="mt-1 inline-flex items-center gap-1 text-xs font-bold text-bright underline-offset-2 hover:underline">Visit source <ExternalLink size={12} /></span>
                   </a>
