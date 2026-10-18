@@ -11,6 +11,7 @@ import { useSession } from "@/state/session";
 import { cn } from "@/lib/utils";
 import { usePersonalization, FALLBACK_MESSAGE } from "@/state/personalize";
 import { ListsLoading } from "@/components/ListsLoading";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/checklist")({
   validateSearch: (s: Record<string, unknown>): { list?: string } => (typeof s["list"] === "string" ? { list: s["list"] } : {}),
@@ -88,23 +89,27 @@ function ChecklistPage() {
               {(current.sections.length > 1 || s.note) && (
                 <section className="mt-6">
                   {collapsible ? (
-                    <button
+                    <Button
+                      variant="ghost"
                       type="button"
                       onClick={() => toggleSection(s.title)}
                       aria-expanded={!collapsed.has(s.title)}
-                      className="flex w-full items-center justify-between gap-2 text-left"
+                      className={cn("flex h-auto w-full items-center justify-between gap-2 whitespace-normal rounded-none p-0 text-left", s.title === "Custom" && "-mx-5 w-[calc(100%+2.5rem)] bg-custom-bar px-5 py-4 text-pitch hover:bg-custom-bar sm:-mx-6 sm:w-[calc(100%+3rem)] sm:px-6")}
                     >
-                      <h2 className="text-xl text-ink">{s.title}</h2>
-                      <ChevronDown size={20} className={cn("shrink-0 text-slate transition-transform", collapsed.has(s.title) && "-rotate-90")} />
-                    </button>
+                      <span className="min-w-0">
+                        <h2 className={cn("text-xl", s.title === "Custom" ? "text-pitch" : "text-ink")}>{s.title}</h2>
+                        {s.title === "Custom" && s.note && !collapsed.has(s.title) && <span className="mt-1 block text-sm font-normal text-pitch">{s.note}</span>}
+                      </span>
+                      <ChevronDown size={20} className={cn("shrink-0 transition-transform", s.title === "Custom" ? "text-pitch" : "text-slate", collapsed.has(s.title) && "-rotate-90")} />
+                    </Button>
                   ) : (
                     <h2 className="text-xl text-ink">{s.title}</h2>
                   )}
                   {!collapsed.has(s.title) && (
                     <>
-                      {s.note && <p className="mt-1 text-sm text-slate">{s.note}</p>}
+                      {s.note && s.title !== "Custom" && <p className="mt-1 text-sm text-slate">{s.note}</p>}
                       {s.title === "Combo" && current.overlapLine && <p className="mt-1 text-sm font-bold text-ink">{current.overlapLine}</p>}
-                      <Rows rows={s.rows} onOpen={setOpen} />
+                      <Rows rows={s.rows} onOpen={setOpen} custom={collapsible && s.title === "Custom"} />
                     </>
                   )}
                 </section>
@@ -123,7 +128,7 @@ function ChecklistPage() {
   );
 }
 
-function Rows({ rows, onOpen }: { rows: Row[]; onOpen: (row: Row) => void }) {
+function Rows({ rows, onOpen, custom = false }: { rows: Row[]; onOpen: (row: Row) => void; custom?: boolean }) {
   return (
     <ul className="mt-3">
       {rows.map((r) => (
@@ -133,7 +138,7 @@ function Rows({ rows, onOpen }: { rows: Row[]; onOpen: (row: Row) => void }) {
             onClick={() => onOpen(r)}
             className="flex w-full items-center gap-3 py-3 text-left transition-colors hover:bg-pale/60 rounded-2xl px-2 -mx-2"
           >
-            <img src={themeIcons[r.theme]} alt="" width={816} height={816} loading="lazy" className="h-11 w-11 shrink-0 rounded-xl bg-pale object-contain p-1.5" />
+            <img src={themeIcons[r.theme]} alt="" width={816} height={816} loading="lazy" className={cn("h-11 w-11 shrink-0 object-contain p-1.5", custom ? "rounded-full bg-custom-icon" : "rounded-xl bg-pale")} />
             <span className="min-w-0 flex-1">
               <span className="block font-bold text-ink">{r.name}</span>
               <span className="block truncate text-sm text-slate">{r.shortNote}</span>
