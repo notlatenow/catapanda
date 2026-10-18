@@ -85,7 +85,10 @@ export function buildDisasterList(disaster: string): Checklist {
   return { id: disaster, title: disaster, sections, showStores: false };
 }
 
-export function buildPersonalized(disasters: string[], facts: HouseholdFact[], ai: AIInput = null): Checklist {
+/** Sized water note when the AI confidently read a household size (3 L/person/day × 3 days). */
+const waterNote = (people: number) => `For ${people} ${people === 1 ? "person" : "people"}: ~${people * 9} L for 3 days`;
+
+export function buildPersonalized(disasters: string[], facts: HouseholdFact[], ai: AIInput = null, people: number | null = null): Checklist {
   const lists = disasters.map((d) => itemsFor(d).filter((i) => isVisible(i, facts)));
   const seen = new Set<string>();
   const all: CatalogItem[] = [];
