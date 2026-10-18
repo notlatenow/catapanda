@@ -96,14 +96,14 @@ function ChecklistPage() {
                       type="button"
                       onClick={() => toggleSection(s.title)}
                       aria-expanded={expanded.has(s.title)}
-                      className={cn("flex h-auto w-full items-center justify-between gap-2 whitespace-normal rounded-none p-0 text-left", (s.title === "Custom" || s.title === "Combo" || s.title === "Core") && "-mx-5 w-[calc(100%+2.5rem)] px-5 py-4 sm:-mx-6 sm:w-[calc(100%+3rem)] sm:px-6", s.title === "Custom" && "bg-custom-bar text-pitch hover:bg-custom-bar", s.title === "Combo" && "bg-combo-bar text-snow hover:bg-combo-bar hover:text-snow", s.title === "Core" && "bg-core-bar text-snow hover:bg-core-bar hover:text-snow")}
+                      className={cn("flex h-auto w-full items-center justify-between gap-2 whitespace-normal rounded-none p-0 text-left", (s.title === "Custom" || s.title === "Combo" || s.title === "Core") && "-mx-5 w-[calc(100%+2.5rem)] bg-snow px-5 py-4 text-slate hover:bg-snow hover:text-slate sm:-mx-6 sm:w-[calc(100%+3rem)] sm:px-6")}
                     >
                       <span className="min-w-0">
-                        <h2 className={cn("text-xl", s.title === "Custom" ? "text-pitch" : s.title === "Combo" || s.title === "Core" ? "text-snow" : "text-ink")}>{s.title}</h2>
-                        {(s.title === "Custom" || s.title === "Combo" || s.title === "Core") && s.note && expanded.has(s.title) && <span className={cn("mt-1 block text-sm font-normal", s.title === "Combo" || s.title === "Core" ? "text-snow" : "text-pitch")}>{s.note}</span>}
-                        {s.title === "Combo" && current.overlapLine && expanded.has(s.title) && <span className="mt-1 block text-sm font-bold text-snow">{current.overlapLine}</span>}
+                        <h2 className={cn("text-xl", s.title === "Custom" ? "text-custom-heading" : s.title === "Combo" ? "text-combo-heading" : s.title === "Core" ? "text-core-heading" : "text-ink")}>{s.title}</h2>
+                        {(s.title === "Custom" || s.title === "Combo" || s.title === "Core") && s.note && expanded.has(s.title) && <span className="mt-1 block text-sm font-normal text-slate">{s.note}</span>}
+                        {s.title === "Combo" && current.overlapLine && expanded.has(s.title) && <span className="mt-1 block text-sm font-bold text-slate">{current.overlapLine}</span>}
                       </span>
-                      <ChevronDown size={20} className={cn("shrink-0 transition-transform", s.title === "Custom" ? "text-pitch" : s.title === "Combo" || s.title === "Core" ? "text-snow" : "text-slate", !expanded.has(s.title) && "-rotate-90")} />
+                      <ChevronDown size={20} className={cn("shrink-0 text-slate transition-transform", !expanded.has(s.title) && "-rotate-90")} />
                     </Button>
                   {expanded.has(s.title) && (
                     <>
