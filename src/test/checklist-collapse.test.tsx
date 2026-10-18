@@ -13,7 +13,7 @@ vi.mock("@/components/brand/ItemPanel", () => ({ ItemPanel: () => null }));
 vi.mock("@/components/ListsLoading", () => ({ ListsLoading: () => null }));
 vi.mock("@/lib/checklists", () => {
   const list = (id: string, titles: string[]) => ({ id, sections: titles.map(title => ({ title, rows: [{ name: `${title} item`, theme: "checklist", shortNote: "" }] })) });
-  return { buildAll: () => ({ top10: list("top10", ["Top Tips"]), personalized: list("personalized", ["Custom", "Combo", "Core"]), perDisaster: [list("Earthquake", ["Earthquake", "If it applies to you"])] }) };
+  return { buildDisasterAdvice: () => list("advice", ["Disaster dos & don'ts"]).sections[0], buildAll: () => ({ top10: list("top10", ["Top Tips"]), personalized: list("personalized", ["Custom", "Combo", "Core"]), perDisaster: [list("Earthquake", ["Earthquake", "If it applies to you"])] }) };
 });
 import { Route } from "@/routes/checklist";
 afterEach(cleanup);
@@ -24,7 +24,7 @@ it.each(["personalized", "top10", "Earthquake"])("opens %s with every section co
   if (!Component) throw new Error("Checklist component missing");
   render(<Component />);
   const sections = screen.getAllByRole("button", { expanded: false });
-  expect(sections.length).toBe(list === "personalized" ? 3 : list === "Earthquake" ? 2 : 1);
+  expect(sections.length).toBe(list === "personalized" ? 3 : 2);
   expect(screen.queryAllByRole("list")).toHaveLength(0);
   const firstSection = sections[0];
   if (!firstSection) throw new Error("No collapsed section found");

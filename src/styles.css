@@ -56,6 +56,7 @@
   --color-combo-heading: var(--combo-heading);
   --color-combo-icon: var(--combo-icon);
   --color-core-heading: var(--core-heading);
+  --color-disaster-advice: var(--disaster-advice);
   --color-core-icon: var(--core-icon);
   --color-intake-tab: var(--intake-tab);
   --color-dusk: var(--dusk);
@@ -91,6 +92,7 @@
   --combo-heading: #a94a41;
   --combo-icon: #f4d3cf;
   --core-heading: var(--loading-tab);
+  --disaster-advice: #4f7dcb;
   --core-icon: #d4e3f4;
   --intake-tab: #d49a00;
   --dusk: #103654;
