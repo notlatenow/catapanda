@@ -97,11 +97,8 @@ function aiRow(i: AIItem): Row {
 export function buildDisasterList(disaster: string): Checklist {
   const hh = householdNames();
   const items = itemsFor(disaster);
-  const main = sortRows(items.filter((i) => !hh.has(i.name)).map(toRow));
-  const ruleOrder = catalog.getHouseholdRules().map((r) => r.item);
-  const extra = items.filter((i) => hh.has(i.name)).sort((a, b) => ruleOrder.indexOf(a.name) - ruleOrder.indexOf(b.name)).map(toRow);
-  const sections: Section[] = [{ title: disaster, rows: main }];
-  if (extra.length) sections.push({ title: "If it applies to you", rows: extra });
+  const main = sortRows(items.filter((i) => !hh.has(i.name) || i.scope === disaster).map(toRow));
+  const sections: Section[] = [{ title: "Standard items", rows: main }];
   return { id: disaster, title: disaster, sections, showStores: false };
 }
 

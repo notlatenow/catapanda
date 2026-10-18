@@ -100,16 +100,16 @@ function ChecklistPage() {
                       className={cn("flex h-auto w-full items-center justify-between gap-2 whitespace-normal rounded-none p-0 text-left", (s.title === "Custom" || s.title === "Combo" || s.title === "Core") && "-mx-5 w-[calc(100%+2.5rem)] bg-snow px-5 py-4 text-slate hover:bg-snow hover:text-slate sm:-mx-6 sm:w-[calc(100%+3rem)] sm:px-6")}
                     >
                       <span className="min-w-0">
-                        <h2 className={cn("text-xl", s.title === "Custom" ? "text-custom-heading" : s.title === "Combo" ? "text-combo-heading" : s.title === "Core" ? "text-core-heading" : s.title === "Disaster dos & don'ts" ? "text-disaster-advice" : s.title === "Top 10 items" ? "text-pitch" : "text-ink")}>{s.title}</h2>
+                        <h2 className={cn("text-xl", s.title === "Custom" ? "text-custom-heading" : s.title === "Combo" ? "text-combo-heading" : s.title === "Core" ? "text-core-heading" : s.title === "Disaster dos & don'ts" ? "text-disaster-advice" : s.title === "Top 10 items" || s.title === "Standard items" ? "text-pitch" : "text-ink")}>{s.title}</h2>
                         {(s.title === "Custom" || s.title === "Combo" || s.title === "Core") && s.note && expanded.has(s.title) && <span className="mt-1 block text-sm font-normal text-slate">{s.note}</span>}
                         {s.title === "Combo" && current.overlapLine && expanded.has(s.title) && <span className="mt-1 block text-sm font-bold text-slate">{current.overlapLine}</span>}
                       </span>
-                      <ChevronDown size={20} className={cn("shrink-0 text-slate transition-transform", !expanded.has(s.title) && "-rotate-90")} />
+                      <ChevronDown size={20} className={cn("shrink-0 transition-transform", needsAI ? "text-slate" : "text-pitch", !expanded.has(s.title) && "-rotate-90")} />
                     </Button>
                   {expanded.has(s.title) && (
                     <>
                       {s.note && s.title !== "Custom" && s.title !== "Combo" && s.title !== "Core" && <p className="mt-1 text-sm text-slate">{s.note}</p>}
-                      <Rows rows={s.rows} onOpen={setOpen} tone={collapsible && s.title === "Custom" ? "custom" : collapsible && s.title === "Combo" ? "combo" : collapsible && s.title === "Core" ? "core" : "default"} />
+                      <Rows rows={s.rows} onOpen={setOpen} blackText={!needsAI} tone={collapsible && s.title === "Custom" ? "custom" : collapsible && s.title === "Combo" ? "combo" : collapsible && s.title === "Core" ? "core" : "default"} />
                     </>
                   )}
                 </section>
@@ -125,7 +125,7 @@ function ChecklistPage() {
   );
 }
 
-function Rows({ rows, onOpen, tone = "default" }: { rows: Row[]; onOpen: (row: Row) => void; tone?: "custom" | "combo" | "core" | "default" }) {
+function Rows({ rows, onOpen, tone = "default", blackText = false }: { rows: Row[]; onOpen: (row: Row) => void; tone?: "custom" | "combo" | "core" | "default"; blackText?: boolean }) {
   return (
     <ul className="mt-3">
       {rows.map((r) => (
@@ -137,10 +137,10 @@ function Rows({ rows, onOpen, tone = "default" }: { rows: Row[]; onOpen: (row: R
           >
             {r.disaster ? <span className="flex h-11 w-11 shrink-0 items-center justify-center text-ink"><DisasterIcon name={r.disaster} selected small /></span> : <img src={themeIcons[r.theme]} alt="" width={816} height={816} loading="lazy" className={cn("h-11 w-11 shrink-0 object-contain p-1.5", tone === "custom" ? "rounded-full bg-custom-icon" : tone === "combo" ? "rounded-full bg-combo-icon" : tone === "core" ? "rounded-full bg-core-icon" : "rounded-xl bg-pale")} />}
             <span className="min-w-0 flex-1">
-              <span className="block font-bold text-ink">{r.name}</span>
-              <span className="block truncate text-sm text-slate">{r.shortNote}</span>
+              <span className={cn("block font-bold", blackText ? "text-pitch" : "text-ink")}>{r.name}</span>
+              <span className={cn("block truncate text-sm", blackText ? "text-pitch" : "text-slate")}>{r.shortNote}</span>
             </span>
-            <ChevronRight size={18} className="shrink-0 text-slate" />
+            <ChevronRight size={18} className={cn("shrink-0", blackText ? "text-pitch" : "text-slate")} />
           </button>
         </li>
       ))}
