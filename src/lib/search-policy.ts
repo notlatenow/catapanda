@@ -20,6 +20,18 @@ const NEEDS: { match: RegExp; query: string }[] = [
   { match: /powered wheelchair|electric wheelchair/i, query: "powered wheelchair emergency power backup" },
   { match: /anaphyla|severe allerg|rare allerg|life.threatening allerg/i, query: "severe allergy emergency supplies disaster preparation" },
   { match: /medical device.*(?:regulation|import)|(?:regulation|import).*medical device/i, query: "Taiwan medical device emergency preparation regulations" },
+  // Generic "verify this" queries for item panels. Item names are matched locally;
+  // only these fixed query strings ever reach the search provider.
+  { match: /glasses|contact lens/i, query: "emergency kit spare glasses contact lenses preparedness" },
+  { match: /hearing aid/i, query: "hearing aid batteries emergency preparedness" },
+  { match: /cane|walker|crutch|mobility aid/i, query: "mobility aid emergency evacuation preparedness" },
+  { match: /dentur/i, query: "denture care emergency kit preparedness" },
+  { match: /pet|leash|\bdog\b|\bcat\b/i, query: "pet disaster preparedness kit" },
+  { match: /infant|baby|formula|diaper/i, query: "infant emergency kit preparedness" },
+  { match: /grab.and.go|go bag|evacuation bag|backpack/i, query: "emergency go bag checklist" },
+  { match: /document|insurance|passport|records/i, query: "important documents emergency preparedness" },
+  { match: /medication|prescription|medicine/i, query: "emergency medication supply preparedness" },
+  { match: /cash|money|atm/i, query: "emergency cash small bills preparedness" },
 ];
 
 export function genericSearchNeeds(texts: string[], answers: QA[] = []): string[] {
