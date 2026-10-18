@@ -105,7 +105,7 @@ export function Questions() {
       <div className="mx-auto flex w-full max-w-xl flex-1 items-center px-4 py-12">
         <section key={loading ? "loading" : step} className="question-enter w-full text-sm" aria-busy={loading}>
           <StackedCard bottomTab={theme === "yellow" ? "blue" : "yellow"} topTab={loading ? "blue" : "panda"}>
-            <h1 ref={heading} tabIndex={-1} className={cn("leading-7 outline-none", !loading && step === 0 ? "text-2xl font-normal" : "text-lg font-bold")}>{loading ? "Hold on, we got a few more questions for you!" : step === 0 ? "Tell us about your household" : q?.text ?? "Your checklists are next…"}</h1>
+            <h1 ref={heading} tabIndex={-1} className={cn("leading-7 outline-none", !loading && step === 0 ? "text-2xl font-normal" : "text-lg font-bold")}>{loading ? "Hold on while we prepare a few more questions!" : step === 0 ? "Tell us about your household" : q?.text ?? "Your checklists are next…"}</h1>
           {loading ? (
              <div className="question-cat-arena relative mt-6 h-96 w-full overflow-hidden" role="status" aria-label="Preparing your follow-up questions"><div className="question-cat-bounce absolute flex aspect-square items-center justify-center"><img src={catBadge.url} alt="CataPanda cat in a red circle" className="question-cat-wobble aspect-square object-contain" /></div></div>
           ) : step === 0 ? (
