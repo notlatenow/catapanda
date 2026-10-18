@@ -15,6 +15,7 @@ export type Personal = {
   facts: HouseholdFact[];
   items: AIItem[];
   top: TopPick[];
+  people: number | null; // confident household size from AI, else null
 };
 
 export type Session = {
