@@ -19,6 +19,7 @@ const AID_EXAMPLES = [
 ];
 
 function kindLabel(row: Row) {
+  if (row.disaster) return "Gov-vetted";
   return row.kind === "tip" ? "CataPanda tip" : row.kind === "ai" ? "AI" : "Gov-vetted";
 }
 
