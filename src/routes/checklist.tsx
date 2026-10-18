@@ -137,8 +137,8 @@ function Rows({ rows, onOpen, tone = "default", blackText = false }: { rows: Row
           >
             {r.disaster ? <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-linen text-ink"><DisasterIcon name={r.disaster} selected small /></span> : <img src={themeIcons[r.theme]} alt="" width={816} height={816} loading="lazy" className={cn("h-11 w-11 shrink-0 object-contain p-1.5", tone === "custom" ? "rounded-full bg-custom-icon" : tone === "combo" ? "rounded-full bg-combo-icon" : tone === "core" ? "rounded-full bg-core-icon" : "rounded-xl bg-linen")} />}
             <span className="min-w-0 flex-1">
-              <span className={cn("block font-bold", blackText ? "text-pitch" : "text-ink")}>{r.name}</span>
-              <span className={cn("block truncate text-sm", blackText ? "text-pitch" : "text-slate")}>{r.shortNote}</span>
+              <span className={cn("block", r.disaster ? "font-sans text-sm font-normal text-pitch" : cn("font-bold", blackText ? "text-pitch" : "text-ink"))}>{r.name}</span>
+              <span className={cn("block truncate text-sm", r.disaster ? "font-sans font-normal text-pitch" : blackText ? "text-pitch" : "text-slate")}>{r.shortNote}</span>
             </span>
             <ChevronRight size={18} className={cn("shrink-0", blackText ? "text-pitch" : "text-slate")} />
           </button>
