@@ -68,7 +68,7 @@ export function ItemPanel({ row, onClose }: { row: Row; onClose: () => void }) {
           <div className="min-w-0 flex-1">
             <h2 className="text-xl leading-6 text-ink">{row.name}</h2>
             <p className="mt-1 text-sm text-slate">{row.shortNote}</p>
-            <span className={cn("mt-2 inline-block rounded-full px-2.5 py-0.5 text-xs font-bold", row.kind === "ai" ? "bg-pale text-bright" : row.kind === "tip" ? "bg-linen text-ink" : "bg-pale text-ocean")}>
+            <span className="mt-2 inline-block rounded-full bg-pitch px-2.5 py-0.5 text-xs font-bold text-snow">
               {kindLabel(row)}
             </span>
           </div>
