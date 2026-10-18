@@ -22,7 +22,7 @@ export function ensurePersonalized() {
   if (!s.disasters.length || !s.description.trim()) return;
   const key = personalKey(s);
   if (s.personal?.key === key) return;
-  const base: Personal = { key, status: "running", phase: 0, facts: [], items: [], top: [] };
+  const base: Personal = { key, status: "running", phase: 0, facts: [], items: [], top: [], people: null };
   session.setPersonal(base);
   const current = () => session.get().personal?.key === key;
   const description = s.description.trim();
@@ -37,7 +37,7 @@ export function ensurePersonalized() {
     session.setPersonal({ ...base, phase: 1 });
     const rev = await reviewItems({ data: { drafts: sug.drafts, disasters, facts: sug.facts, description, answers, searchResults } });
     if (!rev.ok) return null;
-    return { facts: sug.facts, items: rev.items, top: rev.top };
+    return { facts: sug.facts, items: rev.items, top: rev.top, people: sug.people };
   })().catch(() => null);
   const timeout = new Promise<null>((r) => setTimeout(() => r(null), TIMEOUT_MS));
 

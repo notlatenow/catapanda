@@ -55,7 +55,7 @@ const itemSchema = {
 const suggestJson = {
   type: "object",
   additionalProperties: false,
-  required: ["facts", "items"],
+  required: ["facts", "people", "items"],
   properties: {
     facts: {
       type: "object",
@@ -63,6 +63,7 @@ const suggestJson = {
       required: FACTS,
       properties: Object.fromEntries(FACTS.map((f) => [f, { type: "boolean" }])),
     },
+    people: { type: "integer" },
     items: { type: "array", items: itemSchema },
   },
 };
@@ -70,7 +71,7 @@ const rawItem = z.object({
   name: z.string(), category: z.string(), priority: z.enum(PRIORITY_LABELS), shortNote: z.string(),
   stores: z.array(z.string()), medical: z.boolean(), specializes: z.string(), sourceUrl: z.string(),
 });
-const suggestOut = z.object({ facts: z.object({ infant: z.boolean(), elderly: z.boolean(), personalAids: z.boolean(), pet: z.boolean() }), items: z.array(rawItem) });
+const suggestOut = z.object({ facts: z.object({ infant: z.boolean(), elderly: z.boolean(), personalAids: z.boolean(), pet: z.boolean() }), people: z.number().int().min(0).max(20), items: z.array(rawItem) });
 
 const catalogFor = (disasters: string[]) => {
   const seen = new Set<string>();
@@ -91,7 +92,7 @@ export const suggestItems = createServerFn({ method: "POST" })
   )
   .handler(async ({ data }): Promise<SuggestResult> => {
     const { runAI, isAIEnabled } = await import("@/lib/ai.server");
-    const fail: SuggestResult = { ok: false, facts: [], drafts: [] };
+    const fail: SuggestResult = { ok: false, facts: [], drafts: [], people: null };
     if (!isAIEnabled()) return fail;
     const searchResults = data.searchResults.filter((r) => isAllowedSearchUrl(r.link));
     try {
@@ -104,7 +105,8 @@ The data holds the household description, clarifying answers, selected disasters
 - elderly: someone is 65+ or uses elderly-care aids.
 - personalAids: anyone uses glasses, hearing aids, a cane or similar, at any age.
 - pet: any pet.
-2) Draft up to 8 household-specific items to add ALONGSIDE the catalog (fewer is fine; none if nothing specific is needed). Priority is Essential, Important or Nice-to-have. Use your own knowledge for common needs (pets, diets, sensitive skin, pregnancy). If anyone is pregnant or expecting, you MUST include 2-3 pregnancy-specific items (e.g. prenatal care supplies, maternity support items, hospital-bag essentials for the birth); medical/medication ones set medical=true and say "Check with your doctor".
+2) people: the household size as an integer, ONLY when explicitly stated or unambiguous (e.g. "family of 4", "two adults and a toddler" = 3, "I live alone" = 1). Vague wording ("my family", "me and my partner" without numbers) means 0. Never guess.
+3) Draft up to 8 household-specific items to add ALONGSIDE the catalog (fewer is fine; none if nothing specific is needed). Priority is Essential, Important or Nice-to-have. Use your own knowledge for common needs (pets, diets, sensitive skin, pregnancy). If anyone is pregnant or expecting, you MUST include 2-3 pregnancy-specific items (e.g. prenatal care supplies, maternity support items, hospital-bag essentials for the birth); medical/medication ones set medical=true and say "Check with your doctor".
 ${GUARDRAILS}
 Understand typos and casual writing. ${SECURITY_NOTE}`,
         userData: {
@@ -123,7 +125,7 @@ Understand typos and casual writing. ${SECURITY_NOTE}`,
         out.items.map((i) => ({ ...i, priority: toPriority(i.priority), specializes: i.specializes.trim() || null })),
         searchResults,
       );
-      return { ok: true, facts, drafts };
+      return { ok: true, facts, drafts, people: out.people > 0 ? out.people : null };
     } catch {
       return fail; // no logging (privacy)
     }

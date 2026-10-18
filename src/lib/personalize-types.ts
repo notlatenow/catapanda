@@ -13,5 +13,5 @@ export type AIItem = {
 };
 export type TopPick = { name: string; why: string };
 export type QA = { question: string; answer: string };
-export type SuggestResult = { ok: boolean; facts: HouseholdFact[]; drafts: AIItem[] };
+export type SuggestResult = { ok: boolean; facts: HouseholdFact[]; drafts: AIItem[]; people: number | null };
 export type ReviewResult = { ok: boolean; items: AIItem[]; top: TopPick[] };
