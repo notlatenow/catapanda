@@ -13,9 +13,9 @@ import { useSession } from "@/state/session";
 export const Route = createFileRoute("/share")({
   head: () => ({
     meta: [
-      { title: "Share your Top 10 — CataPanda" },
-      { name: "description", content: "Share your disaster prep Top 10 by email, text, WhatsApp, Facebook or X." },
-      { property: "og:title", content: "Share your Top 10 — CataPanda" },
+      { title: "Share your Top Tips — CataPanda" },
+      { name: "description", content: "Share your disaster prep Top Tips by email, text, WhatsApp, Facebook or X." },
+      { property: "og:title", content: "Share your Top Tips — CataPanda" },
       { property: "og:description", content: "Help your people get disaster-ready." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

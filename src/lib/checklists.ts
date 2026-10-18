@@ -152,12 +152,12 @@ export function buildTop10(personalized: Checklist, top: TopPick[] = []): Checkl
   const valid = names.length === 8 && new Set(names).size === 8 && names.every((n) => shown.has(n) && n !== firstName && n !== secondName);
   if (valid && water) {
     const rows = [bag, water, ...top.map((t) => ({ ...shown.get(t.name)!, why: t.why }))];
-    return { id: "top10", title: "Top 10", sections: [{ title: "Top 10", rows }], showStores: false, aiRanked: true };
+    return { id: "top10", title: "Top Tips", sections: [{ title: "Top Tips", rows }], showStores: false, aiRanked: true };
   }
   const catalogRows = personalized.sections.flatMap((s) => s.rows).filter((r) => r.kind === "catalog");
   const rest = sortRows(catalogRows.filter((r) => r.name !== secondName));
   const rows = [bag, ...(water ? [water] : []), ...rest].slice(0, 10);
-  return { id: "top10", title: "Top 10", sections: [{ title: "Top 10", rows }], showStores: false, aiRanked: false };
+  return { id: "top10", title: "Top Tips", sections: [{ title: "Top Tips", rows }], showStores: false, aiRanked: false };
 }
 
 export function buildAll(disasters: string[], facts: HouseholdFact[], ai: AIInput = null, people: number | null = null) {

@@ -78,7 +78,7 @@ function About() {
       </Section>
 
       <Section id="ai" title="AI">
-        <p>CataPanda uses AI to tailor your lists to your household. It reads what you told us, figures out who's at home (like a baby, a grandparent or a pet), and suggests a few extra items just for you. It also picks your Top 10 and explains why each one matters for you.</p>
+        <p>CataPanda uses AI to tailor your lists to your household. It reads what you told us, figures out who's at home (like a baby, a grandparent or a pet), and suggests a few extra items just for you. It also picks your Top Tips and explains why each one matters for you.</p>
         <p>Every AI item is labeled "AI", so you always know where it came from.</p>
         <h3 id="how-the-tiers-work" className="scroll-mt-20 font-bold text-ink">How the tiers work</h3>
         <ul className="flex flex-col gap-2">
