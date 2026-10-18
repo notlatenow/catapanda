@@ -48,7 +48,7 @@ function About() {
         </div>
       </div>
 
-      <h2 className="-mb-2 px-1 text-2xl text-ink">Where our items come from</h2>
+      <h2 className="-mb-2 px-1 text-2xl text-snow">Where our items come from</h2>
 
       <Section id="gov-vetted" title="Gov-vetted">
         <p>Our "core" items come from a catalog the CataPanda team researched by hand, using official government and civil-defense guidance on disaster prep.</p>
