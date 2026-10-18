@@ -133,6 +133,12 @@ export function buildPersonalized(disasters: string[], facts: HouseholdFact[], a
     overlapLine = `${pct}% of your items prepare you for ${disasters.length === 2 ? "both" : "all the disasters you chose"}`;
   }
   sections.push({ title: "Core", note: "These are the remaining disaster-specific items.", rows: core });
+  if (people && people > 0) {
+    for (const s of sections) {
+      const w = s.rows.find((r) => r.name === "Drinking water");
+      if (w) w.shortNote = waterNote(people);
+    }
+  }
   return { id: "personalized", title: "Personalized checklist", sections, showStores: true, overlapLine };
 }
 
@@ -154,8 +160,8 @@ export function buildTop10(personalized: Checklist, top: TopPick[] = []): Checkl
   return { id: "top10", title: "Top 10", sections: [{ title: "Top 10", rows }], showStores: false, aiRanked: false };
 }
 
-export function buildAll(disasters: string[], facts: HouseholdFact[], ai: AIInput = null) {
-  const personalized = buildPersonalized(disasters, facts, ai);
+export function buildAll(disasters: string[], facts: HouseholdFact[], ai: AIInput = null, people: number | null = null) {
+  const personalized = buildPersonalized(disasters, facts, ai, people);
   return { top10: buildTop10(personalized, ai?.top), personalized, perDisaster: disasters.map(buildDisasterList) };
 }
 
