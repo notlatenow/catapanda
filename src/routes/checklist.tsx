@@ -100,7 +100,7 @@ function ChecklistPage() {
                       className={cn("flex h-auto w-full items-center justify-between gap-2 whitespace-normal rounded-none p-0 text-left hover:bg-snow hover:text-inherit", (s.title === "Custom" || s.title === "Combo" || s.title === "Core") && "-mx-5 w-[calc(100%+2.5rem)] bg-snow px-5 text-slate hover:text-slate sm:-mx-6 sm:w-[calc(100%+3rem)] sm:px-6", collapsible && (expanded.has(s.title) ? "py-4" : "py-2"))}
                     >
                       <span className="min-w-0">
-                        <h2 className={cn("text-xl", s.title === "Custom" ? "text-custom-heading" : s.title === "Combo" ? "text-combo-heading" : s.title === "Core" ? "text-core-heading" : s.title === "Disaster Dos & Dont's" || s.title === "Top 10 items" || s.title === "Standard items" ? "text-pitch" : "text-ink")}>{s.title}</h2>
+                        <h2 className={cn("text-xl", s.title === "Custom" ? "text-custom-heading" : s.title === "Combo" ? "text-combo-heading" : s.title === "Core" ? "text-core-heading" : s.title === "Disaster Dos & Dont's" || s.title === "Top 10 items" || s.title === "Standard items" ? "text-slate" : "text-ink")}>{s.title}</h2>
                         {collapsible && s.note && <span className="mt-1 block text-sm font-normal text-slate">{s.note}</span>}
                         {s.title === "Combo" && current.overlapLine && expanded.has(s.title) && <span className="mt-1 block text-sm font-bold text-slate">{current.overlapLine}</span>}
                       </span>
