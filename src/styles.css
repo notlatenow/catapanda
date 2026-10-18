@@ -55,6 +55,8 @@
   --color-custom-icon: var(--custom-icon);
   --color-combo-bar: var(--combo-bar);
   --color-combo-icon: var(--combo-icon);
+  --color-core-bar: var(--core-bar);
+  --color-core-icon: var(--core-icon);
   --color-intake-tab: var(--intake-tab);
   --color-dusk: var(--dusk);
   --color-haze: var(--haze);
@@ -88,6 +90,8 @@
   --custom-icon: #ffe6ab;
   --combo-bar: #a94a41;
   --combo-icon: #f4d3cf;
+  --core-bar: var(--loading-tab);
+  --core-icon: #d4e3f4;
   --intake-tab: #d49a00;
   --dusk: #103654;
   --haze: #0063ad;
