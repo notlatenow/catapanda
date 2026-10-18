@@ -83,8 +83,8 @@ export function ItemPanel({ row, onClose }: { row: Row; onClose: () => void }) {
         <div className="flex shrink-0 items-start gap-4 p-5 pb-3">
           <img src={themeIcons[row.theme]} alt="" width={816} height={816} className="h-16 w-16 shrink-0 rounded-2xl bg-linen object-contain p-2" />
           <div className="min-w-0 flex-1">
-            <h2 className="text-xl leading-6 text-ink">{row.name}</h2>
-            <p className="mt-1 text-sm text-slate">{row.shortNote}</p>
+            <h2 className={cn(row.disaster ? "font-sans text-sm font-normal text-pitch" : "text-xl leading-6 text-ink")}>{row.name}</h2>
+            <p className={cn("mt-1 text-sm", row.disaster ? "font-sans font-normal text-pitch" : "text-slate")}>{row.shortNote}</p>
             <span className="mt-2 inline-block rounded-full bg-pitch px-2.5 py-0.5 text-xs font-bold text-snow">
               {kindLabel(row)}
             </span>
@@ -116,7 +116,7 @@ export function ItemPanel({ row, onClose }: { row: Row; onClose: () => void }) {
               </ul>
             </section>
           )}
-          {row.detail && <p className="mt-4 text-sm text-slate">{row.detail}</p>}
+          {row.detail && <p className={cn("mt-4 text-sm", row.disaster ? "font-sans font-normal text-pitch" : "text-slate")}>{row.detail}</p>}
           <section className="mt-5">
             <h3 className="text-lg text-ink">Take action</h3>
             {row.stores.length > 0 && (
