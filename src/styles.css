@@ -155,7 +155,7 @@ h1, h2, h3, h4, .font-display, .question-next { font-weight: 400; }
   0%, 100% { rotate: -22deg; }
   50% { rotate: 22deg; }
 }
-.question-cat-bounce { width: min(100%, 20.365rem); left: 50%; top: 50%; transform: translate(-50%, -50%); }
+.question-cat-bounce { width: min(100%, 40.73rem); left: 50%; top: 50%; transform: translate(-50%, -50%); }
 .question-cat-wobble { width: 70.71%; animation: question-cat-wobble 1.4s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) {
   .question-cat-wobble { animation: none; rotate: 0deg; }
