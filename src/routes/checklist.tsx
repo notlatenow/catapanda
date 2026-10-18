@@ -133,7 +133,7 @@ function Rows({ rows, onOpen, tone = "default", blackText = false }: { rows: Row
           <button
             type="button"
             onClick={() => onOpen(r)}
-            className="flex w-full items-center gap-3 py-3 text-left transition-colors hover:bg-pale/60 rounded-none px-2 -mx-2"
+            className="flex w-[calc(100%+1rem)] items-center gap-3 py-3 text-left transition-colors hover:bg-pale/60 rounded-none px-2 -mx-2"
           >
             {r.disaster ? <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-linen text-ink"><DisasterIcon name={r.disaster} selected small /></span> : <img src={themeIcons[r.theme]} alt="" width={816} height={816} loading="lazy" className={cn("h-11 w-11 shrink-0 object-contain p-1.5", tone === "custom" ? "rounded-full bg-custom-icon" : tone === "combo" ? "rounded-full bg-combo-icon" : tone === "core" ? "rounded-full bg-core-icon" : "rounded-xl bg-linen")} />}
             <span className="min-w-0 flex-1">
