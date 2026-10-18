@@ -94,22 +94,22 @@ function ChecklistPage() {
                       type="button"
                       onClick={() => toggleSection(s.title)}
                       aria-expanded={!collapsed.has(s.title)}
-                      className={cn("flex h-auto w-full items-center justify-between gap-2 whitespace-normal rounded-none p-0 text-left", s.title === "Custom" && "-mx-5 w-[calc(100%+2.5rem)] bg-custom-bar px-5 py-4 text-pitch hover:bg-custom-bar sm:-mx-6 sm:w-[calc(100%+3rem)] sm:px-6")}
+                      className={cn("flex h-auto w-full items-center justify-between gap-2 whitespace-normal rounded-none p-0 text-left", (s.title === "Custom" || s.title === "Combo") && "-mx-5 w-[calc(100%+2.5rem)] px-5 py-4 sm:-mx-6 sm:w-[calc(100%+3rem)] sm:px-6", s.title === "Custom" && "bg-custom-bar text-pitch hover:bg-custom-bar", s.title === "Combo" && "bg-combo-bar text-snow hover:bg-combo-bar hover:text-snow")}
                     >
                       <span className="min-w-0">
-                        <h2 className={cn("text-xl", s.title === "Custom" ? "text-pitch" : "text-ink")}>{s.title}</h2>
-                        {s.title === "Custom" && s.note && !collapsed.has(s.title) && <span className="mt-1 block text-sm font-normal text-pitch">{s.note}</span>}
+                        <h2 className={cn("text-xl", s.title === "Custom" ? "text-pitch" : s.title === "Combo" ? "text-snow" : "text-ink")}>{s.title}</h2>
+                        {(s.title === "Custom" || s.title === "Combo") && s.note && !collapsed.has(s.title) && <span className={cn("mt-1 block text-sm font-normal", s.title === "Combo" ? "text-snow" : "text-pitch")}>{s.note}</span>}
+                        {s.title === "Combo" && current.overlapLine && !collapsed.has(s.title) && <span className="mt-1 block text-sm font-bold text-snow">{current.overlapLine}</span>}
                       </span>
-                      <ChevronDown size={20} className={cn("shrink-0 transition-transform", s.title === "Custom" ? "text-pitch" : "text-slate", collapsed.has(s.title) && "-rotate-90")} />
+                      <ChevronDown size={20} className={cn("shrink-0 transition-transform", s.title === "Custom" ? "text-pitch" : s.title === "Combo" ? "text-snow" : "text-slate", collapsed.has(s.title) && "-rotate-90")} />
                     </Button>
                   ) : (
                     <h2 className="text-xl text-ink">{s.title}</h2>
                   )}
                   {!collapsed.has(s.title) && (
                     <>
-                      {s.note && s.title !== "Custom" && <p className="mt-1 text-sm text-slate">{s.note}</p>}
-                      {s.title === "Combo" && current.overlapLine && <p className="mt-1 text-sm font-bold text-ink">{current.overlapLine}</p>}
-                      <Rows rows={s.rows} onOpen={setOpen} custom={collapsible && s.title === "Custom"} />
+                      {s.note && s.title !== "Custom" && s.title !== "Combo" && <p className="mt-1 text-sm text-slate">{s.note}</p>}
+                      <Rows rows={s.rows} onOpen={setOpen} tone={collapsible && s.title === "Custom" ? "custom" : collapsible && s.title === "Combo" ? "combo" : "default"} />
                     </>
                   )}
                 </section>
@@ -128,7 +128,7 @@ function ChecklistPage() {
   );
 }
 
-function Rows({ rows, onOpen, custom = false }: { rows: Row[]; onOpen: (row: Row) => void; custom?: boolean }) {
+function Rows({ rows, onOpen, tone = "default" }: { rows: Row[]; onOpen: (row: Row) => void; tone?: "custom" | "combo" | "default" }) {
   return (
     <ul className="mt-3">
       {rows.map((r) => (
@@ -138,7 +138,7 @@ function Rows({ rows, onOpen, custom = false }: { rows: Row[]; onOpen: (row: Row
             onClick={() => onOpen(r)}
             className="flex w-full items-center gap-3 py-3 text-left transition-colors hover:bg-pale/60 rounded-2xl px-2 -mx-2"
           >
-            <img src={themeIcons[r.theme]} alt="" width={816} height={816} loading="lazy" className={cn("h-11 w-11 shrink-0 object-contain p-1.5", custom ? "rounded-full bg-custom-icon" : "rounded-xl bg-pale")} />
+            <img src={themeIcons[r.theme]} alt="" width={816} height={816} loading="lazy" className={cn("h-11 w-11 shrink-0 object-contain p-1.5", tone === "custom" ? "rounded-full bg-custom-icon" : tone === "combo" ? "rounded-full bg-combo-icon" : "rounded-xl bg-pale")} />
             <span className="min-w-0 flex-1">
               <span className="block font-bold text-ink">{r.name}</span>
               <span className="block truncate text-sm text-slate">{r.shortNote}</span>
