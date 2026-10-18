@@ -29,7 +29,7 @@ export type Checklist = { id: string; title: string; sections: Section[]; showSt
 export function buildDisasterAdvice(disasters: string[]): Section {
   return {
     title: "Disaster dos & don'ts",
-    rows: disasters.flatMap(disaster => (catalog.getDisaster(disaster)?.tips ?? []).slice(0, 3).map(tip => ({
+    rows: disasters.flatMap(disaster => (catalog.getDisaster(disaster)?.tips ?? []).slice(0, 2).map(tip => ({
       name: tip.text,
       shortNote: "",
       category: "Disaster advice",
