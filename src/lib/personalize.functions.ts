@@ -92,7 +92,7 @@ export const suggestItems = createServerFn({ method: "POST" })
   )
   .handler(async ({ data }): Promise<SuggestResult> => {
     const { runAI, isAIEnabled } = await import("@/lib/ai.server");
-    const fail: SuggestResult = { ok: false, facts: [], drafts: [] };
+    const fail: SuggestResult = { ok: false, facts: [], drafts: [], people: null };
     if (!isAIEnabled()) return fail;
     const searchResults = data.searchResults.filter((r) => isAllowedSearchUrl(r.link));
     try {
@@ -124,7 +124,7 @@ Understand typos and casual writing. ${SECURITY_NOTE}`,
         out.items.map((i) => ({ ...i, priority: toPriority(i.priority), specializes: i.specializes.trim() || null })),
         searchResults,
       );
-      return { ok: true, facts, drafts };
+      return { ok: true, facts, drafts, people: out.people > 0 ? out.people : null };
     } catch {
       return fail; // no logging (privacy)
     }
