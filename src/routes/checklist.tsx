@@ -97,11 +97,11 @@ function ChecklistPage() {
                       type="button"
                       onClick={() => toggleSection(s.title)}
                       aria-expanded={expanded.has(s.title)}
-                      className={cn("flex h-auto w-full items-center justify-between gap-2 whitespace-normal rounded-none p-0 text-left", (s.title === "Custom" || s.title === "Combo" || s.title === "Core") && "-mx-5 w-[calc(100%+2.5rem)] bg-snow px-5 py-4 text-slate hover:bg-snow hover:text-slate sm:-mx-6 sm:w-[calc(100%+3rem)] sm:px-6")}
+                      className={cn("flex h-auto w-full items-center justify-between gap-2 whitespace-normal rounded-none p-0 text-left hover:bg-snow hover:text-inherit", (s.title === "Custom" || s.title === "Combo" || s.title === "Core") && "-mx-5 w-[calc(100%+2.5rem)] bg-snow px-5 py-4 text-slate hover:text-slate sm:-mx-6 sm:w-[calc(100%+3rem)] sm:px-6")}
                     >
                       <span className="min-w-0">
                         <h2 className={cn("text-xl", s.title === "Custom" ? "text-custom-heading" : s.title === "Combo" ? "text-combo-heading" : s.title === "Core" ? "text-core-heading" : s.title === "Disaster dos & don'ts" ? "text-disaster-advice" : s.title === "Top 10 items" || s.title === "Standard items" ? "text-pitch" : "text-ink")}>{s.title}</h2>
-                        {(s.title === "Custom" || s.title === "Combo" || s.title === "Core") && s.note && expanded.has(s.title) && <span className="mt-1 block text-sm font-normal text-slate">{s.note}</span>}
+                        {collapsible && s.note && <span className="mt-1 block text-sm font-normal text-slate">{s.note}</span>}
                         {s.title === "Combo" && current.overlapLine && expanded.has(s.title) && <span className="mt-1 block text-sm font-bold text-slate">{current.overlapLine}</span>}
                       </span>
                       <ChevronDown size={20} className={cn("shrink-0 transition-transform", needsAI ? "text-slate" : "text-pitch", !expanded.has(s.title) && "-rotate-90")} />
