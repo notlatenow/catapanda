@@ -59,7 +59,7 @@ export function ListsLoading({ disasters, phase }: { disasters: string[]; phase:
         <p className="font-bold text-ink">{msg}</p>
         {slow && <p className="text-sm text-slate">Taking a little longer than usual. Hang tight, your lists are almost ready!</p>}
         {tip && (
-          <div className="mt-2 w-full rounded-2xl border border-sand bg-pale p-4 text-left text-sm">
+          <div className="mt-2 w-full rounded-2xl bg-linen p-4 text-left text-sm">
             <p className="text-xs font-bold uppercase tracking-wide text-slate">{tip.label}</p>
             <p className="mt-1 text-ink">{tip.text}</p>
           </div>
