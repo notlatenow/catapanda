@@ -3,7 +3,7 @@ import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 
 const state = vi.hoisted(() => ({ list: "personalized" }));
 vi.mock("@tanstack/react-router", () => ({
-  createFileRoute: () => (options: object) => ({ ...options, useSearch: () => ({ list: state.list }) }),
+  createFileRoute: () => (options: object) => ({ options, useSearch: () => ({ list: state.list }) }),
   Link: ({ children }: { children: React.ReactNode }) => <a>{children}</a>,
 }));
 vi.mock("@/state/session", () => ({ useSession: () => ({ disasters: ["Earthquake"], facts: {} }) }));
