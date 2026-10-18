@@ -26,7 +26,9 @@ it.each(["personalized", "top10", "Earthquake"])("opens %s with every section co
   const sections = screen.getAllByRole("button", { expanded: false });
   expect(sections.length).toBe(list === "personalized" ? 3 : list === "Earthquake" ? 2 : 1);
   expect(screen.queryAllByRole("list")).toHaveLength(0);
-  fireEvent.click(sections[0]);
+  const firstSection = sections[0];
+  if (!firstSection) throw new Error("No collapsed section found");
+  fireEvent.click(firstSection);
   expect(screen.getAllByRole("list")).toHaveLength(1);
 });
 
