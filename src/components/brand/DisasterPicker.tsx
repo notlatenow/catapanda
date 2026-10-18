@@ -23,6 +23,17 @@ export function InkOutline({ wide = false, name = "Earthquake" }: { wide?: boole
   );
 }
 
+function RegionOutline() {
+  return (
+    <svg aria-hidden="true" className="ink-outline" viewBox="14 24 1003 93" preserveAspectRatio="none">
+      <g transform="translate(0 140) scale(0.1 -0.1)">
+        <path fillRule="evenodd" d="M7850 1148 c-668 -5 -2628 -10 -4355 -11 -2955 -2 -3143 -3 -3191 -19 -74 -26 -116 -57 -142 -108 -27 -54 -28 -129 -8 -417 16 -216 22 -235 94 -290 90 -69 -23 -66 2059 -59 1821 6 6166 16 7130 17 434 0 487 2 547 18 128 36 179 106 177 246 -1 133 -22 417 -33 460 -14 55 -79 116 -153 146 -60 23 -63 24 -485 25 -234 1 -972 -3 -1640 -8z m2121 -56 c113 -45 125 -75 140 -361 11 -202 11 -226 -5 -276 -19 -62 -79 -122 -143 -145 -78 -27 -2008 -34 -5858 -21 -1975 7 -3624 16 -3667 21 -94 10 -158 37 -188 80 -29 40 -39 133 -41 381 -1 149 2 183 16 213 22 45 68 82 132 104 44 16 383 17 4543 23 5486 6 5000 8 5071 -19z" />
+        <path d="M9080 1030 c74 -11 216 -10 175 0 -16 4 -75 8 -130 7 -88 0 -93 -1 -45 -7z M9414 1032 c9 -8 227 -29 328 -31 200 -4 215 -18 234 -211 4 -41 7 -81 7 -87 0 -7 4 -13 8 -13 19 0 23 269 5 299 -8 13 -85 30 -162 36 -77 6 -425 12 -420 7z M254 840 c3 -36 8 -119 11 -185 4 -66 10 -138 15 -160 12 -53 3 236 -11 329 -12 90 -22 99 -15 16z M640 391 c0 -7 25 -11 62 -11 74 0 70 11 -7 17 -35 3 -55 1 -55 -6z M960 388 c0 -11 410 -9 435 2 12 6 -65 9 -207 8 -126 -1 -228 -6 -228 -10z" />
+      </g>
+    </svg>
+  );
+}
+
 export function DisasterIcon({ name, selected, small = false }: { name: string; selected: boolean; small?: boolean }) {
   return (
     <svg aria-hidden="true" viewBox="0 0 32 32" className={cn("max-w-full fill-none stroke-current motion-safe:transition-transform motion-safe:duration-150", small ? "h-7 w-7 shrink-0" : "h-16 w-16", selected ? "rotate-0" : name === "Flood" ? "rotate-[8deg]" : "-rotate-[8deg]", small && "motion-safe:group-active:rotate-[10deg]")} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -57,7 +68,7 @@ export function DisasterPicker({ picked, onToggle, region, onRegionChange }: { p
       </div>
       <Select.Root value={region} onValueChange={(value) => onRegionChange(value === "reset-region" ? "" : value)}>
         <Select.Trigger aria-label="Country" className="doodle-region relative mt-6 flex h-12 w-full items-center justify-between gap-2 px-4 text-left text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-          <InkOutline wide />
+          <RegionOutline />
           <span className={cn("font-sans font-normal", !region && "text-slate")}><Select.Value placeholder="Choose your region." /></span>
           <Select.Icon>
             <svg aria-hidden="true" viewBox="0 0 24 18" className="h-4 w-5 fill-current"><path d="m3 4 18-1-9 12Z" /></svg>
