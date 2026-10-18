@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { Page, FlowNav, PlaceholderNote } from "@/components/brand/AppLayout";
 import { StackedCard } from "@/components/brand/StackedCard";
@@ -25,15 +25,20 @@ export const Route = createFileRoute("/checklist")({
       { name: "twitter:card", content: "summary" },
     ],
   }),
-  component: ChecklistPage,
+  component: ChecklistRoute,
 });
+
+function ChecklistRoute() {
+  const { list = "top10" } = Route.useSearch();
+  return <ChecklistPage key={list} />;
+}
 
 function ChecklistPage() {
   const { disasters, facts } = useSession();
   const { list = "top10" } = Route.useSearch();
   const personal = usePersonalization();
   const [open, setOpen] = useState<Row | null>(null);
-  const [collapsed, setCollapsed] = useState<Set<string>>(new Set());
+  const [expanded, setExpanded] = useState<Set<string>>(new Set());
 
   if (!disasters.length) {
     return (
@@ -54,7 +59,7 @@ function ChecklistPage() {
   const collapsible = current.id === "personalized";
 
   function toggleSection(title: string) {
-    setCollapsed((c) => {
+    setExpanded((c) => {
       const next = new Set(c);
       if (next.has(title)) next.delete(title);
       else next.add(title);
@@ -85,37 +90,28 @@ function ChecklistPage() {
         <StackedCard>
           <h1 className="text-2xl text-ink">{current.id === "top10" ? "Top Tips" : current.id === "personalized" ? "Personal Picks" : `${current.id} Basics`}</h1>
           {current.sections.map((s) => (
-            <Fragment key={s.title}>
-              {(current.sections.length > 1 || s.note) && (
-                <section className="mt-6">
-                  {collapsible ? (
+                <section key={s.title} className="mt-6">
                     <Button
                       variant="ghost"
                       type="button"
                       onClick={() => toggleSection(s.title)}
-                      aria-expanded={!collapsed.has(s.title)}
+                      aria-expanded={expanded.has(s.title)}
                       className={cn("flex h-auto w-full items-center justify-between gap-2 whitespace-normal rounded-none p-0 text-left", (s.title === "Custom" || s.title === "Combo" || s.title === "Core") && "-mx-5 w-[calc(100%+2.5rem)] px-5 py-4 sm:-mx-6 sm:w-[calc(100%+3rem)] sm:px-6", s.title === "Custom" && "bg-custom-bar text-pitch hover:bg-custom-bar", s.title === "Combo" && "bg-combo-bar text-snow hover:bg-combo-bar hover:text-snow", s.title === "Core" && "bg-core-bar text-snow hover:bg-core-bar hover:text-snow")}
                     >
                       <span className="min-w-0">
                         <h2 className={cn("text-xl", s.title === "Custom" ? "text-pitch" : s.title === "Combo" || s.title === "Core" ? "text-snow" : "text-ink")}>{s.title}</h2>
-                        {(s.title === "Custom" || s.title === "Combo" || s.title === "Core") && s.note && !collapsed.has(s.title) && <span className={cn("mt-1 block text-sm font-normal", s.title === "Combo" || s.title === "Core" ? "text-snow" : "text-pitch")}>{s.note}</span>}
-                        {s.title === "Combo" && current.overlapLine && !collapsed.has(s.title) && <span className="mt-1 block text-sm font-bold text-snow">{current.overlapLine}</span>}
+                        {(s.title === "Custom" || s.title === "Combo" || s.title === "Core") && s.note && expanded.has(s.title) && <span className={cn("mt-1 block text-sm font-normal", s.title === "Combo" || s.title === "Core" ? "text-snow" : "text-pitch")}>{s.note}</span>}
+                        {s.title === "Combo" && current.overlapLine && expanded.has(s.title) && <span className="mt-1 block text-sm font-bold text-snow">{current.overlapLine}</span>}
                       </span>
-                      <ChevronDown size={20} className={cn("shrink-0 transition-transform", s.title === "Custom" ? "text-pitch" : s.title === "Combo" || s.title === "Core" ? "text-snow" : "text-slate", collapsed.has(s.title) && "-rotate-90")} />
+                      <ChevronDown size={20} className={cn("shrink-0 transition-transform", s.title === "Custom" ? "text-pitch" : s.title === "Combo" || s.title === "Core" ? "text-snow" : "text-slate", !expanded.has(s.title) && "-rotate-90")} />
                     </Button>
-                  ) : (
-                    <h2 className="text-xl text-ink">{s.title}</h2>
-                  )}
-                  {!collapsed.has(s.title) && (
+                  {expanded.has(s.title) && (
                     <>
                       {s.note && s.title !== "Custom" && s.title !== "Combo" && s.title !== "Core" && <p className="mt-1 text-sm text-slate">{s.note}</p>}
                       <Rows rows={s.rows} onOpen={setOpen} tone={collapsible && s.title === "Custom" ? "custom" : collapsible && s.title === "Combo" ? "combo" : collapsible && s.title === "Core" ? "core" : "default"} />
                     </>
                   )}
                 </section>
-              )}
-              {current.sections.length === 1 && !s.note && <Rows rows={s.rows} onOpen={setOpen} />}
-            </Fragment>
           ))}
         </StackedCard>
         {current.id === "top10" && (
