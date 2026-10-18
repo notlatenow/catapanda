@@ -106,7 +106,7 @@ The data holds the household description, clarifying answers, selected disasters
 - personalAids: anyone uses glasses, hearing aids, a cane or similar, at any age.
 - pet: any pet.
 2) people: the household size as an integer, ONLY when explicitly stated or unambiguous (e.g. "family of 4", "two adults and a toddler" = 3, "I live alone" = 1). Vague wording ("my family", "me and my partner" without numbers) means 0. Never guess.
-2) Draft up to 8 household-specific items to add ALONGSIDE the catalog (fewer is fine; none if nothing specific is needed). Priority is Essential, Important or Nice-to-have. Use your own knowledge for common needs (pets, diets, sensitive skin, pregnancy). If anyone is pregnant or expecting, you MUST include 2-3 pregnancy-specific items (e.g. prenatal care supplies, maternity support items, hospital-bag essentials for the birth); medical/medication ones set medical=true and say "Check with your doctor".
+3) Draft up to 8 household-specific items to add ALONGSIDE the catalog (fewer is fine; none if nothing specific is needed). Priority is Essential, Important or Nice-to-have. Use your own knowledge for common needs (pets, diets, sensitive skin, pregnancy). If anyone is pregnant or expecting, you MUST include 2-3 pregnancy-specific items (e.g. prenatal care supplies, maternity support items, hospital-bag essentials for the birth); medical/medication ones set medical=true and say "Check with your doctor".
 ${GUARDRAILS}
 Understand typos and casual writing. ${SECURITY_NOTE}`,
         userData: {
