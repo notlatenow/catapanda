@@ -1,13 +1,10 @@
-- [x] Replace homepage disaster choices with hand-drawn horizontal buttons and a country dropdown; verify selection and small-screen layout.
-- [x] Update selection colors, borderless region menu and shared navigation states; verify all required inputs and reset behavior.
-- [x] Add managed official-source search, private generic queries, and visit budget.
-- [x] Integrate background searches and approved citations into Suggest/Review and checklist rows.
-- [x] Update Tier 3 copy and verify search/fallback flows (eight tests and live oxygen-device checklist).
-- [x] Update share channels, email layout, mobile SMS syntax and verify desktop/mobile sharing (three tests and full desktop/iOS/Android browser journeys).
-- [x] Move household entry into a seamless full-page, one-question-at-a-time form; enable Home with disaster and region only.
-- [x] Verify immediate option advance, typed Next, individual skip, Back, fallback and phone layout.
-- [x] Redesign question screens with three comic backgrounds, stacked content boxes and simplified Next controls; verify the flow.
-- [x] Compact the question box, place Back/Start over/Next underneath, and replace the three backgrounds with clean PNG redraws; verify phone and desktop layouts.
-- [x] Match reference question typography and word-only pill answers without skip; verify selection, typing and phone layout.
-- [x] Stretch question progress segments across the top of every screen, preserving height and gaps; verified at 375px, 603px, 768px and 1280px widths.
-- [x] Make Enter confirm typed clarifying answers like OK; verified validation, Other, and IME typing with nine tests and live Enter navigation.
+# Roadmap
+
+## Checklist redesign (approved direction)
+- [ ] Generate ~14 comic theme icons (water, food, health, personal aids, clothing, light, communication, documents, money, pets, bag, tools, home, checklist catch-all) matching home/share sketchy style, transparent bg.
+- [ ] Map every catalog item + AI suggestion to a theme.
+- [ ] Checklist rows become clickable: theme icon + name + chevron.
+- [ ] Sliding detail panel (bottom sheet on mobile, centered on desktop): title, one-liner, "What to include" tickable list (visit-only), Examples as comic drawings, "Take action" (stores first, then sources with org/document/section), label chip (Gov-vetted / AI / CataPanda tip).
+- [ ] Personal Picks: remove items duplicated in Basics lists; add household-sizing second line; expand/collapse sections.
+- [ ] "Verify this": on-demand source search when an AI item's panel opens (within visit search budget); drop later if too slow.
+- [ ] Nested items: umbrella items (go bag) show contents; show sources only for umbrella item unless inner items have different sources.
