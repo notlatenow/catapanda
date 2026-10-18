@@ -16,7 +16,7 @@
 - No database tables or logging for household input — privacy requirement (Cloud is used only for server-side AI).
 - Brand UI primitives (StackedCard, PillButton, OptionCard, FlowNav) live in `src/components/brand/`; reuse them for consistent design.
 - Homepage welcome styling uses a dedicated StackedCard variant, and its source count comes from catalog.getSources() so other cards and catalog updates remain consistent.
-- Homepage disaster and region controls live in the brand DisasterPicker, with catalog-sourced country options and decorative SVG pen strokes, so intake styling stays isolated from checklist logic.
+- Homepage disaster and region controls live in the brand DisasterPicker, with catalog-sourced country options and decorative SVG pen strokes; its RegionOutline is shared with options-page disaster bars so their artwork stays consistent.
 - Region selection and form position live in visit-only session state; isIntakeReady gates disaster/region and isHouseholdReady gates household text separately so each step enforces its own inputs without persistence.
 - The /questions route owns the household-first sequential form, and the root shell hides regular navigation/footer there so all question types share one immersive experience.
 - All AI calls go through `runAI` in `src/lib/ai.server.ts` (provider, model, endpoint live only there) so the provider can be swapped in one place.
