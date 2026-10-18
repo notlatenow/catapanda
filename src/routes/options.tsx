@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Page } from "@/components/brand/AppLayout";
 import { StackedCard } from "@/components/brand/StackedCard";
-import { InkOutline, DisasterIcon } from "@/components/brand/DisasterPicker";
+import { RegionOutline, DisasterIcon } from "@/components/brand/DisasterPicker";
 import { useSession } from "@/state/session";
 import { usePersonalization } from "@/state/personalize";
 import { ListsLoading } from "@/components/ListsLoading";
@@ -70,7 +70,7 @@ function Options() {
                 {lists.map((l) => (
                   <Link key={l.id} to="/checklist" search={{ list: l.id }}
                     className="doodle-disaster doodle-pill group relative flex items-center gap-3 rounded-none px-4 py-3">
-                    <InkOutline wide name={l.id} />
+                    <RegionOutline />
                     <DisasterIcon name={l.id} selected={false} small />
                     <span className="font-sans text-sm font-bold">{l.name}</span>
                   </Link>

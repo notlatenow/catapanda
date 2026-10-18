@@ -23,7 +23,7 @@ export function InkOutline({ wide = false, name = "Earthquake" }: { wide?: boole
   );
 }
 
-function RegionOutline() {
+export function RegionOutline() {
   return (
     <svg aria-hidden="true" className="ink-outline" viewBox="14 24 1003 93" preserveAspectRatio="none">
       <g transform="translate(0 140) scale(0.1 -0.1)">
