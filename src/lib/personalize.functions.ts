@@ -55,7 +55,7 @@ const itemSchema = {
 const suggestJson = {
   type: "object",
   additionalProperties: false,
-  required: ["facts", "items"],
+  required: ["facts", "people", "items"],
   properties: {
     facts: {
       type: "object",
@@ -63,6 +63,7 @@ const suggestJson = {
       required: FACTS,
       properties: Object.fromEntries(FACTS.map((f) => [f, { type: "boolean" }])),
     },
+    people: { type: "integer" },
     items: { type: "array", items: itemSchema },
   },
 };
@@ -70,7 +71,7 @@ const rawItem = z.object({
   name: z.string(), category: z.string(), priority: z.enum(PRIORITY_LABELS), shortNote: z.string(),
   stores: z.array(z.string()), medical: z.boolean(), specializes: z.string(), sourceUrl: z.string(),
 });
-const suggestOut = z.object({ facts: z.object({ infant: z.boolean(), elderly: z.boolean(), personalAids: z.boolean(), pet: z.boolean() }), items: z.array(rawItem) });
+const suggestOut = z.object({ facts: z.object({ infant: z.boolean(), elderly: z.boolean(), personalAids: z.boolean(), pet: z.boolean() }), people: z.number().int().min(0).max(20), items: z.array(rawItem) });
 
 const catalogFor = (disasters: string[]) => {
   const seen = new Set<string>();
