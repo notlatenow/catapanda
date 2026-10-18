@@ -130,8 +130,9 @@ h1, h2, h3, h4, .font-display, .question-next { font-weight: 400; }
 .doodle-disaster:nth-child(1) .ink-outline { transform: rotate(-0.8deg); }
 .doodle-disaster:nth-child(2) .ink-outline { transform: rotate(0.7deg); }
 .doodle-disaster:nth-child(3) .ink-outline { transform: rotate(-0.5deg); }
-.doodle-disaster:hover { background: var(--pale); }
-.doodle-disaster:active { background: var(--pale); }
+.doodle-disaster:hover { background: var(--snow); color: var(--pitch); }
+.doodle-disaster:hover svg { rotate: 0deg; }
+.doodle-disaster:active { background: var(--snow); color: var(--pitch); }
 .doodle-disaster.doodle-selected { background: var(--snow); color: var(--pitch); }
 .doodle-pill:hover, .doodle-pill:active { color: var(--pitch); }
 .doodle-pill:nth-child(n) .ink-outline { transform: none; }
