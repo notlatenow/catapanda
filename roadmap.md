@@ -1,10 +1,9 @@
-# Roadmap
-
-## Checklist redesign (approved direction)
-- [ ] Generate ~14 comic theme icons (water, food, health, personal aids, clothing, light, communication, documents, money, pets, bag, tools, home, checklist catch-all) matching home/share sketchy style, transparent bg.
-- [ ] Map every catalog item + AI suggestion to a theme.
-- [ ] Checklist rows become clickable: theme icon + name + chevron.
-- [ ] Sliding detail panel (bottom sheet on mobile, centered on desktop): title, one-liner, "What to include" tickable list (visit-only), Examples as comic drawings, "Take action" (stores first, then sources with org/document/section), label chip (Gov-vetted / AI / CataPanda tip).
-- [ ] Personal Picks: remove items duplicated in Basics lists; add household-sizing second line; expand/collapse sections.
-- [ ] "Verify this": on-demand source search when an AI item's panel opens (within visit search budget); drop later if too slow.
-- [ ] Nested items: umbrella items (go bag) show contents; show sources only for umbrella item unless inner items have different sources.
+# Checklist redesign — done
+- [x] 15 hand-drawn theme icons (src/assets/icons/, checklist = catch-all)
+- [x] Theme mapping: src/lib/themes.ts (name → category → catch-all)
+- [x] Clickable rows: icon + name + chevron (src/routes/checklist.tsx)
+- [x] Sliding detail panel: src/components/brand/ItemPanel.tsx (bottom sheet mobile / centered desktop; label chip, What to include ticks visit-only, Take action = stores then sources)
+- [x] Personal Picks: AI duplicates of Basics items dropped; sections expand/collapse
+- [x] "Verify this": panel-open search via fixed generic queries only (VERIFY_NEEDS in search-policy.ts), within 3/visit budget
+- [x] Verified in browser: Earthquake Basics list + First aid kit panel render correctly
+- [ ] Later: Examples as comic drawings (deferred); household-sizing line needs structured people count (free text today)
