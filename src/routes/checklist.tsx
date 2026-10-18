@@ -91,13 +91,13 @@ function ChecklistPage() {
         <StackedCard>
           <h1 className="text-2xl text-ink">{current.id === "top10" ? "Top Tips" : current.id === "personalized" ? "Personal Picks" : `${current.id} Basics`}</h1>
           {sections.map((s) => (
-                <section key={s.title} className="mt-6">
+                <section key={s.title} className={cn(collapsible && !expanded.has(s.title) ? "mt-2" : "mt-6")}>
                     <Button
                       variant="ghost"
                       type="button"
                       onClick={() => toggleSection(s.title)}
                       aria-expanded={expanded.has(s.title)}
-                      className={cn("flex h-auto w-full items-center justify-between gap-2 whitespace-normal rounded-none p-0 text-left hover:bg-snow hover:text-inherit", (s.title === "Custom" || s.title === "Combo" || s.title === "Core") && "-mx-5 w-[calc(100%+2.5rem)] bg-snow px-5 py-4 text-slate hover:text-slate sm:-mx-6 sm:w-[calc(100%+3rem)] sm:px-6")}
+                      className={cn("flex h-auto w-full items-center justify-between gap-2 whitespace-normal rounded-none p-0 text-left hover:bg-snow hover:text-inherit", (s.title === "Custom" || s.title === "Combo" || s.title === "Core") && "-mx-5 w-[calc(100%+2.5rem)] bg-snow px-5 text-slate hover:text-slate sm:-mx-6 sm:w-[calc(100%+3rem)] sm:px-6", collapsible && (expanded.has(s.title) ? "py-4" : "py-2"))}
                     >
                       <span className="min-w-0">
                         <h2 className={cn("text-xl", s.title === "Custom" ? "text-custom-heading" : s.title === "Combo" ? "text-combo-heading" : s.title === "Core" ? "text-core-heading" : s.title === "Disaster Dos & Dont's" || s.title === "Top 10 items" || s.title === "Standard items" ? "text-pitch" : "text-ink")}>{s.title}</h2>
