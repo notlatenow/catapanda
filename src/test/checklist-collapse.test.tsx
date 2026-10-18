@@ -13,7 +13,7 @@ vi.mock("@/components/brand/ItemPanel", () => ({ ItemPanel: () => null }));
 vi.mock("@/components/ListsLoading", () => ({ ListsLoading: () => null }));
 vi.mock("@/lib/checklists", () => {
   const list = (id: string, titles: string[]) => ({ id, sections: titles.map(title => ({ title, rows: [{ name: `${title} item`, theme: "checklist", shortNote: "" }] })) });
-  return { buildDisasterAdvice: () => list("advice", ["Disaster dos & don'ts"]).sections[0], buildAll: () => ({ top10: list("top10", ["Top Tips"]), personalized: list("personalized", ["Custom", "Combo", "Core"]), perDisaster: [list("Earthquake", ["Standard items"])] }) };
+  return { buildDisasterAdvice: () => list("advice", ["Disaster Dos & Dont's"]).sections[0], buildAll: () => ({ top10: list("top10", ["Top Tips"]), personalized: list("personalized", ["Custom", "Combo", "Core"]), perDisaster: [list("Earthquake", ["Standard items"])] }) };
 });
 import { Route } from "@/routes/checklist";
 afterEach(cleanup);

@@ -28,7 +28,7 @@ export type Checklist = { id: string; title: string; sections: Section[]; showSt
 /** Catalog-backed advice, kept separate from the ten ranked items and sharing. */
 export function buildDisasterAdvice(disasters: string[]): Section {
   return {
-    title: "Disaster dos & don'ts",
+    title: "Disaster Dos & Dont's",
     rows: disasters.flatMap(disaster => (catalog.getDisaster(disaster)?.tips ?? []).slice(0, 2).map(tip => ({
       name: tip.text,
       shortNote: "",
