@@ -13,6 +13,7 @@
 - Share URL and message formatting live in `src/lib/share.ts`; detect SMS device syntax after hydration so desktop browsers omit SMS without SSR mismatches.
 - Catalog content lives only in `src/data/catalog/*.json`; read it only through `src/services/catalog.ts` (swappable data source).
 - Top Tips disaster advice is built separately from ranked item rows so the advice display cannot alter ranking, item counts, or share-message selection.
+- Checklist item panels portal to document.body and lock/restore page scroll; viewport-relative sizing and an independently scrolling body keep details and the close control reachable without collapsing lists.
 - App public URL comes only from `src/config/app.ts` (`VITE_APP_URL` override) so hosting can change without code edits.
 - No database tables or logging for household input — privacy requirement (Cloud is used only for server-side AI).
 - Brand UI primitives (StackedCard, PillButton, OptionCard, FlowNav) live in `src/components/brand/`; reuse them for consistent design.

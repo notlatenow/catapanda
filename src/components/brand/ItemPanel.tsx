@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { X, ExternalLink } from "lucide-react";
 import { catalog } from "@/services/catalog";
 import type { Row } from "@/lib/checklists";
@@ -41,13 +42,26 @@ export function ItemPanel({ row, onClose }: { row: Row; onClose: () => void }) {
     .sort((a, b) => (a.code === "TW" ? -1 : b.code === "TW" ? 1 : 0));
 
   useEffect(() => {
-    closeRef.current?.focus();
+    const scrollY = window.scrollY;
+    const previousStyles = {
+      overflow: document.body.style.overflow,
+      position: document.body.style.position,
+      top: document.body.style.top,
+      width: document.body.style.width,
+    };
+    const previousFocus = document.activeElement;
+    document.body.style.overflow = "hidden";
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = "100%";
+    closeRef.current?.focus({ preventScroll: true });
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
     document.addEventListener("keydown", onKey);
-    document.body.style.overflow = "hidden";
     return () => {
       document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
+      Object.assign(document.body.style, previousStyles);
+      window.scrollTo(0, scrollY);
+      if (previousFocus instanceof HTMLElement) previousFocus.focus({ preventScroll: true });
     };
   }, [onClose]);
 
@@ -58,12 +72,14 @@ export function ItemPanel({ row, onClose }: { row: Row; onClose: () => void }) {
     return () => { alive = false; };
   }, [row.name, verified]);
 
-  return (
+  if (typeof document === "undefined") return null;
+
+  return createPortal(
     <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center sm:p-6" role="dialog" aria-modal="true" aria-label={row.name}>
       <button type="button" aria-label="Close" onClick={onClose} className="absolute inset-0 bg-pitch/60" />
-      <div className="relative flex max-h-[85vh] w-full max-w-lg flex-col overflow-hidden rounded-t-3xl bg-snow shadow-soft sm:rounded-3xl">
+      <div className="relative flex max-h-[85dvh] w-full max-w-lg flex-col overflow-hidden rounded-t-3xl bg-snow shadow-soft sm:rounded-3xl">
         <div className="mx-auto mt-2 h-1.5 w-10 shrink-0 rounded-full bg-sand sm:hidden" />
-        <div className="flex items-start gap-4 p-5 pb-3">
+        <div className="flex shrink-0 items-start gap-4 p-5 pb-3">
           <img src={themeIcons[row.theme]} alt="" width={816} height={816} className="h-16 w-16 shrink-0 rounded-2xl bg-linen object-contain p-2" />
           <div className="min-w-0 flex-1">
             <h2 className="text-xl leading-6 text-ink">{row.name}</h2>
@@ -76,7 +92,7 @@ export function ItemPanel({ row, onClose }: { row: Row; onClose: () => void }) {
             <X size={20} />
           </button>
         </div>
-        <div className="overflow-y-auto px-5 pb-6">
+        <div className="min-h-0 overflow-y-auto overscroll-contain px-5 pb-6">
           {row.why && <p className="text-sm font-bold text-bright">{row.why}</p>}
           {row.medical && <p className="mt-2 rounded-2xl border border-sand bg-linen p-3 text-sm text-ink">Check with your doctor about the right supplies and amounts for you.</p>}
           {includes.length > 0 && (
@@ -141,6 +157,7 @@ export function ItemPanel({ row, onClose }: { row: Row; onClose: () => void }) {
           </section>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
