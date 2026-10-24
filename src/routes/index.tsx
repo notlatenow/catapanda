@@ -38,9 +38,9 @@ function Start() {
       <div className="pointer-events-none relative z-20 -mt-36 flex justify-center overflow-hidden" >
         <img src={logo.url} alt="Catastrophic Pandamonium" className="w-[120%] max-w-none shrink-0 sm:w-full sm:max-w-2xl" />
       </div>
-      <div className="-mt-10 sm:-mt-12">
+      <div className="relative z-30 -mt-28 sm:-mt-32">
       <Page>
-        <div className="pointer-events-none relative mx-auto -mb-11 h-36 w-60 max-w-full overflow-hidden" >
+        <div className="pointer-events-none relative mx-auto -mb-11 h-48 w-80 max-w-full overflow-hidden" >
           <img src={friends.url} alt="Cat and Panda together" width={768} height={768} className="absolute inset-x-0 top-0 h-auto w-full" />
         </div>
         <StackedCard variant="welcome">
