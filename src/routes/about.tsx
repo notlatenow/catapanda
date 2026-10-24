@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type { ReactNode } from "react";
-import friends from "@/assets/friends-waist.png.asset.json";
+import friends from "@/assets/AH-cata-hug.png.asset.json";
 import { Page } from "@/components/brand/AppLayout";
 import { StackedCard } from "@/components/brand/StackedCard";
 import { catalog } from "@/services/catalog";
@@ -35,7 +35,7 @@ function About() {
   const tips = catalog.getCataPandaTips();
   return (
     <Page>
-      <div className="relative z-20 mt-40">
+      <div className="relative z-20 mt-96">
         <img
           src={friends.url}
           alt="The CataPanda cat and panda hugging"

@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, X } from "lucide-react";
-import catBadge from "@/assets/cat-circle-cleaned.png.asset.json";
+import catBadge from "@/assets/AH-cat-circ.png.asset.json";
 import blueBackground from "@/assets/question-blue.webp";
 import redBackground from "@/assets/question-red.webp";
 import yellowBackground from "@/assets/question-yellow.webp";
