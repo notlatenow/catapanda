@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import pandaBadge from "@/assets/AH-panda-circ.png.asset.json";
+import pandaBadge from "@/assets/AH-panda-circ.webp.asset.json";
 import { StackedCard } from "@/components/brand/StackedCard";
 import { catalog } from "@/services/catalog";
 import { hasSearches } from "@/state/search";

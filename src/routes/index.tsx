@@ -1,6 +1,8 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import logo from "@/assets/web-logo.png.asset.json";
-import friends from "@/assets/AH-cata-hug.png.asset.json";
+import friends from "@/assets/AH-cata-hug.webp.asset.json";
+import catBadge from "@/assets/AH-cat-circ.webp.asset.json";
+import pandaBadge from "@/assets/AH-panda-circ.webp.asset.json";
 import { Page } from "@/components/brand/AppLayout";
 import { PillButton } from "@/components/brand/PillButton";
 import letsGoButton from "@/assets/lets-go-button-clean.png";
@@ -23,7 +25,10 @@ export const Route = createFileRoute("/")({
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
-    links: [blueBackground, redBackground, yellowBackground].map((href) => ({ rel: "prefetch", as: "image", href })),
+    links: [
+      { rel: "preload", as: "image", href: friends.url },
+      ...[blueBackground, redBackground, yellowBackground, catBadge.url, pandaBadge.url].map((href) => ({ rel: "prefetch", as: "image", href })),
+    ],
   }),
   component: Start,
 });
@@ -41,7 +46,7 @@ function Start() {
       <div className="relative z-30 -mt-32">
       <Page>
         <div className="pointer-events-none relative mx-auto -mb-11 aspect-[3/2] w-[24rem] max-w-[80%] overflow-hidden" >
-          <img src={friends.url} alt="Cat and Panda together" width={768} height={768} className="absolute inset-x-0 top-0 h-auto w-full" />
+          <img src={friends.url} alt="Cat and Panda together" width={768} height={768} fetchPriority="high" className="absolute inset-x-0 top-0 h-auto w-full" />
         </div>
         <StackedCard variant="welcome">
           <h1 className="text-2xl text-pitch">Let's get your home ready.</h1>
