@@ -40,7 +40,7 @@ function Start() {
       </div>
       <div className="relative z-30 -mt-28 sm:-mt-32">
       <Page>
-        <div className="pointer-events-none relative mx-auto -mb-11 aspect-[3/2] w-[30rem] max-w-full overflow-hidden" >
+        <div className="pointer-events-none relative mx-auto -mb-11 aspect-[3/2] w-[24rem] max-w-[80%] overflow-hidden" >
           <img src={friends.url} alt="Cat and Panda together" width={768} height={768} className="absolute inset-x-0 top-0 h-auto w-full" />
         </div>
         <StackedCard variant="welcome">
