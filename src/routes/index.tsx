@@ -35,10 +35,10 @@ function Start() {
 
   return (
     <>
-      <div className="pointer-events-none relative z-20 -mt-36 flex justify-center overflow-hidden" >
+      <div className="pointer-events-none relative z-20 -mt-32 sm:-mt-36 flex justify-center overflow-hidden" >
         <img src={logo.url} alt="Catastrophic Pandamonium" className="w-[120%] max-w-none shrink-0 sm:w-full sm:max-w-2xl" />
       </div>
-      <div className="relative z-30 -mt-28 sm:-mt-32">
+      <div className="relative z-30 -mt-32">
       <Page>
         <div className="pointer-events-none relative mx-auto -mb-11 aspect-[3/2] w-[24rem] max-w-[80%] overflow-hidden" >
           <img src={friends.url} alt="Cat and Panda together" width={768} height={768} className="absolute inset-x-0 top-0 h-auto w-full" />
