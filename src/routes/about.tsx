@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type { ReactNode } from "react";
-import friends from "@/assets/friends-waist.png.asset.json";
+import friends from "@/assets/AH-cata-hug.png.asset.json";
 import { Page } from "@/components/brand/AppLayout";
 import { StackedCard } from "@/components/brand/StackedCard";
 import { catalog } from "@/services/catalog";
