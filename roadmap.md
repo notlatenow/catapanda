@@ -1,4 +1,8 @@
-# Checklist redesign — done
+# Approved checklist redesign
+- [ ] Personal Picks: For you / Essentials, panda yellow / cat red, names-only rows and useful extras
+- [ ] Combined Disaster Basics: standard union, real overlap summary, priorities and Nice-to-Have
+- [ ] Full-screen details: bundle packing / why tabs, resources and applicability under why
+- [ ] Validate grouping rules, collapsed state and complete browser flows
 - [x] 15 hand-drawn theme icons (src/assets/icons/, checklist = catch-all)
 - [x] Theme mapping: src/lib/themes.ts (name → category → catch-all)
 - [x] Clickable rows: icon + name + chevron (src/routes/checklist.tsx)
@@ -6,4 +10,4 @@
 - [x] Personal Picks: AI duplicates of Basics items dropped; sections expand/collapse
 - [x] "Verify this": panel-open search via fixed generic queries only (VERIFY_NEEDS in search-policy.ts), within 3/visit budget
 - [x] Verified in browser: Earthquake Basics list + First aid kit panel render correctly
-- [ ] Later: Examples as comic drawings (deferred); household-sizing line needs structured people count (free text today)
+- Deferred: PDF sharing, unique links, recipient experience and Top Tips redesign
