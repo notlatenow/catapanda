@@ -13,11 +13,11 @@ export function SiteHeader() {
   const logoHeader = pathname === "/share" || pathname === "/options" || pathname === "/checklist";
   const link = "rounded-full px-2 py-1.5 text-sm sm:px-4 sm:text-base font-bold text-sun hover:text-snow active:text-sky";
   return (
-    <header className={cn("relative z-10", home ? "pb-20" : "pb-4", logoHeader && (pathname === "/checklist" ? "mb-40" : "mb-16"))}>
+    <header className={cn("relative z-10", home ? "pb-20" : "pb-4", logoHeader && (pathname === "/checklist" ? "mb-28" : "mb-16"))}>
       <div aria-hidden="true" className="halftone-ink absolute inset-0" style={{ clipPath: INK_EDGE }} />
       <nav className="relative mx-auto flex max-w-xl items-center justify-end gap-2 px-4 py-4">
         {logoHeader && (
-          <Link to="/" onClick={() => session.reset()} aria-label="CataPanda home" className="absolute left-1.75 top-2 max-w-[calc(100%-1rem)]">
+          <Link to="/" onClick={() => session.reset()} aria-label="CataPanda home" className={cn("absolute left-1.75 max-w-[calc(100%-1rem)]", pathname === "/checklist" ? "top-12 sm:top-2" : "top-2")}>
             <img src={logoAsset.url} alt="CataPanda" className="h-auto max-h-34 w-79 max-w-full object-contain object-left sm:w-90" />
           </Link>
         )}

@@ -29,6 +29,11 @@ export function bundleRows(rows: DetailRow[]): DetailRow[] {
     { root: "Soap & personal hygiene items", names: ["Hand sanitiser, wet wipes, tissues", "Sanitary pads / diapers"], label: "Hygiene supplies" },
     { root: "Copies of ID card & health/insurance card", names: ["List of essential phone numbers"] },
   ];
+  for (const theme of ["aids", "pets"] as const) {
+    const members = rows.filter(r => r.theme === theme);
+    const first = members[0];
+    if (first && members.length > 1) groups.push({ root: first.name, names: members.slice(1).map(r => r.name), label: theme === "aids" ? "Mobility & personal aids" : "Pet essentials" });
+  }
   const output = rows.map(row => {
     const group = groups.find(g => g.root === row.name);
     if (!group) return row;

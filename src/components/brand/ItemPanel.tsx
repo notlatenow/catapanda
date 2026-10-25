@@ -65,13 +65,13 @@ export function ItemPanel({ row, onClose, fullScreen = false, listTitle = "Perso
           </div>}
           <div id="item-content" role={fullScreen && bundle ? "tabpanel" : undefined} aria-labelledby={fullScreen && bundle ? `tab-${tab}` : undefined}>
             {!showWhy && <>
-              {bag && <ul className="divide-y divide-linen">{catalog.getBagTips().map(t => <li key={t.text} className="py-3 text-sm">{t.text}</li>)}</ul>}
               {row.detail && <p className="mb-4 text-sm text-ink">{row.detail}</p>}
               {!!row.contents?.length && <ul className="divide-y divide-linen">{row.contents.map(child => <li key={child.name} className="flex items-start gap-3 py-4"><img src={themeIcons[child.theme]} alt="" className="h-11 w-11 shrink-0 rounded-full bg-linen object-contain p-2" /><div><h3 className="text-lg">{child.displayName ?? child.name}</h3><p className="mt-1 text-sm text-slate">{child.shortNote}</p>{child.detail && <p className="mt-1 text-sm text-slate">{child.detail}</p>}</div></li>)}</ul>}
               {!bag && !row.detail && !row.contents?.length && <p className="text-sm">{row.shortNote}</p>}
             </>}
             {showWhy && <>
               <section><h3 className="text-xl text-pitch">Why it matters</h3><p className="mt-2 text-sm">{row.why ?? row.detail ?? row.shortNote}</p>
+                {bag && <ul className="mt-3 divide-y divide-linen">{catalog.getBagTips().map(t => <li key={t.text} className="py-3 text-sm">{t.text}</li>)}</ul>}
                 {!!row.appliesTo?.length && <div className="mt-4 rounded-xl bg-linen p-3"><span className="inline-block rounded-full bg-pitch px-2.5 py-1 text-xs font-bold text-snow">{row.appliesTo.length > 1 ? "Shared" : row.appliesTo[0]}</span><p className="mt-2 text-sm">{row.appliesTo.join(" + ")}</p></div>}
                 {row.medical && <p className="mt-3 rounded-xl bg-linen p-3 text-sm">Check with your doctor about the right supplies and amounts for you.</p>}
               </section>
