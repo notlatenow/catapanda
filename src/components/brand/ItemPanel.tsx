@@ -47,8 +47,8 @@ export function ItemPanel({ row, onClose, fullScreen = false, listTitle = "Perso
   const showWhy = !fullScreen || !bundle || tab === "why";
   const label = row.disaster ? "Gov-vetted" : row.kind === "ai" ? "AI" : row.kind === "tip" ? "CataPanda tip" : "Gov-vetted";
   return createPortal(
-    <div className={cn("fixed inset-0 z-50 flex justify-center", fullScreen ? "bg-snow" : "items-end bg-pitch/60 sm:items-center sm:p-6")}>
-      <div ref={dialogRef} role="dialog" aria-modal="true" aria-label={row.displayName ?? row.name} className={cn("relative flex w-full max-w-xl flex-col overflow-hidden bg-snow text-ink", fullScreen ? "h-dvh" : "max-h-[85dvh] rounded-t-3xl sm:rounded-3xl")}>
+    <div className={cn("fixed inset-0 z-50 flex justify-center", "items-end bg-pitch/60 sm:items-center sm:p-6")}>
+      <div ref={dialogRef} role="dialog" aria-modal="true" aria-label={row.displayName ?? row.name} className={cn("relative flex w-full max-w-xl flex-col overflow-hidden bg-snow text-ink", "max-h-[85dvh] rounded-t-3xl sm:rounded-3xl")}>
         <div className="flex shrink-0 items-center justify-between px-4 py-3">
           <Button variant="ghost" onClick={onClose} className="gap-2 text-ink"><ArrowLeft size={18} />{listTitle}</Button>
           <Button ref={closeRef} variant="ghost" size="icon" onClick={onClose} aria-label="Close panel"><X size={22} /></Button>
