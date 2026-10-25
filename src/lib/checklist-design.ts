@@ -47,7 +47,7 @@ export function designPersonalPicks(original: Checklist, disasters: string[]): D
   const standard = sortRows(all.filter(r => r.kind === "catalog" && !customNames.has(r.name) && !household.has(r.name) && r.priority !== "nice-to-have"));
   const bag = all.find(r => r.name === "Grab-and-go bag");
   // Keep the priority shortlist approachable; the complete standard list is in Disaster Basics.
-  const essentials = [...(bag ? [bag] : []), ...standard.slice(0, 10)];
+  const essentials = [...(bag ? [bag] : []), ...standard.filter(r => r.priority === "essential" || ["Personal medications", "Power bank & charging cable", "Copies of ID card & health/insurance card", "Spare clothing, incl. a raincoat"].includes(r.name))];
   return { ...original, title: "Personal Picks", sections: [
     { title: "For you", note: "Your household’s priority needs", rows: bundleRows(forYou.map(r => decorate(r, disasters))) },
     { title: "Essentials", note: "The most important shared supplies", rows: bundleRows(essentials.map(r => decorate(r, disasters))) },

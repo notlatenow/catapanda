@@ -31,7 +31,6 @@ function Options() {
     { id: "top10", name: "Top Tips", art: topTipsArt, tilt: "-rotate-[5deg]" },
     { id: "personalized", name: "Personal Picks", art: personalPicksArt, tilt: "rotate-[10deg]" },
   ];
-  const lists = disasters.map((d) => ({ id: d, name: `${d} Basics` }));
   const featuredText = "font-display block py-2 text-center text-3xl leading-tight text-slate sm:text-4xl";
   if (disasters.length > 0 && waiting) {
     return (
@@ -67,14 +66,12 @@ function Options() {
                 )}
               </div>
               <div className="mt-4 grid gap-3">
-                {lists.map((l) => (
-                  <Link key={l.id} to="/checklist" search={{ list: l.id }}
+                  <Link to="/checklist" search={{ list: "basics" }}
                     className="doodle-disaster doodle-pill group relative flex items-center gap-3 rounded-none px-4 py-3">
                     <RegionOutline />
-                    <DisasterIcon name={l.id} selected={false} small />
-                    <span className="font-sans text-sm font-bold">{l.name}</span>
+                    <span className="flex shrink-0 gap-1">{disasters.map(d => <DisasterIcon key={d} name={d} selected={false} small />)}</span>
+                    <span className="min-w-0 font-sans text-sm font-bold">Disaster Basics</span>
                   </Link>
-                ))}
               </div>
             </>
           )}
