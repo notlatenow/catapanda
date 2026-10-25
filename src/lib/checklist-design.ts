@@ -2,9 +2,9 @@
 import { catalog } from "@/services/catalog";
 import { buildDisasterList, sortRows, type Checklist, type Row } from "@/lib/checklists";
 
-export type DetailRow = Row & { displayName?: string; contents?: DetailRow[]; appliesTo?: string[] };
+export type DetailRow = Row & { displayName?: string | undefined; contents?: DetailRow[]; appliesTo?: string[] };
 export type DesignedList = Omit<Checklist, "sections"> & {
-  sections: { title: string; note?: string; rows: DetailRow[] }[];
+  sections: { title: string; note?: string | undefined; rows: DetailRow[] }[];
   overlap?: { shared: number; total: number; percent: number };
 };
 
