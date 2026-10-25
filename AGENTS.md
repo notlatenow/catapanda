@@ -15,6 +15,8 @@
 - Share URL and message formatting live in `src/lib/share.ts`; detect SMS device syntax after hydration so desktop browsers omit SMS without SSR mismatches.
 - Catalog content lives only in `src/data/catalog/*.json`; read it only through `src/services/catalog.ts` (swappable data source).
 - Top Tips disaster advice is built separately from ranked item rows so the advice display cannot alter ranking, item counts, or share-message selection.
+- Checklist redesign grouping lives in src/lib/checklist-design.ts as a presentation adapter; preserve the original ranked rows for Top Tips/sharing, and calculate Disaster Basics overlap from the distinct standard catalog union before bundling.
+- Bundles retain original catalog identities and source metadata inside their details; the full-screen ItemPanel keeps packing separate from why/resources while Top Tips retains its compact panel.
 - Checklist item panels portal to document.body and lock/restore page scroll; viewport-relative sizing and an independently scrolling body keep details and the close control reachable without collapsing lists.
 - App public URL comes only from `src/config/app.ts` (`VITE_APP_URL` override) so hosting can change without code edits.
 - No database tables or logging for household input — privacy requirement (Cloud is used only for server-side AI).
