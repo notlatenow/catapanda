@@ -1,164 +1,89 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { X, ExternalLink } from "lucide-react";
+import { X, ExternalLink, ArrowLeft } from "lucide-react";
 import { catalog } from "@/services/catalog";
-import type { Row } from "@/lib/checklists";
+import type { DetailRow } from "@/lib/checklist-design";
 import { themeIcons } from "@/lib/themes";
 import { verifyItemSource } from "@/state/search";
 import type { SearchResult } from "@/lib/search-types";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
-const BAG_NAME = "Grab-and-go bag";
-const AIDS_NAME = "Personal aids";
-
-const AID_EXAMPLES = [
-  "Spare glasses or contact lenses",
-  "Hearing aid batteries",
-  "Mobility aids (cane, walker)",
-  "Denture care supplies",
-];
-
-function kindLabel(row: Row) {
-  if (row.disaster) return "Gov-vetted";
-  return row.kind === "tip" ? "CataPanda tip" : row.kind === "ai" ? "AI" : "Gov-vetted";
-}
-
-/** Items that contain other items show their contents as a tickable list. */
-function includesFor(row: Row): string[] {
-  if (row.name === BAG_NAME) return catalog.getBagTips().map((t) => t.text);
-  if (row.name === AIDS_NAME) return AID_EXAMPLES;
-  return [];
-}
-
-export function ItemPanel({ row, onClose }: { row: Row; onClose: () => void }) {
-  const [ticked, setTicked] = useState<Set<number>>(new Set());
-  const [verified, setVerified] = useState<SearchResult | null | "loading">(
-    row.kind === "ai" && !row.sourceUrl ? "loading" : null,
-  );
+export function ItemPanel({ row, onClose, fullScreen = false, listTitle = "Personal Picks" }: { row: DetailRow; onClose: () => void; fullScreen?: boolean; listTitle?: string }) {
+  const [tab, setTab] = useState("pack");
+  const [verified, setVerified] = useState<SearchResult | null | "loading">(row.kind === "ai" && !row.sourceUrl ? "loading" : null);
   const closeRef = useRef<HTMLButtonElement>(null);
-  const includes = includesFor(row);
-  const sources = row.sourceCodes
-    .map((code) => catalog.getSource(code))
-    .filter((s): s is NonNullable<typeof s> => !!s)
-    .sort((a, b) => (a.code === "TW" ? -1 : b.code === "TW" ? 1 : 0));
-
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeCallback = useRef(onClose);
+  closeCallback.current = onClose;
+  const bag = row.name === "Grab-and-go bag";
+  const bundle = bag || !!row.contents?.length || ["food", "health", "hygiene", "documents", "pets", "aids"].includes(row.theme) || row.displayName === "Phone power supplies";
+  const sources = [...new Set([...row.sourceCodes, ...(row.contents ?? []).flatMap(r => r.sourceCodes)])].map(code => catalog.getSource(code)).filter(s => !!s).sort((a, b) => a.code === "TW" ? -1 : b.code === "TW" ? 1 : 0);
   useEffect(() => {
     const scrollY = window.scrollY;
-    const previousStyles = {
-      overflow: document.body.style.overflow,
-      position: document.body.style.position,
-      top: document.body.style.top,
-      width: document.body.style.width,
-    };
-    const previousFocus = document.activeElement;
-    document.body.style.overflow = "hidden";
-    document.body.style.position = "fixed";
-    document.body.style.top = `-${scrollY}px`;
-    document.body.style.width = "100%";
+    const previous = { overflow: document.body.style.overflow, position: document.body.style.position, top: document.body.style.top, width: document.body.style.width };
+    const focus = document.activeElement;
+    Object.assign(document.body.style, { overflow: "hidden", position: "fixed", top: `-${scrollY}px`, width: "100%" });
     closeRef.current?.focus({ preventScroll: true });
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
-    document.addEventListener("keydown", onKey);
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      Object.assign(document.body.style, previousStyles);
-      window.scrollTo(0, scrollY);
-      if (previousFocus instanceof HTMLElement) previousFocus.focus({ preventScroll: true });
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeCallback.current();
+      if (e.key === "Tab") {
+        const nodes = dialogRef.current?.querySelectorAll<HTMLElement>('button, a[href], [tabindex="0"]');
+        const first = nodes?.[0]; const last = nodes?.[nodes.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last?.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first?.focus(); }
+      }
     };
-  }, [onClose]);
-
+    document.addEventListener("keydown", onKey);
+    return () => { document.removeEventListener("keydown", onKey); Object.assign(document.body.style, previous); window.scrollTo(0, scrollY); if (focus instanceof HTMLElement) focus.focus({ preventScroll: true }); };
+  }, []);
   useEffect(() => {
     if (verified !== "loading") return;
     let alive = true;
-    void verifyItemSource(row.name).then((r) => { if (alive) setVerified(r); });
+    void verifyItemSource(row.name).then(r => { if (alive) setVerified(r); });
     return () => { alive = false; };
   }, [row.name, verified]);
-
   if (typeof document === "undefined") return null;
-
+  const showWhy = !fullScreen || !bundle || tab === "why";
+  const label = row.disaster ? "Gov-vetted" : row.kind === "ai" ? "AI" : row.kind === "tip" ? "CataPanda tip" : "Gov-vetted";
   return createPortal(
-    <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center sm:p-6" role="dialog" aria-modal="true" aria-label={row.name}>
-      <button type="button" aria-label="Close" onClick={onClose} className="absolute inset-0 bg-pitch/60" />
-      <div className="relative flex max-h-[85dvh] w-full max-w-lg flex-col overflow-hidden rounded-t-3xl bg-snow shadow-soft sm:rounded-3xl">
-        <div className="mx-auto mt-2 h-1.5 w-10 shrink-0 rounded-full bg-sand sm:hidden" />
-        <div className="flex shrink-0 items-start gap-4 p-5 pb-3">
-          <img src={themeIcons[row.theme]} alt="" width={816} height={816} className="h-16 w-16 shrink-0 rounded-2xl bg-linen object-contain p-2" />
-          <div className="min-w-0 flex-1">
-            <h2 className={cn(row.disaster ? "font-sans text-sm font-normal text-pitch" : "text-xl leading-6 text-ink")}>{row.name}</h2>
-            <p className={cn("mt-1 text-sm", row.disaster ? "font-sans font-normal text-pitch" : "text-slate")}>{row.shortNote}</p>
-            <span className="mt-2 inline-block rounded-full bg-pitch px-2.5 py-0.5 text-xs font-bold text-snow">
-              {kindLabel(row)}
-            </span>
-          </div>
-          <button ref={closeRef} type="button" onClick={onClose} aria-label="Close panel" className="rounded-full p-2 text-slate hover:bg-linen hover:text-ink">
-            <X size={20} />
-          </button>
+    <div className={cn("fixed inset-0 z-50 flex justify-center", fullScreen ? "bg-snow" : "items-end bg-pitch/60 sm:items-center sm:p-6")}>
+      <div ref={dialogRef} role="dialog" aria-modal="true" aria-label={row.displayName ?? row.name} className={cn("relative flex w-full max-w-xl flex-col overflow-hidden bg-snow text-ink", fullScreen ? "h-dvh" : "max-h-[85dvh] rounded-t-3xl sm:rounded-3xl")}>
+        <div className="flex shrink-0 items-center justify-between px-4 py-3">
+          <Button variant="ghost" onClick={onClose} className="gap-2 text-ink"><ArrowLeft size={18} />{listTitle}</Button>
+          <Button ref={closeRef} variant="ghost" size="icon" onClick={onClose} aria-label="Close panel"><X size={22} /></Button>
         </div>
-        <div className="min-h-0 overflow-y-auto overscroll-contain px-5 pb-6">
-          {row.why && <p className="text-sm font-bold text-bright">{row.why}</p>}
-          {row.medical && <p className="mt-2 rounded-2xl border border-sand bg-linen p-3 text-sm text-ink">Check with your doctor about the right supplies and amounts for you.</p>}
-          {includes.length > 0 && (
-            <section className="mt-4">
-              <h3 className="text-lg text-ink">What to include</h3>
-              <ul className="mt-2 space-y-2">
-                {includes.map((line, i) => (
-                  <li key={i}>
-                    <label className="flex cursor-pointer items-start gap-3 text-sm text-ink">
-                      <input
-                        type="checkbox"
-                        checked={ticked.has(i)}
-                        onChange={() => setTicked((t) => { const next = new Set(t); if (next.has(i)) next.delete(i); else next.add(i); return next; })}
-                        className="mt-0.5 h-4 w-4 shrink-0 accent-[var(--bright)]"
-                      />
-                      <span className={cn(ticked.has(i) && "text-slate line-through")}>{line}</span>
-                    </label>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )}
-          {row.detail && <p className={cn("mt-4 text-sm", row.disaster ? "font-sans font-normal text-pitch" : "text-slate")}>{row.detail}</p>}
-          <section className="mt-5">
-            <h3 className="text-lg text-ink">Take action</h3>
-            {row.stores.length > 0 && (
-              <p className="mt-2 text-sm font-bold text-ink">Find at the store: {[...row.stores].sort().join(", ")}</p>
-            )}
-            {sources.length > 0 && (
-              <ul className="mt-3 space-y-2">
-                {sources.map((s) => (
-                  <li key={s.code} className="rounded-2xl bg-linen p-3">
-                    <p className="text-sm font-bold text-ink">{s.document}</p>
-                    <p className="text-xs text-slate">{s.agency}</p>
-                    {s.websites[0] && (
-                      <a href={s.websites[0]} target="_blank" rel="noopener noreferrer" className="mt-1 inline-flex items-center gap-1 text-xs font-bold text-bright underline-offset-2 hover:underline">
-                        Visit source <ExternalLink size={12} />
-                      </a>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            )}
-            {row.kind === "ai" && (
-              <div className="mt-3">
-                {row.sourceUrl ? (
-                  <a href={row.sourceUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 rounded-2xl bg-linen px-3 py-2 text-sm font-bold text-bright underline-offset-2 hover:underline">
-                    Verified source <ExternalLink size={14} />
-                  </a>
-                ) : verified === "loading" ? (
-                  <p className="text-sm text-slate" role="status">Checking official sources…</p>
-                ) : verified ? (
-                  <a href={verified.link} target="_blank" rel="noopener noreferrer" className="block rounded-2xl bg-linen p-3">
-                    <p className="text-sm font-bold text-ink">{verified.title}</p>
-                    <span className="mt-1 inline-flex items-center gap-1 text-xs font-bold text-bright underline-offset-2 hover:underline">Visit source <ExternalLink size={12} /></span>
-                  </a>
-                ) : (
-                  <p className="text-sm text-slate">No official source found for this one yet — it's an AI suggestion, so double-check it fits your needs.</p>
-                )}
-              </div>
-            )}
-          </section>
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 pb-8 sm:px-8">
+          <header className={cn("pb-5", fullScreen && "text-center")}>
+            <img src={themeIcons[row.theme]} alt="" width={80} height={80} className={cn("h-20 w-20 rounded-full bg-linen object-contain p-3", fullScreen && "mx-auto")} />
+            <h2 className={cn("mt-3 text-2xl text-sky", row.disaster && "font-sans text-sm font-normal text-pitch")}>{row.displayName ?? row.name}</h2>
+            <span className="mt-2 inline-block rounded-full bg-pitch px-3 py-1 text-xs font-bold text-snow">{label}</span>
+            <p className={cn("mt-3 text-sm", row.disaster ? "text-pitch" : "text-ink")}>{row.shortNote}</p>
+          </header>
+          {fullScreen && bundle && <div role="tablist" aria-label="Item details" className="mb-5 grid grid-cols-2 border-b border-linen">
+            {[{ id: "pack", label: "What to Pack" }, { id: "why", label: "Why" }].map(t => <Button key={t.id} id={`tab-${t.id}`} role="tab" aria-selected={tab === t.id} aria-controls="item-content" variant="ghost" onClick={() => setTab(t.id)} className={cn("h-12 rounded-none border-b-4 font-display text-xl", tab === t.id ? "border-sky text-sky" : "border-transparent text-slate")}>{t.label}</Button>)}
+          </div>}
+          <div id="item-content" role={fullScreen && bundle ? "tabpanel" : undefined} aria-labelledby={fullScreen && bundle ? `tab-${tab}` : undefined}>
+            {!showWhy && <>
+              {bag && <ul className="divide-y divide-linen">{catalog.getBagTips().map(t => <li key={t.text} className="py-3 text-sm">{t.text}</li>)}</ul>}
+              {row.detail && <p className="mb-4 text-sm text-ink">{row.detail}</p>}
+              {!!row.contents?.length && <ul className="divide-y divide-linen">{row.contents.map(child => <li key={child.name} className="flex items-start gap-3 py-4"><img src={themeIcons[child.theme]} alt="" className="h-11 w-11 shrink-0 rounded-full bg-linen object-contain p-2" /><div><h3 className="text-lg">{child.displayName ?? child.name}</h3><p className="mt-1 text-sm text-slate">{child.shortNote}</p>{child.detail && <p className="mt-1 text-sm text-slate">{child.detail}</p>}</div></li>)}</ul>}
+              {!bag && !row.detail && !row.contents?.length && <p className="text-sm">{row.shortNote}</p>}
+            </>}
+            {showWhy && <>
+              <section><h3 className="text-xl text-pitch">Why it matters</h3><p className="mt-2 text-sm">{row.why ?? row.detail ?? row.shortNote}</p>
+                {!!row.appliesTo?.length && <div className="mt-4 rounded-xl bg-linen p-3"><span className="inline-block rounded-full bg-pitch px-2.5 py-1 text-xs font-bold text-snow">{row.appliesTo.length > 1 ? "Shared" : row.appliesTo[0]}</span><p className="mt-2 text-sm">{row.appliesTo.join(" + ")}</p></div>}
+                {row.medical && <p className="mt-3 rounded-xl bg-linen p-3 text-sm">Check with your doctor about the right supplies and amounts for you.</p>}
+              </section>
+              <section className="mt-6 border-t border-linen pt-5"><h3 className="text-xl text-pitch">Helpful resources</h3>
+                <ul className="mt-3 space-y-2">{sources.map(s => <li key={s.code} className="rounded-xl bg-linen p-3"><p className="text-sm font-bold">{s.document}</p><p className="text-xs text-slate">{s.agency}</p>{s.websites[0] && <a href={s.websites[0]} target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex items-center gap-1 text-sm text-sky underline">Visit source <ExternalLink size={14} /></a>}</li>)}</ul>
+                {row.kind === "ai" && <div className="mt-3">{row.sourceUrl || (verified && verified !== "loading") ? <a href={row.sourceUrl ?? (verified && verified !== "loading" ? verified.link : "")} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-xl bg-linen p-3 text-sm text-sky">Verified source <ExternalLink size={14} /></a> : <p className="text-sm text-slate" role="status">{verified === "loading" ? "Checking official sources…" : "No official source found for this one yet — it's an AI suggestion, so double-check it fits your needs."}</p>}</div>}
+                {!!row.stores.length && <p className="mt-4 text-sm"><strong>Find at the store:</strong> {[...row.stores].sort().join(", ")}</p>}
+              </section>
+            </>}
+          </div>
         </div>
       </div>
-    </div>,
-    document.body,
+    </div>, document.body,
   );
 }
