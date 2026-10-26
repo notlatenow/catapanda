@@ -17,7 +17,7 @@ vi.mock("@/lib/checklists", () => {
 });
 vi.mock("@/lib/checklist-design", () => {
   const list = (id: string, titles: string[]) => ({ id, title: id, sections: titles.map(title => ({ title, rows: [{ name: `${title} item`, theme: "checklist", priority: "essential", shortNote: "" }] })) });
-  return { designPersonalPicks: () => list("personalized", ["For you", "Essentials"]), buildDisasterBasics: () => list("basics", ["Priority items", "Nice-to-Have"]) };
+  return { designPersonalPicks: () => list("personalized", ["Food & Water", "Health & Wellness"]), buildDisasterBasics: () => list("basics", ["Priority items", "Nice-to-Have"]) };
 });
 import { Route } from "@/routes/checklist";
 afterEach(cleanup);
@@ -41,8 +41,8 @@ it("resets expanded sections when switching away and back", () => {
   const Component = Route.options.component;
   if (!Component) throw new Error("Checklist component missing");
   const view = render(<Component />);
-  fireEvent.click(screen.getByRole("button", { name: "Essentials" }));
-  expect(screen.getByRole("button", { name: "Essentials", expanded: true })).toBeTruthy();
+  fireEvent.click(screen.getByRole("button", { name: "Health & Wellness" }));
+  expect(screen.getByRole("button", { name: "Health & Wellness", expanded: true })).toBeTruthy();
   state.list = "basics";
   view.rerender(<Component />);
   state.list = "personalized";

@@ -6,7 +6,7 @@ import { StackedCard } from "@/components/brand/StackedCard";
 import { pillVariants } from "@/components/brand/PillButton";
 import { ItemPanel } from "@/components/brand/ItemPanel";
 import { buildAll, buildDisasterAdvice, type Row } from "@/lib/checklists";
-import { buildDisasterBasics, designPersonalPicks, type DetailRow } from "@/lib/checklist-design";
+import { buildDisasterBasics, designPersonalPicks, type DesignedList, type DetailRow } from "@/lib/checklist-design";
 import { DisasterIcon } from "@/components/brand/DisasterPicker";
 import { themeIcons } from "@/lib/themes";
 import { useSession } from "@/state/session";
@@ -14,8 +14,6 @@ import { cn } from "@/lib/utils";
 import { usePersonalization, FALLBACK_MESSAGE } from "@/state/personalize";
 import { ListsLoading } from "@/components/ListsLoading";
 import { Button } from "@/components/ui/button";
-import pandaBadge from "@/assets/AH-panda-circ.webp.asset.json";
-import catBadge from "@/assets/AH-cat-circ.webp.asset.json";
 
 export const Route = createFileRoute("/checklist")({
   validateSearch: (s: Record<string, unknown>): { list?: string } => typeof s["list"] === "string" ? { list: s["list"] } : {},
@@ -35,7 +33,6 @@ function ChecklistPage() {
   const personal = usePersonalization();
   const [open, setOpen] = useState<DetailRow | null>(null);
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
-  const [extras, setExtras] = useState(false);
   const [more, setMore] = useState(false);
   if (!disasters.length) return <><Page><PlaceholderNote>Head back to the start and pick at least one disaster first.</PlaceholderNote></Page><FlowNav back="/options" startOver={false} /></>;
   const ai = personal?.status === "done" ? { items: personal.items, top: personal.top } : null;
@@ -43,7 +40,7 @@ function ChecklistPage() {
   const isPersonal = list === "personalized";
   const isTop = list === "top10";
   const current = isTop ? built.top10 : isPersonal ? designPersonalPicks(built.personalized, disasters) : buildDisasterBasics(disasters);
-  const sections = isTop ? [buildDisasterAdvice(disasters), { title: "Top 10 items", rows: current.sections.flatMap(s => s.rows) }] : current.sections;
+  const sections: DesignedList["sections"] = isTop ? [buildDisasterAdvice(disasters), { title: "Top 10 items", rows: current.sections.flatMap(s => s.rows) }] : current.sections;
   const waiting = (isTop || isPersonal) && (!personal || personal.status === "running");
   function toggle(title: string) { setExpanded(old => { const next = new Set(old); if (next.has(title)) next.delete(title); else next.add(title); return next; }); }
   return <>
@@ -57,23 +54,17 @@ function ChecklistPage() {
           {isTop && <h1 className="text-2xl text-ink">Top Tips</h1>}
           {sections.map(s => {
             const opened = expanded.has(s.title);
-            const tone = isPersonal ? s.title === "For you" ? "yellow" : "red" : "default";
-            const optional = s.rows.filter(r => r.priority === "nice-to-have");
-            const primary = s.rows.filter(r => r.priority !== "nice-to-have");
             let visible: DetailRow[] = s.rows;
-            if (isPersonal && s.title === "For you") visible = extras ? s.rows : primary;
             if (!isTop && !isPersonal && s.title === "Priority items" && !more) visible = s.rows.slice(0, 4);
             return <section key={s.title} className={cn("border-b border-linen last:border-0", isPersonal ? "py-2" : "py-4")}>
               <Button variant="ghost" onClick={() => toggle(s.title)} aria-expanded={opened} className="h-auto w-full justify-between gap-3 whitespace-normal rounded-none p-0 py-2 text-left hover:bg-snow hover:text-inherit">
-                {isPersonal && <img src={s.title === "For you" ? pandaBadge.url : catBadge.url} alt="" width={56} height={56} className="h-14 w-14 shrink-0 object-contain" />}
-                <span className="min-w-0 flex-1"><h2 className={cn("text-xl", tone === "yellow" ? "text-custom-heading" : tone === "red" ? "text-combo-heading" : "text-slate")}>{s.title}</h2>{isPersonal && s.note && <span className="mt-1 block text-sm font-normal text-slate">{s.note}</span>}</span>
+                {isPersonal && s.icon && <img src={themeIcons[s.icon]} alt="" width={56} height={56} className="h-14 w-14 shrink-0 rounded-full bg-linen object-contain p-2" />}
+                <span className="min-w-0 flex-1"><h2 className={cn("text-xl", isPersonal ? "text-pitch" : "text-slate")}>{s.title}</h2>{isPersonal && s.note && <span className="mt-1 block text-sm font-normal text-slate">{s.note}</span>}</span>
                 <ChevronDown size={20} className={cn("shrink-0 text-pitch", !opened && "-rotate-90")} />
               </Button>
               {opened && <>
                 {!isPersonal && s.note && <p className="mt-1 text-sm text-slate">{s.note}</p>}
-                <Rows rows={visible} onOpen={setOpen} tone={tone} namesOnly={!isTop} />
-                {isPersonal && s.title === "For you" && optional.length > 0 && <Button variant="ghost" onClick={() => setExtras(!extras)} aria-expanded={extras} className="mt-3 w-full justify-between bg-linen text-ink"><span className="flex items-center gap-2"><Plus size={16} />Useful extras</span><ChevronDown size={18} className={cn(extras && "rotate-180")} /></Button>}
-                {isPersonal && s.title === "For you" && !s.rows.length && <p className="py-3 text-sm text-slate">No additional household-specific supplies were identified.</p>}
+                <Rows rows={visible} onOpen={setOpen} namesOnly={!isTop} hideIcon={isPersonal} />
                 {!isPersonal && !isTop && s.title === "Priority items" && s.rows.length > 4 && <Button variant="ghost" onClick={() => setMore(!more)} aria-expanded={more} className="mt-2 w-full justify-end text-ink">{more ? "Show fewer priorities" : "Show more priorities"}<Plus size={16} /></Button>}
               </>}
             </section>;
@@ -86,9 +77,11 @@ function ChecklistPage() {
     {open && <ItemPanel key={open.name} row={open} onClose={() => setOpen(null)} fullScreen={!isTop} listTitle={isTop ? "Top Tips" : current.title} />}
   </>;
 }
-function Rows({ rows, onOpen, tone, namesOnly }: { rows: DetailRow[]; onOpen: (row: Row) => void; tone: "yellow" | "red" | "default"; namesOnly: boolean }) {
+function Rows({ rows, onOpen, namesOnly, hideIcon }: { rows: DetailRow[]; onOpen: (row: Row) => void; namesOnly: boolean; hideIcon: boolean }) {
   return <ul className="mt-3">{rows.map(r => <li key={r.name} className="border-b border-linen last:border-0"><Button variant="ghost" onClick={() => onOpen(r)} className="h-auto w-full justify-start gap-3 whitespace-normal rounded-none px-0 py-3 text-left hover:bg-pale/60">
-    {r.disaster ? <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-linen text-ink"><DisasterIcon name={r.disaster} selected small /></span> : <img src={themeIcons[r.theme]} alt="" width={44} height={44} loading="lazy" className={cn("h-11 w-11 shrink-0 rounded-full object-contain p-1.5", tone === "yellow" ? "bg-custom-icon" : tone === "red" ? "bg-combo-icon" : "bg-linen")} />}
-    <span className="min-w-0 flex-1"><span className={cn("block", r.disaster ? "font-sans text-sm font-normal text-pitch" : namesOnly ? "font-display text-lg text-pitch" : "font-bold text-ink")}>{namesOnly ? r.displayName ?? r.name : r.name}</span>{!namesOnly && <span className={cn("block text-sm font-normal", r.disaster ? "text-pitch" : "text-slate")}>{r.shortNote}</span>}</span><ChevronRight size={18} className="shrink-0 text-pitch" />
+    {!hideIcon && (r.disaster ? <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-linen text-ink"><DisasterIcon name={r.disaster} selected small /></span> : <img src={themeIcons[r.theme]} alt="" width={44} height={44} loading="lazy" className="h-11 w-11 shrink-0 rounded-full bg-linen object-contain p-1.5" />)}
+    <span className="min-w-0 flex-1"><span className={cn("block", r.disaster ? "font-sans text-sm font-normal text-pitch" : namesOnly ? "font-display text-lg text-pitch" : "font-bold text-ink")}>{namesOnly ? r.displayName ?? r.name : r.name}</span>{!namesOnly && <span className={cn("block text-sm font-normal", r.disaster ? "text-pitch" : "text-slate")}>{r.shortNote}</span>}</span>
+    {hideIcon && (r.forYou || r.priority === "essential") && <span className={cn("shrink-0 rounded-full px-2.5 py-0.5 text-xs font-bold", r.forYou ? "bg-custom-icon text-pitch" : "bg-combo-heading text-snow")}>{r.forYou ? "For you" : "Essential"}</span>}
+    <ChevronRight size={18} className="shrink-0 text-pitch" />
   </Button></li>)}</ul>;
 }

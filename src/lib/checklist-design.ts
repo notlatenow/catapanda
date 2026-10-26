@@ -1,10 +1,11 @@
 /** Presentation-only grouping: original ranked rows remain intact for Top Tips and sharing. */
 import { catalog } from "@/services/catalog";
 import { buildDisasterList, sortRows, type Checklist, type Row } from "@/lib/checklists";
+import type { Theme } from "@/lib/themes";
 
-export type DetailRow = Row & { displayName?: string | undefined; contents?: DetailRow[]; appliesTo?: string[] };
+export type DetailRow = Row & { displayName?: string | undefined; contents?: DetailRow[]; appliesTo?: string[]; forYou?: boolean | undefined };
 export type DesignedList = Omit<Checklist, "sections"> & {
-  sections: { title: string; note?: string | undefined; rows: DetailRow[] }[];
+  sections: { title: string; note?: string | undefined; icon?: Theme | undefined; rows: DetailRow[] }[];
   overlap?: { shared: number; total: number; percent: number };
 };
 
@@ -44,19 +45,67 @@ export function bundleRows(rows: DetailRow[]): DetailRow[] {
   return output.filter(row => !used.has(row.name));
 }
 
+/** Six broad categories replace the old For you / Essentials split; rows carry a forYou flag instead. */
+const CATEGORY_ORDER: { title: string; icon: Theme }[] = [
+  { title: "Food & Water", icon: "food" },
+  { title: "Health & Wellness", icon: "health" },
+  { title: "Tools & Safety", icon: "tools" },
+  { title: "Power & Communication", icon: "light" },
+  { title: "Documents & Money", icon: "documents" },
+  { title: "Go-bag", icon: "bag" },
+];
+
+const BABY = /baby|infant|formula|pacifier/i;
+
+const THEME_CATEGORY: Record<Theme, string> = {
+  water: "Food & Water", food: "Food & Water", pets: "Food & Water",
+  health: "Health & Wellness", hygiene: "Health & Wellness", aids: "Health & Wellness", home: "Health & Wellness",
+  tools: "Tools & Safety", clothing: "Tools & Safety", checklist: "Tools & Safety",
+  light: "Power & Communication", radio: "Power & Communication",
+  documents: "Documents & Money", money: "Documents & Money",
+  bag: "Go-bag",
+};
+
+const CATALOG_CATEGORY: Record<string, string> = {
+  "Water & Food": "Food & Water",
+  "First Aid & Medication": "Health & Wellness",
+  "Hygiene & Sanitation": "Health & Wellness",
+  "Tools & Support Aids": "Tools & Safety",
+  "Clothing & Protection": "Tools & Safety",
+  "Light, Power & Communication": "Power & Communication",
+  "Documents & Money": "Documents & Money",
+};
+
+function categoryFor(row: DetailRow): string {
+  if (row.name === "Grab-and-go bag" || row.name === "Spare clothing, incl. a raincoat") return "Go-bag";
+  if (row.theme === "pets" || BABY.test(row.name)) return "Food & Water";
+  if (row.theme === "aids") return "Health & Wellness";
+  return CATALOG_CATEGORY[row.category] ?? THEME_CATEGORY[row.theme];
+}
+
+/** Baby and pet supplies collapse into one labelled group each, keeping every member row in contents. */
+function makeGroup(label: string, members: DetailRow[], disasters: string[]): DetailRow {
+  const sorted = sortRows(members) as DetailRow[];
+  const root = sorted[0]!;
+  return { ...root, displayName: label, forYou: true, contents: sorted.slice(1), appliesTo: disasters };
+}
+
 export function designPersonalPicks(original: Checklist, disasters: string[]): DesignedList {
   const household = new Set(catalog.getHouseholdRules().map(r => r.item));
-  const all = original.sections.flatMap(s => s.rows);
   const customNames = new Set(original.sections.find(s => s.title === "Custom")?.rows.map(r => r.name));
-  const forYou = sortRows(all.filter(r => r.name !== "Grab-and-go bag" && (customNames.has(r.name) || household.has(r.name))));
-  const standard = sortRows(all.filter(r => r.kind === "catalog" && !customNames.has(r.name) && !household.has(r.name) && r.priority !== "nice-to-have"));
-  const bag = all.find(r => r.name === "Grab-and-go bag");
-  // Keep the priority shortlist approachable; the complete standard list is in Disaster Basics.
-  const essentials = [...(bag ? [bag] : []), ...standard.filter(r => r.priority === "essential" || ["Personal medications", "Power bank & charging cable", "Copies of ID card & health/insurance card", "Spare clothing, incl. a raincoat"].includes(r.name))];
-  return { ...original, title: "Personal Picks", sections: [
-    { title: "For you", note: "Your household’s priority needs", rows: bundleRows(forYou.map(r => decorate(r, disasters))) },
-    { title: "Essentials", note: "The most important shared supplies", rows: bundleRows(essentials.map(r => decorate(r, disasters))) },
-  ] };
+  const all = original.sections.flatMap(s => s.rows);
+  const flagged = all.map(r => ({ ...decorate(r, disasters), forYou: customNames.has(r.name) || household.has(r.name) }));
+  const grouped = new Set<string>();
+  const bundles: DetailRow[] = [];
+  const baby = flagged.filter(r => BABY.test(r.name));
+  const pets = flagged.filter(r => r.theme === "pets");
+  if (baby.length > 1) { baby.forEach(r => grouped.add(r.name)); bundles.push(makeGroup("Baby care", baby, disasters)); }
+  if (pets.length > 1) { pets.forEach(r => grouped.add(r.name)); bundles.push(makeGroup("Pet care", pets, disasters)); }
+  const flat = bundleRows([...flagged.filter(r => !grouped.has(r.name)), ...bundles]);
+  const sections = CATEGORY_ORDER
+    .map(c => ({ title: c.title, icon: c.icon, rows: sortRows(flat.filter(r => categoryFor(r) === c.title)) as DetailRow[] }))
+    .filter(s => s.rows.length);
+  return { ...original, title: "Personal Picks", sections };
 }
 
 export function buildDisasterBasics(selected: string[]): DesignedList {
