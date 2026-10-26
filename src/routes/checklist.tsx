@@ -77,9 +77,11 @@ function ChecklistPage() {
     {open && <ItemPanel key={open.name} row={open} onClose={() => setOpen(null)} fullScreen={!isTop} listTitle={isTop ? "Top Tips" : current.title} />}
   </>;
 }
-function Rows({ rows, onOpen, tone, namesOnly }: { rows: DetailRow[]; onOpen: (row: Row) => void; tone: "yellow" | "red" | "default"; namesOnly: boolean }) {
+function Rows({ rows, onOpen, namesOnly, hideIcon }: { rows: DetailRow[]; onOpen: (row: Row) => void; namesOnly: boolean; hideIcon: boolean }) {
   return <ul className="mt-3">{rows.map(r => <li key={r.name} className="border-b border-linen last:border-0"><Button variant="ghost" onClick={() => onOpen(r)} className="h-auto w-full justify-start gap-3 whitespace-normal rounded-none px-0 py-3 text-left hover:bg-pale/60">
-    {r.disaster ? <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-linen text-ink"><DisasterIcon name={r.disaster} selected small /></span> : <img src={themeIcons[r.theme]} alt="" width={44} height={44} loading="lazy" className={cn("h-11 w-11 shrink-0 rounded-full object-contain p-1.5", tone === "yellow" ? "bg-custom-icon" : tone === "red" ? "bg-combo-icon" : "bg-linen")} />}
-    <span className="min-w-0 flex-1"><span className={cn("block", r.disaster ? "font-sans text-sm font-normal text-pitch" : namesOnly ? "font-display text-lg text-pitch" : "font-bold text-ink")}>{namesOnly ? r.displayName ?? r.name : r.name}</span>{!namesOnly && <span className={cn("block text-sm font-normal", r.disaster ? "text-pitch" : "text-slate")}>{r.shortNote}</span>}</span><ChevronRight size={18} className="shrink-0 text-pitch" />
+    {!hideIcon && (r.disaster ? <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-linen text-ink"><DisasterIcon name={r.disaster} selected small /></span> : <img src={themeIcons[r.theme]} alt="" width={44} height={44} loading="lazy" className="h-11 w-11 shrink-0 rounded-full bg-linen object-contain p-1.5" />)}
+    <span className="min-w-0 flex-1"><span className={cn("block", r.disaster ? "font-sans text-sm font-normal text-pitch" : namesOnly ? "font-display text-lg text-pitch" : "font-bold text-ink")}>{namesOnly ? r.displayName ?? r.name : r.name}</span>{!namesOnly && <span className={cn("block text-sm font-normal", r.disaster ? "text-pitch" : "text-slate")}>{r.shortNote}</span>}</span>
+    {hideIcon && (r.forYou || r.priority === "essential") && <span className={cn("shrink-0 rounded-full px-2.5 py-0.5 text-xs font-bold", r.forYou ? "bg-custom-icon text-pitch" : "bg-combo-heading text-snow")}>{r.forYou ? "For you" : "Essential"}</span>}
+    <ChevronRight size={18} className="shrink-0 text-pitch" />
   </Button></li>)}</ul>;
 }
