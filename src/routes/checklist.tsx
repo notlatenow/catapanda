@@ -14,8 +14,6 @@ import { cn } from "@/lib/utils";
 import { usePersonalization, FALLBACK_MESSAGE } from "@/state/personalize";
 import { ListsLoading } from "@/components/ListsLoading";
 import { Button } from "@/components/ui/button";
-import pandaBadge from "@/assets/AH-panda-circ.webp.asset.json";
-import catBadge from "@/assets/AH-cat-circ.webp.asset.json";
 
 export const Route = createFileRoute("/checklist")({
   validateSearch: (s: Record<string, unknown>): { list?: string } => typeof s["list"] === "string" ? { list: s["list"] } : {},
@@ -35,7 +33,6 @@ function ChecklistPage() {
   const personal = usePersonalization();
   const [open, setOpen] = useState<DetailRow | null>(null);
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
-  const [extras, setExtras] = useState(false);
   const [more, setMore] = useState(false);
   if (!disasters.length) return <><Page><PlaceholderNote>Head back to the start and pick at least one disaster first.</PlaceholderNote></Page><FlowNav back="/options" startOver={false} /></>;
   const ai = personal?.status === "done" ? { items: personal.items, top: personal.top } : null;
