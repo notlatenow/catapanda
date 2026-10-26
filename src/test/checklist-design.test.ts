@@ -39,8 +39,7 @@ it("groups personal picks into broad categories without changing Top Tips rankin
   const personal = designPersonalPicks(built.personalized, ["Earthquake"]);
   expect(personal.sections.map(s => s.title)).toEqual(["Food & Water", "Health & Wellness", "Tools & Safety", "Power & Communication", "Documents & Money", "Go-bag"]);
   const food = personal.sections[0]!;
-  const petCare = food.rows.find(r => r.displayName === "Pet care");
-  expect(petCare?.forYou).toBe(true);
+  expect(food.rows.find(r => r.name === "Pet supplies")?.forYou).toBe(true);
   const allNames = flatten(personal.sections.flatMap(s => s.rows)).map(r => r.name);
   expect(allNames).toContain("Pet supplies");
   expect(allNames).toContain("Infant supplies");
