@@ -1,5 +1,5 @@
 # Approved checklist redesign
-- [x] Personal Picks: For you / Essentials, panda yellow / cat red, names-only rows and useful extras
+- [x] Personal Picks: six categories (Food & Water, Health & Wellness, Tools & Safety, Power & Communication, Documents & Money, Go-bag), text-only sub-rows, For you / Essential pills, Baby care / Pet care groupings, pop-up details
 - [x] Combined Disaster Basics: standard union, real overlap summary, priorities and Nice-to-Have
 - [x] Full-screen details: bundle packing / why tabs, resources and applicability under why
 - [x] Validate grouping rules, collapsed state and complete browser flows (52 tests; desktop and mobile packing, why, resources, close and return)
