@@ -79,6 +79,7 @@ const CATALOG_CATEGORY: Record<string, string> = {
 function categoryFor(row: DetailRow): string {
   if (row.name === "Grab-and-go bag" || row.name === "Spare clothing, incl. a raincoat") return "Go-bag";
   if (row.theme === "pets" || BABY.test(row.name)) return "Food & Water";
+  if (row.theme === "aids") return "Health & Wellness";
   return CATALOG_CATEGORY[row.category] ?? THEME_CATEGORY[row.theme];
 }
 
@@ -93,14 +94,14 @@ export function designPersonalPicks(original: Checklist, disasters: string[]): D
   const household = new Set(catalog.getHouseholdRules().map(r => r.item));
   const customNames = new Set(original.sections.find(s => s.title === "Custom")?.rows.map(r => r.name));
   const all = original.sections.flatMap(s => s.rows);
-  const flagged = bundleRows(all.map(r => ({ ...decorate(r, disasters), forYou: customNames.has(r.name) || household.has(r.name) })));
+  const flagged = all.map(r => ({ ...decorate(r, disasters), forYou: customNames.has(r.name) || household.has(r.name) }));
   const grouped = new Set<string>();
   const bundles: DetailRow[] = [];
   const baby = flagged.filter(r => BABY.test(r.name));
   const pets = flagged.filter(r => r.theme === "pets");
   if (baby.length > 1) { baby.forEach(r => grouped.add(r.name)); bundles.push(makeGroup("Baby care", baby, disasters)); }
   if (pets.length > 1) { pets.forEach(r => grouped.add(r.name)); bundles.push(makeGroup("Pet care", pets, disasters)); }
-  const flat = [...flagged.filter(r => !grouped.has(r.name)), ...bundles];
+  const flat = bundleRows([...flagged.filter(r => !grouped.has(r.name)), ...bundles]);
   const sections = CATEGORY_ORDER
     .map(c => ({ title: c.title, icon: c.icon, rows: sortRows(flat.filter(r => categoryFor(r) === c.title)) as DetailRow[] }))
     .filter(s => s.rows.length);
