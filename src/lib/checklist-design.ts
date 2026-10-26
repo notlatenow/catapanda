@@ -1,10 +1,11 @@
 /** Presentation-only grouping: original ranked rows remain intact for Top Tips and sharing. */
 import { catalog } from "@/services/catalog";
 import { buildDisasterList, sortRows, type Checklist, type Row } from "@/lib/checklists";
+import type { Theme } from "@/lib/themes";
 
-export type DetailRow = Row & { displayName?: string | undefined; contents?: DetailRow[]; appliesTo?: string[] };
+export type DetailRow = Row & { displayName?: string | undefined; contents?: DetailRow[]; appliesTo?: string[]; forYou?: boolean | undefined };
 export type DesignedList = Omit<Checklist, "sections"> & {
-  sections: { title: string; note?: string | undefined; rows: DetailRow[] }[];
+  sections: { title: string; note?: string | undefined; icon?: Theme | undefined; rows: DetailRow[] }[];
   overlap?: { shared: number; total: number; percent: number };
 };
 
