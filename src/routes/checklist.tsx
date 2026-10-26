@@ -54,23 +54,17 @@ function ChecklistPage() {
           {isTop && <h1 className="text-2xl text-ink">Top Tips</h1>}
           {sections.map(s => {
             const opened = expanded.has(s.title);
-            const tone = isPersonal ? s.title === "For you" ? "yellow" : "red" : "default";
-            const optional = s.rows.filter(r => r.priority === "nice-to-have");
-            const primary = s.rows.filter(r => r.priority !== "nice-to-have");
             let visible: DetailRow[] = s.rows;
-            if (isPersonal && s.title === "For you") visible = extras ? s.rows : primary;
             if (!isTop && !isPersonal && s.title === "Priority items" && !more) visible = s.rows.slice(0, 4);
             return <section key={s.title} className={cn("border-b border-linen last:border-0", isPersonal ? "py-2" : "py-4")}>
               <Button variant="ghost" onClick={() => toggle(s.title)} aria-expanded={opened} className="h-auto w-full justify-between gap-3 whitespace-normal rounded-none p-0 py-2 text-left hover:bg-snow hover:text-inherit">
-                {isPersonal && <img src={s.title === "For you" ? pandaBadge.url : catBadge.url} alt="" width={56} height={56} className="h-14 w-14 shrink-0 object-contain" />}
-                <span className="min-w-0 flex-1"><h2 className={cn("text-xl", tone === "yellow" ? "text-custom-heading" : tone === "red" ? "text-combo-heading" : "text-slate")}>{s.title}</h2>{isPersonal && s.note && <span className="mt-1 block text-sm font-normal text-slate">{s.note}</span>}</span>
+                {isPersonal && s.icon && <img src={themeIcons[s.icon]} alt="" width={56} height={56} className="h-14 w-14 shrink-0 rounded-full bg-linen object-contain p-2" />}
+                <span className="min-w-0 flex-1"><h2 className={cn("text-xl", isPersonal ? "text-pitch" : "text-slate")}>{s.title}</h2>{isPersonal && s.note && <span className="mt-1 block text-sm font-normal text-slate">{s.note}</span>}</span>
                 <ChevronDown size={20} className={cn("shrink-0 text-pitch", !opened && "-rotate-90")} />
               </Button>
               {opened && <>
                 {!isPersonal && s.note && <p className="mt-1 text-sm text-slate">{s.note}</p>}
-                <Rows rows={visible} onOpen={setOpen} tone={tone} namesOnly={!isTop} />
-                {isPersonal && s.title === "For you" && optional.length > 0 && <Button variant="ghost" onClick={() => setExtras(!extras)} aria-expanded={extras} className="mt-3 w-full justify-between bg-linen text-ink"><span className="flex items-center gap-2"><Plus size={16} />Useful extras</span><ChevronDown size={18} className={cn(extras && "rotate-180")} /></Button>}
-                {isPersonal && s.title === "For you" && !s.rows.length && <p className="py-3 text-sm text-slate">No additional household-specific supplies were identified.</p>}
+                <Rows rows={visible} onOpen={setOpen} namesOnly={!isTop} hideIcon={isPersonal} />
                 {!isPersonal && !isTop && s.title === "Priority items" && s.rows.length > 4 && <Button variant="ghost" onClick={() => setMore(!more)} aria-expanded={more} className="mt-2 w-full justify-end text-ink">{more ? "Show fewer priorities" : "Show more priorities"}<Plus size={16} /></Button>}
               </>}
             </section>;
