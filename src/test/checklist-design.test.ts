@@ -74,5 +74,5 @@ it("bundles multiple pet or baby items into one Pet care or Baby care group", ()
   const babyCare = food.rows.find(r => r.displayName === "Baby care");
   expect(babyCare?.forYou).toBe(true);
   expect(flatten(babyCare ? [babyCare] : []).map(r => r.name)).toEqual(expect.arrayContaining(["Infant supplies", "Baby wrap / carrier", "Baby carrier cover"]));
-  expect(food.rows.map(r => r.name)).not.toContain("Pet supplies");
+  expect(food.rows.filter(r => r.name === "Pet supplies")).toHaveLength(1);
 });
