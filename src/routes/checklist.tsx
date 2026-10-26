@@ -6,7 +6,7 @@ import { StackedCard } from "@/components/brand/StackedCard";
 import { pillVariants } from "@/components/brand/PillButton";
 import { ItemPanel } from "@/components/brand/ItemPanel";
 import { buildAll, buildDisasterAdvice, type Row } from "@/lib/checklists";
-import { buildDisasterBasics, designPersonalPicks, type DetailRow } from "@/lib/checklist-design";
+import { buildDisasterBasics, designPersonalPicks, type DesignedList, type DetailRow } from "@/lib/checklist-design";
 import { DisasterIcon } from "@/components/brand/DisasterPicker";
 import { themeIcons } from "@/lib/themes";
 import { useSession } from "@/state/session";
@@ -40,7 +40,7 @@ function ChecklistPage() {
   const isPersonal = list === "personalized";
   const isTop = list === "top10";
   const current = isTop ? built.top10 : isPersonal ? designPersonalPicks(built.personalized, disasters) : buildDisasterBasics(disasters);
-  const sections = isTop ? [buildDisasterAdvice(disasters), { title: "Top 10 items", rows: current.sections.flatMap(s => s.rows) }] : current.sections;
+  const sections: DesignedList["sections"] = isTop ? [buildDisasterAdvice(disasters), { title: "Top 10 items", rows: current.sections.flatMap(s => s.rows) }] : current.sections;
   const waiting = (isTop || isPersonal) && (!personal || personal.status === "running");
   function toggle(title: string) { setExpanded(old => { const next = new Set(old); if (next.has(title)) next.delete(title); else next.add(title); return next; }); }
   return <>
