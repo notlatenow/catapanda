@@ -60,3 +60,19 @@ it("labels household rows For you and keeps single baby or pet items ungrouped",
   expect(food.rows.some(r => r.displayName === "Pet care")).toBe(false);
   expect(food.rows.find(r => r.name === "Drinking water")?.forYou).toBe(false);
 });
+it("bundles multiple pet or baby items into one Pet care or Baby care group", () => {
+  const ai = { items: [
+    { name: "Dog anxiety wrap", shortNote: "Calms nervous dogs", category: "Household & Special Needs", priority: "nice-to-have" as const, stores: ["Specialty"], sourceUrl: null, specializes: null, medical: false },
+    { name: "Baby carrier cover", shortNote: "Weather cover for the carrier", category: "Household & Special Needs", priority: "nice-to-have" as const, stores: ["Specialty"], sourceUrl: null, specializes: null, medical: false },
+  ], top: [] };
+  const built = buildAll(["Earthquake"], ["pet", "infant"], ai, null);
+  const personal = designPersonalPicks(built.personalized, ["Earthquake"]);
+  const food = personal.sections.find(s => s.title === "Food & Water")!;
+  const petCare = food.rows.find(r => r.displayName === "Pet care");
+  expect(petCare?.forYou).toBe(true);
+  expect(flatten(petCare ? [petCare] : []).map(r => r.name)).toContain("Dog anxiety wrap");
+  const babyCare = food.rows.find(r => r.displayName === "Baby care");
+  expect(babyCare?.forYou).toBe(true);
+  expect(flatten(babyCare ? [babyCare] : []).map(r => r.name)).toEqual(expect.arrayContaining(["Infant supplies", "Baby wrap / carrier", "Baby carrier cover"]));
+  expect(food.rows.map(r => r.name)).not.toContain("Pet supplies");
+});
