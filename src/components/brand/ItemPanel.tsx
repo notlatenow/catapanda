@@ -58,6 +58,10 @@ export function ItemPanel({ row, onClose, fullScreen = false, listTitle = "Perso
             <img src={themeIcons[row.theme]} alt="" width={80} height={80} className={cn("h-20 w-20 rounded-full bg-linen object-contain p-3", fullScreen && "mx-auto")} />
             <h2 className={cn("mt-3 text-2xl text-sky", row.disaster && "font-sans text-sm font-normal text-pitch")}>{row.displayName ?? row.name}</h2>
             <span className="mt-2 inline-block rounded-full bg-pitch px-3 py-1 text-xs font-bold text-snow">{label}</span>
+            {listTitle === "Personal Picks" && (row.forYou || row.priority === "essential") && <div className="mt-3 rounded-xl bg-linen p-3 text-sm">
+              <strong>{row.forYou ? "For you" : "Essential"}</strong>
+              <p className="mt-1">{row.forYou ? "Selected for your household’s needs. Review the packing details to make sure this fits your situation." : "A priority supply for your selected disasters. Include it in your emergency preparations."}</p>
+            </div>}
             <p className={cn("mt-3 text-sm", row.disaster ? "text-pitch" : "text-ink")}>{row.shortNote}</p>
           </header>
           {fullScreen && bundle && <div role="tablist" aria-label="Item details" className="mb-5 grid grid-cols-2 border-b border-linen">
