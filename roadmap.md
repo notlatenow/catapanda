@@ -1,6 +1,6 @@
 # Approved checklist redesign
-- [ ] Personal Picks: match Lov-new.jpg with short category pills on blue, blank deselectable list, personalized stars and detail explanations; defer artwork and pill states
-- [ ] Verify category selection/deselection, item details, desktop and mobile layout
+- [x] Personal Picks: match Lov-new.jpg with short category pills on blue, blank deselectable list, personalized stars and detail explanations; defer artwork and pill states
+- [x] Verify category selection/deselection, item details, desktop and mobile layout (12 targeted tests passed; real household flow, spinning stars, blank deselection and pop-ups verified)
 - [x] Personal Picks: six categories (Food & Water, Health & Wellness, Tools & Safety, Power & Communication, Documents & Money, Go-bag), text-only sub-rows, For you / Essential pills, Baby care / Pet care groupings, pop-up details
 - [x] Combined Disaster Basics: standard union, real overlap summary, priorities and Nice-to-Have
 - [x] Full-screen details: bundle packing / why tabs, resources and applicability under why
