@@ -2,9 +2,12 @@ import { useState } from "react";
 import { Star, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { DesignedList, DetailRow } from "@/lib/checklist-design";
-import documentsLight from "@/assets/documents-light.webp";
-import documentsMedium from "@/assets/documents-medium.webp";
-import documentsDark from "@/assets/documents-dark.webp";
+import documentsLightMobile from "@/assets/documents-light-mobile.webp.asset.json";
+import documentsMediumMobile from "@/assets/documents-medium-mobile.webp.asset.json";
+import documentsDarkMobile from "@/assets/documents-dark-mobile.webp.asset.json";
+import documentsLightDesktop from "@/assets/documents-light-desktop.webp.asset.json";
+import documentsMediumDesktop from "@/assets/documents-medium-desktop.webp.asset.json";
+import documentsDarkDesktop from "@/assets/documents-dark-desktop.webp.asset.json";
 
 const categories = [
   { label: "Go-Bag", title: "Go-bag" },
@@ -47,9 +50,14 @@ export function PersonalPicks({ list, onOpen }: { list: DesignedList; onOpen: (r
     <div role="group" aria-label="Personal Picks categories" className="grid grid-cols-2 gap-x-3 gap-y-3 px-2 sm:gap-x-4">
       {categories.map(c => <Button key={c.title} variant="ghost" aria-pressed={selected === c.title} aria-controls="personal-picks-items" onClick={() => chooseCategory(c.title)} className={`personal-category-pill h-10 min-w-0 justify-start rounded-full border-0 px-4 text-base font-extrabold sm:h-12 sm:px-5 sm:text-lg ${c.label === "Documents" ? "documents-category-pill" : ""}`}>
         {c.label === "Documents" && <span aria-hidden="true" className="documents-artwork absolute inset-0 overflow-hidden rounded-full">
-          <img src={documentsLight} alt="" className="documents-light absolute inset-0 h-full w-full" />
-          <img src={documentsMedium} alt="" className="documents-medium absolute inset-0 h-full w-full" />
-          <img src={documentsDark} alt="" className="documents-dark absolute inset-0 h-full w-full" />
+          {[
+            { state: "light", mobile: documentsLightMobile.url, desktop: documentsLightDesktop.url },
+            { state: "medium", mobile: documentsMediumMobile.url, desktop: documentsMediumDesktop.url },
+            { state: "dark", mobile: documentsDarkMobile.url, desktop: documentsDarkDesktop.url },
+          ].map(art => <picture key={art.state} className={`documents-${art.state} absolute inset-0 h-full w-full`}>
+            <source media="(min-width: 640px)" srcSet={art.desktop} />
+            <img src={art.mobile} alt="" className="absolute inset-0 h-full w-full" />
+          </picture>)}
         </span>}
         <span className="relative z-10">{c.label}</span>
       </Button>)}
