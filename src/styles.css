@@ -227,7 +227,7 @@ h1, h2, h3, h4, .font-display, .question-next { font-weight: 400; }
 }
 .documents-category-pill { position: relative; overflow: hidden; }
 .personal-category-pill.documents-category-pill { color: var(--slate); }
-.documents-artwork img { transform: scale(1.1); }
+.documents-artwork img { transform: none; }
 .documents-medium, .documents-dark { opacity: 0; }
 .documents-category-pill:hover .documents-medium,
 .documents-category-pill:focus-visible .documents-medium { opacity: 1; }
