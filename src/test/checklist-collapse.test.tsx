@@ -22,7 +22,7 @@ vi.mock("@/lib/checklist-design", () => {
 import { Route } from "@/routes/checklist";
 afterEach(cleanup);
 
-it.each(["personalized", "top10", "basics"])("opens %s with every section collapsed", list => {
+it.each(["top10", "basics"])("opens %s with every section collapsed", list => {
   state.list = list;
   const Component = Route.options.component;
   if (!Component) throw new Error("Checklist component missing");
@@ -41,12 +41,36 @@ it("resets expanded sections when switching away and back", () => {
   const Component = Route.options.component;
   if (!Component) throw new Error("Checklist component missing");
   const view = render(<Component />);
-  fireEvent.click(screen.getByRole("button", { name: "Health & Wellness" }));
-  expect(screen.getByRole("button", { name: "Health & Wellness", expanded: true })).toBeTruthy();
+  fireEvent.click(screen.getByRole("button", { name: "Health" }));
+  expect(screen.getByRole("button", { name: "Health", pressed: true })).toBeTruthy();
   state.list = "basics";
   view.rerender(<Component />);
   state.list = "personalized";
   view.rerender(<Component />);
-  expect(screen.getAllByRole("button", { expanded: false })).toHaveLength(2);
+  expect(screen.getAllByRole("button", { pressed: false })).toHaveLength(6);
   expect(screen.queryAllByRole("list")).toHaveLength(0);
+});
+
+it("keeps the personal list empty until a category is selected and empties it on deselection", () => {
+  state.list = "personalized";
+  const Component = Route.options.component;
+  if (!Component) throw new Error("Checklist component missing");
+  render(<Component />);
+  expect(screen.queryAllByRole("list")).toHaveLength(0);
+  fireEvent.click(screen.getByRole("button", { name: "Food" }));
+  expect(screen.getByRole("button", { name: "Food & Water item" })).toBeTruthy();
+  fireEvent.click(screen.getByRole("button", { name: "Food" }));
+  expect(screen.queryAllByRole("list")).toHaveLength(0);
+});
+
+it("shows only one personal category at a time", () => {
+  state.list = "personalized";
+  const Component = Route.options.component;
+  if (!Component) throw new Error("Checklist component missing");
+  render(<Component />);
+  fireEvent.click(screen.getByRole("button", { name: "Food" }));
+  fireEvent.click(screen.getByRole("button", { name: "Health" }));
+  expect(screen.queryByRole("button", { name: "Food & Water item" })).toBeNull();
+  expect(screen.getByRole("button", { name: "Health & Wellness item" })).toBeTruthy();
+  expect(screen.getAllByRole("button", { pressed: true })).toHaveLength(1);
 });
