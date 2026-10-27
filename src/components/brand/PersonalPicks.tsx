@@ -2,11 +2,14 @@ import { useState } from "react";
 import { Star, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { DesignedList, DetailRow } from "@/lib/checklist-design";
+import documentsLight from "@/assets/documents-light.webp";
+import documentsMedium from "@/assets/documents-medium.webp";
+import documentsDark from "@/assets/documents-dark.webp";
 
 const categories = [
   { label: "Go-Bag", title: "Go-bag" },
   { label: "Food", title: "Food & Water" },
-  { label: "Docs", title: "Documents & Money" },
+  { label: "Documents", title: "Documents & Money" },
   { label: "Health", title: "Health & Wellness" },
   { label: "Safety", title: "Tools & Safety" },
   { label: "Utilities", title: "Power & Communication" },
@@ -42,7 +45,14 @@ export function PersonalPicks({ list, onOpen }: { list: DesignedList; onOpen: (r
   }
   return <div className="flex flex-col gap-7">
     <div role="group" aria-label="Personal Picks categories" className="grid grid-cols-2 gap-x-3 gap-y-3 px-2 sm:gap-x-4">
-      {categories.map(c => <Button key={c.title} variant="ghost" aria-pressed={selected === c.title} aria-controls="personal-picks-items" onClick={() => chooseCategory(c.title)} className="personal-category-pill h-10 min-w-0 justify-start rounded-full border-2 border-snow px-4 text-base font-extrabold sm:h-12 sm:px-5 sm:text-lg">{c.label}</Button>)}
+      {categories.map(c => <Button key={c.title} variant="ghost" aria-pressed={selected === c.title} aria-controls="personal-picks-items" onClick={() => chooseCategory(c.title)} className={`personal-category-pill h-10 min-w-0 justify-start rounded-full border-2 border-snow px-4 text-base font-extrabold sm:h-12 sm:px-5 sm:text-lg ${c.label === "Documents" ? "documents-category-pill" : ""}`}>
+        {c.label === "Documents" && <span aria-hidden="true" className="documents-artwork absolute inset-0 overflow-hidden rounded-full">
+          <img src={documentsLight} alt="" className="documents-light absolute inset-0 h-full w-full" />
+          <img src={documentsMedium} alt="" className="documents-medium absolute inset-0 h-full w-full" />
+          <img src={documentsDark} alt="" className="documents-dark absolute inset-0 h-full w-full" />
+        </span>}
+        <span className="relative z-10">{c.label}</span>
+      </Button>)}
     </div>
     <div className="personal-picks-body relative py-2">
       <div aria-hidden="true" className="absolute inset-x-4 inset-y-0 rounded-3xl bg-pitch" />
