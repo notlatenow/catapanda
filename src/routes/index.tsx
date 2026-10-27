@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import logo from "@/assets/web-logo.png.asset.json";
 import friends from "@/assets/AH-cata-hug.webp.asset.json";
 import catBadge from "@/assets/AH-cat-circ.webp.asset.json";
-import pandaBadge from "@/assets/AH-panda-circ.webp.asset.json";
+import pandaBadge from "@/assets/AH-panda-circ-clean.webp.asset.json";
 import { Page } from "@/components/brand/AppLayout";
 import { PillButton } from "@/components/brand/PillButton";
 import letsGoButton from "@/assets/lets-go-button-clean.png";
