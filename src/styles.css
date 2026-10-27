@@ -226,14 +226,20 @@ h1, h2, h3, h4, .font-display, .question-next { font-weight: 400; }
   border-color: var(--snow);
 }
 .personal-picks-title { font-style: italic; text-shadow: 1px 2px 0 var(--pitch); }
+.personal-picks-row { position: relative; }
 .personal-picks-row:not(:last-child)::after {
   content: "";
-  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 1.25rem;
+  right: 1.25rem;
   height: 1px;
-  margin-inline: 1.25rem;
   background: var(--border);
+  pointer-events: none;
 }
-@media (min-width: 640px) { .personal-picks-row:not(:last-child)::after { margin-inline: 1.5rem; } }
+@media (min-width: 640px) { .personal-picks-row:not(:last-child)::after { left: 1.5rem; right: 1.5rem; } }
+.personal-picks-row > button { position: relative; margin-block: -1px; }
+.personal-picks-row > button:hover, .personal-picks-row > button:focus-visible { z-index: 1; }
 @keyframes personal-star-wobble {
   0%, 100% { transform: rotate(-12deg); }
   50% { transform: rotate(12deg); }
