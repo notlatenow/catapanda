@@ -16,7 +16,7 @@
 - Catalog content lives only in `src/data/catalog/*.json`; read it only through `src/services/catalog.ts` (swappable data source).
 - Top Tips disaster advice is built separately from ranked item rows so the advice display cannot alter ranking, item counts, or share-message selection.
 - Checklist redesign grouping lives in src/lib/checklist-design.ts as a presentation adapter; preserve the original ranked rows for Top Tips/sharing, and calculate Disaster Basics overlap from the distinct standard catalog union before bundling.
-- Personal Picks category selection and its compact list presentation live in the brand PersonalPicks component; map existing adapter sections without changing catalog grouping or Top Tips rankings.
+- Personal Picks category selection and direct fixed-bag detail opening live in the brand PersonalPicks component; map existing adapter sections without changing catalog grouping or Top Tips rankings.
 - Bundles retain original catalog identities and source metadata inside their details; the full-screen ItemPanel keeps packing separate from why/resources while Top Tips retains its compact panel.
 - Checklist item panels portal to document.body and lock/restore page scroll; viewport-relative sizing and an independently scrolling body keep details and the close control reachable without collapsing lists.
 - App public URL comes only from `src/config/app.ts` (`VITE_APP_URL` override) so hosting can change without code edits.

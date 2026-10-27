@@ -9,7 +9,7 @@ vi.mock("@tanstack/react-router", () => ({
 vi.mock("@/state/session", () => ({ useSession: () => ({ disasters: ["Earthquake"], facts: {} }) }));
 vi.mock("@/state/personalize", () => ({ usePersonalization: () => ({ status: "fallback" }), FALLBACK_MESSAGE: "" }));
 vi.mock("@/components/brand/AppLayout", () => ({ Page: ({ children }: { children: React.ReactNode }) => <main>{children}</main>, FlowNav: () => null, PlaceholderNote: () => null }));
-vi.mock("@/components/brand/ItemPanel", () => ({ ItemPanel: () => null }));
+vi.mock("@/components/brand/ItemPanel", () => ({ ItemPanel: ({ row, onClose }: { row: { name: string }; onClose: () => void }) => <div role="dialog" aria-label={row.name}><button onClick={onClose}>Close</button></div> }));
 vi.mock("@/components/ListsLoading", () => ({ ListsLoading: () => null }));
 vi.mock("@/lib/checklists", () => {
   const list = (id: string, titles: string[]) => ({ id, sections: titles.map(title => ({ title, rows: [{ name: `${title} item`, theme: "checklist", shortNote: "" }] })) });
@@ -17,7 +17,7 @@ vi.mock("@/lib/checklists", () => {
 });
 vi.mock("@/lib/checklist-design", () => {
   const list = (id: string, titles: string[]) => ({ id, title: id, sections: titles.map(title => ({ title, rows: [{ name: `${title} item`, theme: "checklist", priority: "essential", shortNote: "" }] })) });
-  return { designPersonalPicks: () => list("personalized", ["Food & Water", "Health & Wellness"]), buildDisasterBasics: () => list("basics", ["Priority items", "Nice-to-Have"]) };
+  return { designPersonalPicks: () => ({ ...list("personalized", ["Food & Water", "Health & Wellness"]), sections: [...list("personalized", ["Food & Water", "Health & Wellness"]).sections, { title: "Go-bag", rows: [{ name: "Grab-and-go bag", theme: "bag", shortNote: "" }] }] }), buildDisasterBasics: () => list("basics", ["Priority items", "Nice-to-Have"]) };
 });
 import { Route } from "@/routes/checklist";
 afterEach(cleanup);
@@ -73,4 +73,28 @@ it("shows only one personal category at a time", () => {
   expect(screen.queryByRole("button", { name: "Food & Water item" })).toBeNull();
   expect(screen.getByRole("button", { name: "Health & Wellness item" })).toBeTruthy();
   expect(screen.getAllByRole("button", { pressed: true })).toHaveLength(1);
+});
+
+it("opens the fixed bag directly without selecting a category or adding a list step", () => {
+  state.list = "personalized";
+  const Component = Route.options.component;
+  if (!Component) throw new Error("Checklist component missing");
+  render(<Component />);
+  fireEvent.click(screen.getByRole("button", { name: "Go-Bag" }));
+  expect(screen.getByRole("dialog", { name: "Grab-and-go bag" })).toBeTruthy();
+  expect(screen.queryAllByRole("list")).toHaveLength(0);
+  expect(screen.getByRole("button", { name: "Go-Bag", pressed: false })).toBeTruthy();
+});
+
+it("preserves the selected category when opening and closing the fixed bag", () => {
+  state.list = "personalized";
+  const Component = Route.options.component;
+  if (!Component) throw new Error("Checklist component missing");
+  render(<Component />);
+  fireEvent.click(screen.getByRole("button", { name: "Food" }));
+  fireEvent.click(screen.getByRole("button", { name: "Go-Bag" }));
+  fireEvent.click(screen.getByRole("button", { name: "Close" }));
+  expect(screen.queryByRole("dialog")).toBeNull();
+  expect(screen.getByRole("button", { name: "Food", pressed: true })).toBeTruthy();
+  expect(screen.getByRole("button", { name: "Food & Water item" })).toBeTruthy();
 });
