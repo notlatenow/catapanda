@@ -245,7 +245,7 @@ h1, h2, h3, h4, .font-display, .question-next { font-weight: 400; }
   50% { transform: rotate(12deg); }
 }
 .group:hover .personal-picks-star,
-.group:focus-visible .personal-picks-star { animation: personal-star-wobble 2.4s ease-in-out infinite; }
+.group:focus-visible .personal-picks-star { animation: personal-star-wobble 0.8s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) {
   .group:hover .personal-picks-star,
   .group:focus-visible .personal-picks-star { animation: none; }
