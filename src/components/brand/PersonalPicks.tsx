@@ -33,15 +33,23 @@ function ActionLines({ flipped = false }: { flipped?: boolean }) {
 export function PersonalPicks({ list, onOpen }: { list: DesignedList; onOpen: (row: DetailRow) => void }) {
   const [selected, setSelected] = useState<string | null>(null);
   const rows = list.sections.find(s => s.title === selected)?.rows ?? [];
+  function chooseCategory(title: string) {
+    if (title === "Go-bag") {
+      const bag = list.sections.find(s => s.title === title)?.rows.find(r => r.name === "Grab-and-go bag");
+      if (bag) { onOpen(bag); return; }
+    }
+    setSelected(old => old === title ? null : title);
+  }
   return <div className="flex flex-col gap-7">
     <div role="group" aria-label="Personal Picks categories" className="grid grid-cols-2 gap-x-3 gap-y-3 px-2 sm:gap-x-4">
-      {categories.map(c => <Button key={c.title} variant="ghost" aria-pressed={selected === c.title} aria-controls="personal-picks-items" onClick={() => setSelected(old => old === c.title ? null : c.title)} className="personal-category-pill h-10 min-w-0 justify-start rounded-full border-2 border-snow px-4 text-base font-extrabold sm:h-12 sm:px-5 sm:text-lg">{c.label}</Button>)}
+      {categories.map(c => <Button key={c.title} variant="ghost" aria-pressed={selected === c.title} aria-controls="personal-picks-items" onClick={() => chooseCategory(c.title)} className="personal-category-pill h-10 min-w-0 justify-start rounded-full border-2 border-snow px-4 text-base font-extrabold sm:h-12 sm:px-5 sm:text-lg">{c.label}</Button>)}
     </div>
     <div className="personal-picks-body relative py-2">
       <div aria-hidden="true" className="absolute inset-x-4 inset-y-0 rounded-3xl bg-pitch" />
-      <div id="personal-picks-items" role="region" aria-label={selected ? `${categories.find(c => c.title === selected)?.label} items` : "Personal Picks items"} className="relative min-h-72 rounded-3xl bg-snow px-5 py-3 text-pitch sm:min-h-80 sm:px-6">
-        {selected && rows.length > 0 && <ul>{rows.map(r => <li key={r.name} className="border-b border-border last:border-0">
-          <Button variant="ghost" onClick={() => onOpen(r)} className="group h-auto min-h-16 w-full justify-start gap-3 whitespace-normal rounded-none px-0 py-4 text-left text-pitch hover:bg-pale/60 sm:min-h-18">
+      <div id="personal-picks-items" role="region" aria-label={selected ? `${categories.find(c => c.title === selected)?.label} items` : "Personal Picks items"} className="relative min-h-72 overflow-hidden rounded-3xl bg-snow py-3 text-pitch sm:min-h-80">
+        {!selected && <p className="px-5 py-4 text-base text-slate sm:px-6">We've picked a checklist just for you and your unique needs. Click through the categories to prep for success!</p>}
+        {selected && rows.length > 0 && <ul>{rows.map(r => <li key={r.name} className="personal-picks-row">
+          <Button variant="ghost" onClick={() => onOpen(r)} className="group h-auto min-h-16 w-full justify-start gap-3 whitespace-normal rounded-none px-5 py-4 text-left text-pitch hover:bg-border sm:min-h-18 sm:px-6">
             <span className="min-w-0 flex-1 text-base font-extrabold">{r.displayName ?? r.name}</span>
             {r.forYou && <Star aria-label="For you" className="personal-picks-star h-6 w-6 shrink-0 fill-sun text-pitch" strokeWidth={1.5} />}
             <ChevronRight aria-hidden="true" size={20} className="shrink-0 text-slate" />
