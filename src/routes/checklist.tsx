@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 import { usePersonalization, FALLBACK_MESSAGE } from "@/state/personalize";
 import { ListsLoading } from "@/components/ListsLoading";
 import { Button } from "@/components/ui/button";
+import { PersonalPicks, PersonalPicksHeader } from "@/components/brand/PersonalPicks";
 
 export const Route = createFileRoute("/checklist")({
   validateSearch: (s: Record<string, unknown>): { list?: string } => typeof s["list"] === "string" ? { list: s["list"] } : {},
@@ -48,9 +49,9 @@ function ChecklistPage() {
       <nav aria-label="Your lists" className="flex flex-wrap justify-center gap-2">{[{ id: "top10", name: "Top Tips" }, { id: "personalized", name: "Personal Picks" }, { id: "basics", name: "Disaster Basics" }].map(c => <Link key={c.id} to="/checklist" search={{ list: c.id }} className={cn("rounded-full border-2 px-3 py-2 text-sm font-bold", (c.id === list || c.id === "basics" && !isTop && !isPersonal) ? "border-pitch bg-custom-icon text-pitch" : "border-snow bg-snow text-ink")}>{c.name}</Link>)}</nav>
       {waiting ? <ListsLoading disasters={disasters} phase={personal?.phase ?? 0} /> : <>
         {(isTop || isPersonal) && personal?.status === "fallback" && <p role="status" className="rounded-xl bg-pale p-4 text-sm text-ink">{FALLBACK_MESSAGE}</p>}
-        {!isTop && <header className="text-center"><h1 className="font-display text-3xl text-custom-heading">{current.title}</h1><p className="mt-2 text-sm text-snow">{disasters.join(" + ")}</p></header>}
+        {isPersonal ? <PersonalPicksHeader disasters={disasters} /> : !isTop && <header className="text-center"><h1 className="font-display text-3xl text-custom-heading">{current.title}</h1><p className="mt-2 text-sm text-snow">{disasters.join(" + ")}</p></header>}
         {!isTop && !isPersonal && "overlap" in current && current.overlap && disasters.length > 1 && <div className="text-center"><p className="font-display text-3xl text-custom-heading">{current.overlap.percent}% shared</p><p className="mt-1 text-snow">{current.overlap.shared} of {current.overlap.total} items cover {disasters.length === 2 ? "both" : "all three"}.</p><p className="text-sm text-snow">One kit, {disasters.length === 2 ? "two" : "three"} disasters.</p></div>}
-        <StackedCard>
+        {isPersonal ? <PersonalPicks list={current as DesignedList} onOpen={setOpen} /> : <StackedCard>
           {isTop && <h1 className="text-2xl text-ink">Top Tips</h1>}
           {sections.map(s => {
             const opened = expanded.has(s.title);
@@ -69,7 +70,7 @@ function ChecklistPage() {
               </>}
             </section>;
           })}
-        </StackedCard>
+        </StackedCard>}
         {isPersonal && <Link to="/checklist" search={{ list: "basics" }} className="self-center text-sm text-snow underline underline-offset-4">View Disaster Basics →</Link>}
         {isTop && <Link to="/share" className={cn(pillVariants({ variant: "primary" }), "self-center")}>Share your Top Tips</Link>}
       </>}
