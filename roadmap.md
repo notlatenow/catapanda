@@ -1,5 +1,5 @@
 # Approved checklist redesign
-- [ ] Add approved Documents artwork for resting, hover and selected states; set star wobble to 0.6 seconds and verify in preview.
+- [x] Add approved Documents artwork for resting, hover and selected states; verify desktop/mobile previews and star wobble at 0.6 seconds; 14 checklist tests passed.
 - [x] Personal Picks: direct Go-Bag pop-up, slow star wobble, edge-to-edge divider-grey hover and welcome message; 14 targeted tests passed and household preview flow verified
 - [x] Personal Picks: match Lov-new.jpg with short category pills on blue, blank deselectable list, personalized stars and detail explanations; defer artwork and pill states
 - [x] Verify category selection/deselection, item details, desktop and mobile layout (12 targeted tests passed; real household flow, spinning stars, blank deselection and pop-ups verified)
