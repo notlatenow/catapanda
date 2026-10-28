@@ -50,7 +50,8 @@ function Start() {
         </div>
         <StackedCard variant="welcome">
           <h1 className="text-2xl text-pitch">Let's get your home ready.</h1>
-          <p className="mt-2 text-sm text-ink">Cat &amp; Panda are here to help. Pick what you're preparing for, tell us a little about your home, and we'll hand you a clear, doable checklist. Sourced from {catalog.getSources().length === 7 ? "seven" : catalog.getSources().length} official government resources across Asia, so you know it's legit. Tell us what you're prepping for and who's at home...</p>
+          <p className="mt-2 text-sm text-ink">Cat &amp; Panda are here to help! Create a customized checklist to prepare for the unexpected. Tell us about your home, and we'll hand you a clear, doable checklist. Sourced from {catalog.getSources().length === 7 ? "seven" : catalog.getSources().length} official government resources across Asia, so you know it's legit.</p>
+          <p className="mt-2 text-sm text-ink">Currently, you're viewing the MVP. We are moving to Beta and polishing up our disaster prep features. For now, our offering is limited. Thanks for taking a look!</p>
         </StackedCard>
 
         <StackedCard bottomTab="yellow">
