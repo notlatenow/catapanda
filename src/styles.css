@@ -88,6 +88,7 @@
   --pitch: #000000;
   --sun: #d99b00;
   --welcome: #e6a700;
+  --mvp-note: #ffe278;
   --custom-heading: #ddaa39;
   --custom-icon: #ffe6ab;
   --combo-heading: #a94a41;
@@ -197,6 +198,7 @@ h1, h2, h3, h4, .font-display, .question-next { font-weight: 400; }
 .question-blue { --question-color: var(--sky); }
 .question-red { --question-color: var(--brick); }
 .question-yellow { --question-color: var(--welcome); }
+.mvp-note { color: var(--mvp-note); }
 .question-screen { background-color: var(--question-color); }
 .question-input:hover, .question-input:focus { border-color: var(--bright); }
 .question-icon:active { background-color: var(--question-color); color: var(--panda); border-color: transparent; }
