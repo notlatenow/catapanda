@@ -198,7 +198,7 @@ h1, h2, h3, h4, .font-display, .question-next { font-weight: 400; }
 .question-blue { --question-color: var(--sky); }
 .question-red { --question-color: var(--brick); }
 .question-yellow { --question-color: var(--welcome); }
-.mvp-note { color: var(--sky); }
+.mvp-note { color: var(--brick); }
 .question-screen { background-color: var(--question-color); }
 .question-input:hover, .question-input:focus { border-color: var(--bright); }
 .question-icon:active { background-color: var(--question-color); color: var(--panda); border-color: transparent; }
