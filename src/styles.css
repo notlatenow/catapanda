@@ -226,7 +226,7 @@ h1, h2, h3, h4, .font-display, .question-next { font-weight: 400; }
   border: 0;
 }
 .documents-category-pill { position: relative; overflow: hidden; }
-.personal-category-pill.documents-category-pill { color: var(--slate); }
+.personal-category-pill.documents-category-pill { color: #ababab; }
 .documents-artwork img { transform: none; }
 .documents-medium, .documents-dark { opacity: 0; }
 .documents-category-pill:hover .documents-medium,
