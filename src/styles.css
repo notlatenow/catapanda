@@ -232,7 +232,7 @@ h1, h2, h3, h4, .font-display, .question-next { font-weight: 400; }
 .documents-category-pill:hover .documents-medium,
 .documents-category-pill:focus-visible .documents-medium { opacity: 1; }
 .personal-category-pill.documents-category-pill:hover,
-.personal-category-pill.documents-category-pill:focus-visible,
+.personal-category-pill.documents-category-pill:focus-visible { color: var(--slate); }
 .personal-category-pill.documents-category-pill[aria-pressed="true"] { color: var(--snow); }
 .documents-category-pill[aria-pressed="true"] .documents-dark { opacity: 1; }
 .personal-picks-title { font-style: italic; text-shadow: 1px 2px 0 var(--pitch); }
